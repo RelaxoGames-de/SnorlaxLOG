@@ -1,0 +1,5 @@
+#This is currently not in use!
+language: de_DE
+
+Usages:
+  "PBanUsage": "Nutzung /pban <name> <id>"

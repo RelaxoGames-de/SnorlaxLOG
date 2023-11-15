@@ -1,0 +1,9 @@
+MySQL:
+  Host:
+  Port:
+  Database:
+  User:
+  Password:
+
+DatabaseTables:
+  SnorlaxUserProfile: "snorlax_users_profile"
