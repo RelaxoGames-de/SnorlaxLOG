@@ -204,7 +204,7 @@ public class FileManager {
     /**
      * @return The name of the Users Profile for the MySQL Database
      */
-    public static String getPunishmentTableName(){
+    public static String getUsersProfileTable(){
         File config = getMySQLConfig();
         Configuration fc;
         try {

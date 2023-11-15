@@ -3,16 +3,22 @@ package de.snorlaxlog.files.interfaces;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
 import de.snorlaxlog.mysql.SQLManager;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class GamedPlayer implements GamePlayer {
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+
+public class LOGGEDPlayer implements LOGPlayer {
 
     private SQLManager sqlManager = new SQLManager();
 
     private ProxiedPlayer player;
+    private Long joinedMillis;
 
-    public GamedPlayer(ProxiedPlayer player) {
+    public LOGGEDPlayer(ProxiedPlayer player) {
         this.player = player;
     }
 
@@ -21,6 +27,35 @@ public class GamedPlayer implements GamePlayer {
     @Override
     public ProxiedPlayer getPlayer() {
         return player;
+    }
+
+    @Override
+    public void addPlayerEntry() {
+    }
+
+    @Override
+    public UUID getUUIDFromDatabase(String name) {
+        return sqlManager.;
+    }
+
+    @Override
+    public String getNameFromDatabase(UUID uuid) {
+        return null;
+    }
+
+    @Override
+    public String getUserIP() {
+        return player.getAddress().getHostName();
+    }
+
+    @Override
+    public void changePlayerEntry(PlayerEntryData setting, String newValue) {
+
+    }
+
+    @Override
+    public String getPlayerEntry(PlayerEntryData setting) {
+        return null;
     }
 
     /**
@@ -42,7 +77,7 @@ public class GamedPlayer implements GamePlayer {
     @Override
     public void sendMessage(String fileKey) {
         String msg = LanguageManager.getMessage(language(), fileKey);
-        getPlayer().sendMessage(new TextComponent(CommandPrefix.getRelaxoBanPrefix() + msg));
+        getPlayer().sendMessage(new TextComponent(CommandPrefix.getLOGPrefix() + msg));
     }
 
     /**
@@ -51,9 +86,24 @@ public class GamedPlayer implements GamePlayer {
      */
     @Override
     public void sendMessage(TextComponent message) {
-        TextComponent msg = new TextComponent(CommandPrefix.getRelaxoBanPrefix());
+        TextComponent msg = new TextComponent(CommandPrefix.getLOGPrefix());
         msg.addExtra(message);
         getPlayer().sendMessage(msg);
+    }
+
+    @Override
+    public void logEntry(Level level, String loggingMessage) {
+
+    }
+
+    @Override
+    public long getMillisOnJoin() {
+        return joinedMillis;
+    }
+
+    @Override
+    public void setMillisOnJoin(Long newValue) {
+        joinedMillis = newValue;
     }
 
     /**

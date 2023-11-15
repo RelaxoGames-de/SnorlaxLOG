@@ -1,8 +1,7 @@
 package de.snorlaxlog.files;
 
-import de.snorlaxlog.files.FileManager;
-import de.snorlaxlog.files.interfaces.GamePlayer;
-import de.snorlaxlog.files.interfaces.GamedPlayer;
+import de.snorlaxlog.files.interfaces.LOGPlayer;
+import de.snorlaxlog.files.interfaces.LOGGEDPlayer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.HashMap;
@@ -30,9 +29,9 @@ public class LanguageManager {
      *
      */
     public static String getMessage(ProxiedPlayer player, String message){
-        GamePlayer gamePlayer = new GamedPlayer(player);
+        LOGPlayer LOGPlayer = new LOGGEDPlayer(player);
         if (!playerlocals.containsKey(player)){
-            playerlocals.put(player, gamePlayer.language());
+            playerlocals.put(player, LOGPlayer.language());
         }
         String locale = playerlocals.getOrDefault(player, "de_DE");
         return messages.getOrDefault(locale, messages.get("de_DE")).getOrDefault(message, "KEY NOT SET!");
