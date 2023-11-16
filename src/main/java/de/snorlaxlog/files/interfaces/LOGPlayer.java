@@ -3,15 +3,17 @@ package de.snorlaxlog.files.interfaces;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 import java.util.logging.Level;
 public interface LOGPlayer {
 
     ProxiedPlayer getPlayer();
     void addPlayerEntry();
-    UUID getUUIDFromDatabase(String name);
-    String getNameFromDatabase(UUID uuid);
+    UUID getUUIDFromDatabase();
 
+    String getNameFromDatabase();
+    boolean isInDatabase();
     String getUserIP();
     void changePlayerEntry(PlayerEntryData setting, String newValue);
     String getPlayerEntry(PlayerEntryData setting);
@@ -22,5 +24,6 @@ public interface LOGPlayer {
     void logEntry(Level level, String loggingMessage);
     long getMillisOnJoin();
     void setMillisOnJoin(Long newValue);
+    Timestamp getOnlineTime();
 
 }

@@ -3,13 +3,12 @@ package de.snorlaxlog.files.interfaces;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
 import de.snorlaxlog.mysql.SQLManager;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 public class LOGGEDPlayer implements LOGPlayer {
 
@@ -34,13 +33,18 @@ public class LOGGEDPlayer implements LOGPlayer {
     }
 
     @Override
-    public UUID getUUIDFromDatabase(String name) {
-        return sqlManager.;
+    public UUID getUUIDFromDatabase() {
+        return sqlManager.getUUIDThroughName(getPlayer().getName());
     }
 
     @Override
-    public String getNameFromDatabase(UUID uuid) {
+    public String getNameFromDatabase() {
         return null;
+    }
+
+    @Override
+    public boolean isInDatabase() {
+        return sqlManager.isInDatabase(this);
     }
 
     @Override
@@ -104,6 +108,11 @@ public class LOGGEDPlayer implements LOGPlayer {
     @Override
     public void setMillisOnJoin(Long newValue) {
         joinedMillis = newValue;
+    }
+
+    @Override
+    public Timestamp getOnlineTime() {
+        return null;
     }
 
     /**

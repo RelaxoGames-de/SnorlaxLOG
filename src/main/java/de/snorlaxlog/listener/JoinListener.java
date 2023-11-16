@@ -2,6 +2,7 @@ package de.snorlaxlog.listener;
 
 import de.snorlaxlog.files.interfaces.LOGGEDPlayer;
 import de.snorlaxlog.files.interfaces.LOGPlayer;
+import de.snorlaxlog.files.interfaces.PlayerEntryData;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.LoginEvent;
@@ -15,7 +16,10 @@ public class JoinListener implements Listener {
         ProxiedPlayer player = ProxyServer.getInstance().getPlayer(e.getConnection().getUniqueId());
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
 
+        if (!logPlayer.isInDatabase()){
+            logPlayer.addPlayerEntry();
 
+        }
     }
 
 }
