@@ -3,6 +3,7 @@ package de.snorlaxlog.files.interfaces;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
 import de.snorlaxlog.mysql.SQLManager;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -30,6 +31,12 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public void addPlayerEntry() {
+        if (!sqlManager.isInDatabase(this)){
+            sqlManager.addEntry(this);
+            ProxyServer.getInstance().getLogger().log(Level.INFO, CommandPrefix.getLOGPrefix() + "Registered a new Database entry [name:" + getPlayer().getName() + "] [uuid: " + getPlayer().getUniqueId() + "]");
+            return;
+        }
+        return;
     }
 
     @Override

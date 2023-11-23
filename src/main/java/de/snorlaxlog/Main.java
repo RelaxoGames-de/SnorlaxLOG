@@ -1,6 +1,7 @@
 package de.snorlaxlog;
 
 import de.snorlaxlog.files.FileManager;
+import de.snorlaxlog.listener.JoinListener;
 import de.snorlaxlog.mysql.MySQL;
 import de.snorlaxlog.mysql.SQLManager;
 import net.md_5.bungee.api.ProxyServer;
@@ -26,6 +27,7 @@ public final class Main extends Plugin {
         // Plugin startup logic
         FileManager.loadFiles();
         this.loadMySQL();
+        this.registerListener();
     }
 
     @Override
@@ -49,16 +51,14 @@ public final class Main extends Plugin {
         SQLManager.initializeDatabase();
     }
 
+    public void registerListener(){
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new JoinListener());
+    }
     public static void logMessage(Level level, String message){
         ProxyServer.getInstance().getLogger().log(level, message);
     }
 
     public static Main getInstance() {
         return instance;
-    }
-
-    public static void main(String[] a){
-        System.out.println(new Timestamp(new Date().getTime()));
-
     }
 }
