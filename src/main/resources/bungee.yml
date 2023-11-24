@@ -1,4 +1,4 @@
-name: SnorlaxLOG
+name: "SnorlaxLOG"
 version: '${project.version}'
 main: de.snorlaxlog.Main
-author: vazyx
+author: [vazyx]

@@ -15,6 +15,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PostLoginEvent e){
         ProxiedPlayer player = e.getPlayer();
+        if (player == null)return;
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
 
         if (!logPlayer.isInDatabase()){

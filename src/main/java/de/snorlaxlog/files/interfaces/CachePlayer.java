@@ -33,6 +33,18 @@ public class CachePlayer implements CachedPlayer{
         this.ip = ip;
     }
 
+    public CachePlayer(String uuid, String name, Timestamp firstJoin, Timestamp lastJoin, String discordID, String forumID, long onlineTime, String language, String ip) {
+        this.uuid = uuid;
+        this.name = name;
+        this.firstJoin = firstJoin;
+        this.lastJoin = lastJoin;
+        this.discordID = discordID;
+        this.forumID = forumID;
+        this.onlineTime = onlineTime;
+        this.language = language;
+        this.ip = ip;
+    }
+
     @Override
     public int getID() {
         return id;

@@ -1,7 +1,4 @@
 package de.snorlaxlog.files.interfaces;
-
-import java.sql.Types;
-
 public enum PlayerEntryData {
 
     USER_ID("user_id", 1, DatabaseData.INTEGER),

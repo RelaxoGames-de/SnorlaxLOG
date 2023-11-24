@@ -12,7 +12,9 @@ public class QuitListener implements Listener {
     @EventHandler
     public void onQuit(PlayerDisconnectEvent e){
         ProxiedPlayer p = e.getPlayer();
+        if (p == null)return;
         LOGPlayer lp = new LOGGEDPlayer(p);
+
         lp.updateOnlineTime();
         lp.updatePlayerProfile();
     }
