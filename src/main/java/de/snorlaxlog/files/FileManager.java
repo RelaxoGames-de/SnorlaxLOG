@@ -59,15 +59,15 @@ public class FileManager {
         /* Creates the different Types of the messages.yml and a Folder called 'languages'. In these Files every message is defined.
          */
 
-        File langFolder = new File(Main.getInstance().getDataFolder() + "/languages");
+        File langFolder = new File(Main.getInstance().getDataFolder().getPath() + "//languages");
         if (!langFolder.exists()) {
             langFolder.mkdirs();
         }
 
         //GERMAN FILE
-        File germanFile = new File(langFolder, "de_DE");
+        File germanFile = new File(langFolder, "de_DE.yml");
         if (!germanFile.exists()) {
-            try (InputStream is = Main.getInstance().getResourceAsStream("de_DE")) {
+            try (InputStream is = Main.getInstance().getResourceAsStream("de_DE.yml")) {
                 Files.copy(is, germanFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -77,9 +77,9 @@ public class FileManager {
         }
 
         //ENGLISH FILE
-        File english = new File(langFolder, "en_US");
+        File english = new File(langFolder, "en_US.yml");
         if (!english.exists()) {
-            try (InputStream is = Main.getInstance().getResourceAsStream("en_US")) {
+            try (InputStream is = Main.getInstance().getResourceAsStream("en_US.yml")) {
                 Files.copy(is, english.toPath());
             } catch (IOException e) {
                 e.printStackTrace();

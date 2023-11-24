@@ -31,11 +31,8 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public void addPlayerEntry() {
-        if (!sqlManager.isInDatabase(this)){
-            sqlManager.addEntry(this);
-            ProxyServer.getInstance().getLogger().log(Level.INFO, CommandPrefix.getLOGPrefix() + "Registered a new Database entry [name:" + getPlayer().getName() + "] [uuid: " + getPlayer().getUniqueId() + "]");
-            return;
-        }
+        sqlManager.addEntry(player);
+        ProxyServer.getInstance().getLogger().log(Level.INFO, CommandPrefix.getConsolePrefix() + "Registered a new Database entry [name:" + getPlayer().getName() + "] [uuid: " + getPlayer().getUniqueId() + "]");
         return;
     }
 
@@ -51,7 +48,7 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public boolean isInDatabase() {
-        return sqlManager.isInDatabase(this);
+        return sqlManager.isInDatabase(player);
     }
 
     @Override

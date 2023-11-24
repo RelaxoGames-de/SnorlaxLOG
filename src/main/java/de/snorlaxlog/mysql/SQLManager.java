@@ -3,7 +3,6 @@ package de.snorlaxlog.mysql;
 import de.snorlaxlog.Main;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.FileManager;
-import de.snorlaxlog.files.interfaces.LOGPlayer;
 import de.snorlaxlog.files.interfaces.PlayerEntryData;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -45,9 +44,9 @@ public class SQLManager {
 
     }
 
-    public boolean isInDatabase(LOGPlayer logPlayer){
+    public boolean isInDatabase(ProxiedPlayer player){
 
-        ProxiedPlayer player = logPlayer.getPlayer();
+        this.checkCon();
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
@@ -60,35 +59,43 @@ public class SQLManager {
             return rs.next();
 
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getLOGPrefix() + "Methode getUUIDThroughName() is not supported?!");
+            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
     }
 
-    public void addEntry(LOGPlayer logPlayer){
+    public void addEntry(ProxiedPlayer player){
 
-        ProxiedPlayer player = logPlayer.getPlayer();
+        this.checkCon();
 
         String sql = SQLQuery.ADD_ENTRY_TO_DATABASE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
-            statement.setString(2, player.getUniqueId().toString());
-            statement.setString(3, player.getName());
-            //statement.setTimestamp(4, new Timestamp(new Date().getTime()));
-            //statement.setTimestamp(5, new Timestamp(new Date().getTime()));
-            statement.setTimestamp(8, new Timestamp(0000, 00, 00, 00, 00, 00, 00));
-            statement.setString(9, "de_DE");
-            statement.setString(10, logPlayer.getUserIP());
+            Date today = new Date();
+            Timestamp firstSeen = new Timestamp(today.getTime());
+
+            statement.setString(1, player.getUUID());
+            statement.setString(2, player.getName());
+            statement.setTimestamp(3, firstSeen);
+            statement.setNull(4, Types.TIMESTAMP);
+            statement.setNull(5, Types.VARCHAR);
+            statement.setNull(6, Types.VARCHAR);
+            statement.setTimestamp(7, new Timestamp(0, 0, 0, 0, 0, 0, 0));
+            statement.setString(8, "de_DE");
+            statement.setString(9, player.getAddress().getHostName());
 
             statement.execute();
+
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getLOGPrefix() + "Methode getUUIDThroughName() is not supported?!");
+            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
 
     }
 
     public UUID getUUIDThroughName(String name){
+
+        this.checkCon();
 
         UUID uuid;
 
@@ -99,11 +106,23 @@ public class SQLManager {
             ResultSet rs = statement.executeQuery();
             uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getLOGPrefix() + "Methode getUUIDThroughName() is not supported?!");
+            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
 
         return uuid;
     }
 
+
+    private void checkCon(){
+
+        try {
+            if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) {
+                con = Main.getInstance().mySQL.openConnection();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
