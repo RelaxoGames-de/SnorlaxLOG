@@ -1,26 +1,20 @@
 package de.snorlaxlog.files.interfaces;
-
-import java.sql.Timestamp;
 import java.util.HashMap;
 
 public class OnlineTimeManager {
 
-    private HashMap<LOGPlayer, Long> inStampTime = new HashMap<>();
-    private HashMap<LOGPlayer, Long> outStampTime = new HashMap<>();
-    private HashMap<LOGPlayer, Timestamp> onlineList = new HashMap<>();
-
-
-
-    public Timestamp getOnlineTime(LOGPlayer player){
-        return onlineList.get(player);
-    }
-
+    private static HashMap<LOGPlayer, Long> inStampTime = new HashMap<>();
     public void stampIn(LOGPlayer player){
-
+        if (inStampTime.containsKey(player))return;
         long time = System.currentTimeMillis();
         inStampTime.put(player, time);
-
     }
 
+    public static HashMap<LOGPlayer, Long> getInStampTime() {
+        return inStampTime;
+    }
 
+    public boolean isCaptured(LOGPlayer logPlayer){
+        return inStampTime.containsKey(logPlayer);
+    }
 }

@@ -1,22 +1,28 @@
 package de.snorlaxlog.files.interfaces;
 
+import java.sql.Types;
+
 public enum PlayerEntryData {
 
-    USER_UUID("user_uuid", 1),
-    USER_NAME("user_name", 2),
-    USER_FIRST_JOINED("user_first_seen", 3),
-    USER_LAST_JOINED("user_last_seen", 4),
-    USER_LINKS_DISCORD("user_discord_id", 5),
-    USER_LINKS_FORUM("user_forum_id", 6),
-    USER_ONLINE_TIME("user_total_onlinetime", 7),
-    USER_CACHED_IP("user_last_cached_IP", 8);
+    USER_ID("user_id", 1, DatabaseData.INTEGER),
+    USER_UUID("user_uuid", 2, DatabaseData.VARCHAR),
+    USER_NAME("user_name", 3, DatabaseData.VARCHAR),
+    USER_FIRST_JOINED("user_first_seen", 4, DatabaseData.TIMESTAMP),
+    USER_LAST_JOINED("user_last_seen", 5, DatabaseData.TIMESTAMP),
+    USER_LINKS_DISCORD("user_discord_id", 6, DatabaseData.VARCHAR),
+    USER_LINKS_FORUM("user_forum_id", 7, DatabaseData.VARCHAR),
+    USER_ONLINE_TIME("user_total_onlinetime", 8, DatabaseData.BIGINT),
+    USER_LANGUAGE("user_language_selected", 9, DatabaseData.VARCHAR),
+    USER_CACHED_IP("user_last_cached_IP", 10, DatabaseData.VARCHAR);
 
     String tableColumnName;
     int columnPlace;
+    DatabaseData datatype;
 
-    PlayerEntryData(String tableColumnName, int columnPlace) {
+    PlayerEntryData(String tableColumnName, int columnPlace, DatabaseData datatype) {
         this.tableColumnName = tableColumnName;
         this.columnPlace = columnPlace;
+        this.datatype = datatype;
     }
 
     public String getTableColumnName() {
@@ -25,5 +31,9 @@ public enum PlayerEntryData {
 
     public int getColumnPlace() {
         return columnPlace;
+    }
+
+    public DatabaseData getDatatype() {
+        return datatype;
     }
 }

@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -31,8 +32,10 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public void addPlayerEntry() {
-        sqlManager.addEntry(player);
-        ProxyServer.getInstance().getLogger().log(Level.INFO, CommandPrefix.getConsolePrefix() + "Registered a new Database entry [name:" + getPlayer().getName() + "] [uuid: " + getPlayer().getUniqueId() + "]");
+        if (!isInDatabase()) {
+            sqlManager.addEntry(player);
+            ProxyServer.getInstance().getLogger().log(Level.INFO, CommandPrefix.getConsolePrefix() + "Registered a new Database entry [name:" + getPlayer().getName() + "] [uuid: " + getPlayer().getUniqueId() + "]");
+        }
         return;
     }
 
@@ -103,20 +106,29 @@ public class LOGGEDPlayer implements LOGPlayer {
     public void logEntry(Level level, String loggingMessage) {
 
     }
-
     @Override
-    public long getMillisOnJoin() {
-        return joinedMillis;
+    public Long getOnlineTime() {
+        return sqlManager.getSavedOnlineTime(this);
     }
 
     @Override
-    public void setMillisOnJoin(Long newValue) {
-        joinedMillis = newValue;
+    public void updateOnlineTime() {
+        long joinOn = OnlineTimeManager.getInStampTime().get(this);
+        long leftOn = System.currentTimeMillis();
+        long savedOnlineTime = getOnlineTime();
+
+        long cal = (leftOn - joinOn) + savedOnlineTime;
+        sqlManager.setSavedOnlineTime(this, cal);
     }
 
+
     @Override
-    public Timestamp getOnlineTime() {
-        return null;
+    public void updatePlayerProfile() {
+        String userName = player.getName();
+
+        sqlManager.updatePlayerProfileIP(this);
+        sqlManager.updatePlayerProfileName(this, userName);
+        sqlManager.updatePlayerProfileLastSeen(this);
     }
 
     /**

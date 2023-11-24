@@ -22,8 +22,7 @@ public interface LOGPlayer {
     void sendMessage(String fileKey);
     void sendMessage(TextComponent message);
     void logEntry(Level level, String loggingMessage);
-    long getMillisOnJoin();
-    void setMillisOnJoin(Long newValue);
-    Timestamp getOnlineTime();
-
+    Long getOnlineTime();
+    void updateOnlineTime();
+    void updatePlayerProfile();
 }
