@@ -1,6 +1,8 @@
 package de.snorlaxlog;
 
+import de.snorlaxlog.commands.OnlineTimeCommand;
 import de.snorlaxlog.files.FileManager;
+import de.snorlaxlog.files.interfaces.LOGPlayer;
 import de.snorlaxlog.listener.JoinListener;
 import de.snorlaxlog.listener.QuitListener;
 import de.snorlaxlog.mysql.MySQL;
@@ -8,15 +10,14 @@ import de.snorlaxlog.mysql.SQLManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public final class Main extends Plugin {
 
     private static Main instance;
     public MySQL mySQL;
-
     @Override
     public void onLoad() {
         super.onLoad();
@@ -29,6 +30,7 @@ public final class Main extends Plugin {
         FileManager.loadFiles();
         this.loadMySQL();
         this.registerListener();
+        this.registerCommands();
     }
 
     @Override
@@ -55,6 +57,10 @@ public final class Main extends Plugin {
     public void registerListener(){
         ProxyServer.getInstance().getPluginManager().registerListener(this, new JoinListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new QuitListener());
+    }
+
+    public void registerCommands(){
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new OnlineTimeCommand());
     }
     public static void logMessage(Level level, String message){
         ProxyServer.getInstance().getLogger().log(level, message);

@@ -1,3 +1,11 @@
 #This is currently not in use!
-Usages:
-  "PBanUsage": "Nutzung /pban <name> <id>"
+"Usages":
+  "LanguageSelected": "&7Your current language is &2Englisch (US)"
+  "kickScreen": "&7You were kicked from &3RelaxoGames.de. \n&7Reason: &a%REASON% \n\n&7If this keeps happening,\n please consider to report it: &3support@relaxogames.de\n&7or on our Discord Server:\n&3discord.relaxogames.de"
+
+"Responses":
+  "OnlineTimeResponse": "&7You spent &b%TIME% &7hours on &3&lRelaxoGames&7!"
+
+"Error":
+  "NoPermission1": "&7You &cdon't &7have the right permission to execute this command!"
+  "ErrorCMDCooldown": "&7This Command has a cooldown of &e%COOLDOWN% Minutes&7!"

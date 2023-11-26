@@ -18,11 +18,15 @@ public interface LOGPlayer {
     void changePlayerEntry(PlayerEntryData setting, String newValue);
     String getPlayerEntry(PlayerEntryData setting);
     boolean hasPermission(String permission);
-    String language();
+    Language language();
     void sendMessage(String fileKey);
     void sendMessage(TextComponent message);
     void logEntry(Level level, String loggingMessage);
     Long getOnlineTime();
     void updateOnlineTime();
     void updatePlayerProfile();
+
+    CachedPlayer getCachedPlayer();
+
+    long getLastJoinTime();
 }

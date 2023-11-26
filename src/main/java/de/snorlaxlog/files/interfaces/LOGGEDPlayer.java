@@ -1,5 +1,6 @@
 package de.snorlaxlog.files.interfaces;
 
+import de.snorlaxlog.Main;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
 import de.snorlaxlog.mysql.SQLManager;
@@ -7,18 +8,14 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 
 public class LOGGEDPlayer implements LOGPlayer {
 
     private SQLManager sqlManager = new SQLManager();
-
     private ProxiedPlayer player;
-    private Long joinedMillis;
-
     public LOGGEDPlayer(ProxiedPlayer player) {
         this.player = player;
     }
@@ -56,7 +53,7 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public String getUserIP() {
-        return player.getAddress().getHostName();
+        return player.getAddress().getHostString();
     }
 
     @Override
@@ -108,12 +105,13 @@ public class LOGGEDPlayer implements LOGPlayer {
     }
     @Override
     public Long getOnlineTime() {
-        return sqlManager.getSavedOnlineTime(this);
+        return sqlManager.getSavedOnlineTime(player);
     }
 
     @Override
     public void updateOnlineTime() {
-        long joinOn = OnlineTimeManager.getInStampTime().get(this);
+
+        long joinOn = getLastJoinTime();
         long leftOn = System.currentTimeMillis();
         long savedOnlineTime = getOnlineTime();
 
@@ -136,7 +134,16 @@ public class LOGGEDPlayer implements LOGPlayer {
      * @return the Local of a Player
      */
     @Override
-    public String language() {
-        return "de_DE";
+    public Language language() {
+        return Language.convertLanguage(sqlManager.getPlayerInfos(this).getLanguage());
+    }
+    @Override
+    public CachedPlayer getCachedPlayer(){
+        return sqlManager.getPlayerInfos(this);
+    }
+
+    @Override
+    public long getLastJoinTime(){
+        return sqlManager.getPlayerInfos(this).getLastOnline().getTime();
     }
 }

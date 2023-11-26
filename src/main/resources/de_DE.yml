@@ -1,4 +1,11 @@
 #This is currently not in use!
-Usages:
-  "PBanUsage": "Nutzung /pban <name> <id>"
-  "kickScreen": "&7Du wurdest vom &3RelaxoGames.de Netzwerk &7gekickt. \n&7Grund: &a%REASON% \n\n&7Falls dieser Fehler bestehen bleiben sollte,\n dann melde dich bitte im Support:&3support@relaxogames.de\n&7oder auf unserem Discord:\n&3discord.relaxogames.de"
+"Usages":
+  "LanguageSelected": "&7Deine aktuelle Sprache ist &2Deutsch (DE)"
+  "kickScreen": "&7Du wurdest vom &3RelaxoGames.de Netzwerk &7gekickt. \n&7Grund: &a%REASON% \n\n&7Falls dieser Fehler bestehen bleiben sollte,\n dann melde dich bitte im Support: &3support@relaxogames.de\n&7oder auf unserem Discord:\n&3discord.relaxogames.de"
+
+"Responses":
+  "OnlineTimeResponse": "&7Du hast eine Onlinezeit von &b%TIME% &7Stunden!"
+
+"Error":
+  "NoPermission1": "&7Für diesen Befehl hast du &cnicht&7 die benötigten Berechtigungen!"
+  "ErrorCMDCooldown": "&7Dieser befehl hat einen Cooldown von &e%COOLDOWN% Minuten&7!"

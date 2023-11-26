@@ -15,7 +15,7 @@ public class QuitListener implements Listener {
         if (p == null)return;
         LOGPlayer lp = new LOGGEDPlayer(p);
 
-        lp.updateOnlineTime();
         lp.updatePlayerProfile();
+        lp.updateOnlineTime();
     }
 }

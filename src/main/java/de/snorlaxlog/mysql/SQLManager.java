@@ -78,11 +78,11 @@ public class SQLManager {
             statement.setString(2, player.getUniqueId().toString());
             statement.setString(3, player.getName());
             statement.setTimestamp(4, firstSeen);
-            statement.setNull(5, Types.TIMESTAMP);
+            statement.setTimestamp(5, firstSeen);
             statement.setNull(6, Types.VARCHAR);
             statement.setNull(7, Types.VARCHAR);
             statement.setLong(8, 0);
-            statement.setString(9, "de_DE");
+            statement.setString(9, Language.system_default.getInitials());
             statement.setString(10, player.getAddress().getAddress().getHostAddress());
 
             statement.execute();
@@ -113,14 +113,14 @@ public class SQLManager {
 
         return uuid;
     }
-    public long getSavedOnlineTime(LOGPlayer logPlayer){
+    public long getSavedOnlineTime(ProxiedPlayer player){
         this.checkCon();
 
         String sql = SQLQuery.SELECT_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
-            statement.setString(1, logPlayer.getPlayer().getUniqueId().toString());
-            statement.setString(2, logPlayer.getPlayer().getName());
+            statement.setString(1, player.getUniqueId().toString());
+            statement.setString(2, player.getName());
 
             ResultSet rs = statement.executeQuery();
 
@@ -172,12 +172,12 @@ public class SQLManager {
         try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setLong(1, newOnlineTime);
-            statement.setString(2, logPlayer.getPlayer().getName());
-            statement.setString(3, logPlayer.getPlayer().getUniqueId().toString());
+            statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
+            statement.setString(3, logPlayer.getPlayer().getName());
 
             statement.execute();
 
-            if (getSavedOnlineTime(logPlayer) == newOnlineTime) {
+            if (getSavedOnlineTime(logPlayer.getPlayer()) == newOnlineTime) {
                 Main.logMessage(Level.INFO, CommandPrefix.getConsolePrefix() + "Successfully saved onlinetime of user: [name: " + logPlayer.getPlayer().getName() + "] [uuid: " + logPlayer.getPlayer().getUniqueId().toString() + "]");
                 return;
             }
@@ -218,7 +218,7 @@ public class SQLManager {
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
 
-        if (cachedPlayer.getLastOnline().equals(timestamp)){
+        if (cachedPlayer.getLastOnline().equals(timestamp) && cachedPlayer.getLastOnline() != null){
             return;
         }
 
