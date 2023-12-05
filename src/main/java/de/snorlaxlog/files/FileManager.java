@@ -1,6 +1,6 @@
 package de.snorlaxlog.files;
 
-import de.snorlaxlog.Main;
+import de.snorlaxlog.SnorlaxLOG;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
@@ -38,16 +38,16 @@ public class FileManager {
         /* This part of the Code checks if the DataFolder exists.
          * If it doesn't, it creates a new folder
          */
-        File datafolder = Main.getInstance().getDataFolder();
+        File datafolder = SnorlaxLOG.getInstance().getDataFolder();
         if (!datafolder.exists()) {
             datafolder.mkdirs();
         }
 
         /* Creates the database.yml wich is used for the login to the MySQL Database
          */
-        mySQLConfig = new File(Main.getInstance().getDataFolder(), "database.yml");
+        mySQLConfig = new File(SnorlaxLOG.getInstance().getDataFolder(), "database.yml");
         if (!mySQLConfig.exists()) {
-            try (InputStream is = Main.getInstance().getResourceAsStream("database.yml")) {
+            try (InputStream is = SnorlaxLOG.getInstance().getResourceAsStream("database.yml")) {
                 Files.copy(is, mySQLConfig.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -59,7 +59,7 @@ public class FileManager {
         /* Creates the different Types of the messages.yml and a Folder called 'languages'. In these Files every message is defined.
          */
 
-        File langFolder = new File(Main.getInstance().getDataFolder().getPath() + "//languages");
+        File langFolder = new File(SnorlaxLOG.getInstance().getDataFolder().getPath() + "//languages");
         if (!langFolder.exists()) {
             langFolder.mkdirs();
         }
@@ -67,7 +67,7 @@ public class FileManager {
         //GERMAN FILE
         File germanFile = new File(langFolder, "de_DE.yml");
         if (!germanFile.exists()) {
-            try (InputStream is = Main.getInstance().getResourceAsStream("de_DE.yml")) {
+            try (InputStream is = SnorlaxLOG.getInstance().getResourceAsStream("de_DE.yml")) {
                 Files.copy(is, germanFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -79,7 +79,7 @@ public class FileManager {
         //ENGLISH FILE
         File english = new File(langFolder, "en_US.yml");
         if (!english.exists()) {
-            try (InputStream is = Main.getInstance().getResourceAsStream("en_US.yml")) {
+            try (InputStream is = SnorlaxLOG.getInstance().getResourceAsStream("en_US.yml")) {
                 Files.copy(is, english.toPath());
             } catch (IOException e) {
                 e.printStackTrace();

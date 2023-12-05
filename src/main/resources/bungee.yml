@@ -1,4 +1,4 @@
 name: "SnorlaxLOG"
 version: '${project.version}'
-main: de.snorlaxlog.Main
+main: de.snorlaxlog.SnorlaxLOG
 author: [vazyx]

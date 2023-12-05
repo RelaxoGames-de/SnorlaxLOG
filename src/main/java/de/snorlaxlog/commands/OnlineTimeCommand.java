@@ -1,6 +1,6 @@
 package de.snorlaxlog.commands;
 
-import de.snorlaxlog.Main;
+import de.snorlaxlog.SnorlaxLOG;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
 import de.snorlaxlog.files.interfaces.CachedPlayer;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class OnlineTimeCommand extends Command {
 
     public OnlineTimeCommand(){
-        super("onlinetime", "", "ot");
+        super("onlinetime", "", "ot", "ontime");
     }
 
     private int cooldownTime = 5;
@@ -35,7 +35,7 @@ public class OnlineTimeCommand extends Command {
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
         CachedPlayer cachedPlayer = logPlayer.getCachedPlayer();
 
-        if (cooldown.contains(player.getUniqueId())){
+        if (cooldown.contains(player.getUniqueId()) && !logPlayer.hasPermission("slog.ot.bypass")){
             player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorCMDCooldown").replace("%COOLDOWN%", String.valueOf(cooldownTime)));
             return;
         }
@@ -43,11 +43,11 @@ public class OnlineTimeCommand extends Command {
         long gainedOT = cachedPlayer.getOnlineTime();
         Date date = new Date(gainedOT);
         if (args.length == 0){
-            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getHours())));
+            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getTime())));
             cooldown.add(player.getUniqueId());
 
             ScheduledTask task;
-            task = Main.getInstance().getProxy().getScheduler().schedule(Main.getInstance(), (Runnable) () -> {
+            task = SnorlaxLOG.getInstance().getProxy().getScheduler().schedule(SnorlaxLOG.getInstance(), (Runnable) () -> {
                 cooldown.remove(player.getUniqueId());
             }, cooldownTime, TimeUnit.MINUTES);
 

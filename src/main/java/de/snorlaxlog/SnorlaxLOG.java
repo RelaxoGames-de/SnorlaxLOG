@@ -1,8 +1,8 @@
 package de.snorlaxlog;
 
 import de.snorlaxlog.commands.OnlineTimeCommand;
+import de.snorlaxlog.files.APIManager;
 import de.snorlaxlog.files.FileManager;
-import de.snorlaxlog.files.interfaces.LOGPlayer;
 import de.snorlaxlog.listener.JoinListener;
 import de.snorlaxlog.listener.QuitListener;
 import de.snorlaxlog.mysql.MySQL;
@@ -10,18 +10,18 @@ import de.snorlaxlog.mysql.SQLManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.UUID;
 import java.util.logging.Level;
 
-public final class Main extends Plugin {
+public final class SnorlaxLOG extends Plugin {
 
-    private static Main instance;
+    private static SnorlaxLOG instance;
     public MySQL mySQL;
+    private APIManager apiManager = new APIManager();
     @Override
     public void onLoad() {
         super.onLoad();
         instance = this;
+        apiManager = new APIManager();
     }
 
     @Override
@@ -38,7 +38,7 @@ public final class Main extends Plugin {
         // Plugin shutdown logic
     }
 
-    public void loadMySQL(){
+    private void loadMySQL(){
 
         String host = FileManager.getHost();
         String user = FileManager.getUser();
@@ -54,19 +54,23 @@ public final class Main extends Plugin {
         SQLManager.initializeDatabase();
     }
 
-    public void registerListener(){
+    private void registerListener(){
         ProxyServer.getInstance().getPluginManager().registerListener(this, new JoinListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new QuitListener());
     }
 
-    public void registerCommands(){
+    private void registerCommands(){
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new OnlineTimeCommand());
     }
     public static void logMessage(Level level, String message){
         ProxyServer.getInstance().getLogger().log(level, message);
     }
 
-    public static Main getInstance() {
+    public static SnorlaxLOG getInstance() {
         return instance;
+    }
+
+    public APIManager getApiManager() {
+        return apiManager;
     }
 }

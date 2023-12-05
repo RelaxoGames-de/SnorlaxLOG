@@ -1,6 +1,5 @@
 package de.snorlaxlog.files.interfaces;
 
-import de.snorlaxlog.Main;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
 import de.snorlaxlog.mysql.SQLManager;
@@ -8,7 +7,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 

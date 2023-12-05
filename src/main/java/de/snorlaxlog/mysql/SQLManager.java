@@ -1,9 +1,8 @@
 package de.snorlaxlog.mysql;
 
-import de.snorlaxlog.Main;
+import de.snorlaxlog.SnorlaxLOG;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.FileManager;
-import de.snorlaxlog.files.LanguageManager;
 import de.snorlaxlog.files.interfaces.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -17,7 +16,7 @@ public class SQLManager {
     private static String userDataTable = FileManager.getUsersProfileTable();
     private static String database_path = FileManager.getDatabase();
 
-    private static Connection con = Main.getInstance().mySQL.openConnection();
+    private static Connection con = SnorlaxLOG.getInstance().mySQL.openConnection();
 
     /**
      * Will be triggered by the Server startup logic.
@@ -27,7 +26,7 @@ public class SQLManager {
 
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) {
-                con = Main.getInstance().mySQL.openConnection();
+                con = SnorlaxLOG.getInstance().mySQL.openConnection();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -36,7 +35,7 @@ public class SQLManager {
         try {
 
             String createUserCacheTable = SQLQuery.CREATE_MYSQL_USER_CACHE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-            try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(createUserCacheTable)) {
+            try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(createUserCacheTable)) {
                 statement.execute();
             }
         }catch (SQLException e){
@@ -50,7 +49,7 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setString(1, player.getUniqueId().toString());
 
@@ -59,7 +58,7 @@ public class SQLManager {
             return rs.next();
 
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
     }
@@ -69,7 +68,7 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.ADD_ENTRY_TO_DATABASE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             Date today = new Date();
             Timestamp firstSeen = new Timestamp(today.getTime());
@@ -88,7 +87,7 @@ public class SQLManager {
             statement.execute();
 
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
 
@@ -101,13 +100,13 @@ public class SQLManager {
         UUID uuid;
 
         String sql = SQLQuery.SELECT_USER_UUID_WITH_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
             statement.setString(1, name.toString());
 
             ResultSet rs = statement.executeQuery();
             uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
 
@@ -117,7 +116,7 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.SELECT_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setString(1, player.getUniqueId().toString());
             statement.setString(2, player.getName());
@@ -129,7 +128,7 @@ public class SQLManager {
             return rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
         }catch (SQLException e){
             //ERROR #502
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
             throw new RuntimeException(e);
         }
     }
@@ -138,7 +137,7 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setString(1, logPlayer.getPlayer().getUniqueId().toString());
 
@@ -160,7 +159,7 @@ public class SQLManager {
             return null;
         }catch (SQLException e){
             //ERROR #502
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
             throw new RuntimeException(e);
         }
     }
@@ -169,7 +168,7 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setLong(1, newOnlineTime);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
@@ -178,12 +177,12 @@ public class SQLManager {
             statement.execute();
 
             if (getSavedOnlineTime(logPlayer.getPlayer()) == newOnlineTime) {
-                Main.logMessage(Level.INFO, CommandPrefix.getConsolePrefix() + "Successfully saved onlinetime of user: [name: " + logPlayer.getPlayer().getName() + "] [uuid: " + logPlayer.getPlayer().getUniqueId().toString() + "]");
+                SnorlaxLOG.logMessage(Level.INFO, CommandPrefix.getConsolePrefix() + "Successfully saved onlinetime of user: [name: " + logPlayer.getPlayer().getName() + "] [uuid: " + logPlayer.getPlayer().getUniqueId().toString() + "]");
                 return;
             }
-            Main.logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not save onlinetime of user: [name: " + logPlayer.getPlayer().getName() + "] [uuid: " + logPlayer.getPlayer().getUniqueId().toString() + "]. New Onlinetime: " + newOnlineTime);
+            SnorlaxLOG.logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not save onlinetime of user: [name: " + logPlayer.getPlayer().getName() + "] [uuid: " + logPlayer.getPlayer().getUniqueId().toString() + "]. New Onlinetime: " + newOnlineTime);
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
             throw new RuntimeException(e);
         }
     }
@@ -199,14 +198,14 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.UPDATE_USER_PROFILE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", PlayerEntryData.USER_NAME.getTableColumnName());
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setString(1, newName);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
             statement.execute();
          }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
             throw new RuntimeException(e);
         }
     }
@@ -225,14 +224,14 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.UPDATE_USER_PROFILE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setTimestamp(1, timestamp);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
             statement.execute();
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
             throw new RuntimeException(e);
         }
     }
@@ -250,14 +249,14 @@ public class SQLManager {
         this.checkCon();
 
         String sql = SQLQuery.UPDATE_USER_PROFILE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", PlayerEntryData.USER_CACHED_IP.getTableColumnName());
-        try (PreparedStatement statement = Main.getInstance().mySQL.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
             statement.setString(1, logPlayer.getUserIP());
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
             statement.execute();
         }catch (SQLException e){
-            Main.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
             throw new RuntimeException(e);
         }
     }
@@ -266,7 +265,7 @@ public class SQLManager {
 
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) {
-                con = Main.getInstance().mySQL.openConnection();
+                con = SnorlaxLOG.getInstance().mySQL.openConnection();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

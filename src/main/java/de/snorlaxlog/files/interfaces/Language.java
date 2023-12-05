@@ -3,7 +3,7 @@ package de.snorlaxlog.files.interfaces;
 public enum Language {
 
     de_DE("de_DE"),
-    en_EN("en_EN"),
+    en_US("en_US"),
     system_default("de_DE");
 
     String initials;
@@ -18,7 +18,7 @@ public enum Language {
 
     public static Language convertLanguage(String initials){
         if (initials.equals(de_DE.initials))return de_DE;
-        if (initials.equals(en_EN.initials))return en_EN;
+        if (initials.equals(en_US.initials))return en_US;
         return system_default;
     }
 }
