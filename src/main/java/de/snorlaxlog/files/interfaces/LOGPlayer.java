@@ -4,7 +4,6 @@ import de.snorlaxlog.files.PermissionShotCut;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.sql.Timestamp;
 import java.util.UUID;
 import java.util.logging.Level;
 public interface LOGPlayer {
@@ -12,7 +11,6 @@ public interface LOGPlayer {
     ProxiedPlayer getPlayer();
     void addPlayerEntry();
     UUID getUUIDFromDatabase();
-
     String getNameFromDatabase();
     boolean isInDatabase();
     String getUserIP();
@@ -26,18 +24,13 @@ public interface LOGPlayer {
     Long getOnlineTime();
     void updateOnlineTime();
     void updatePlayerProfile();
-
     CachedPlayer getCachedPlayer();
-
     long getLastJoinTime();
     boolean notifyIsActive();
     @Deprecated
     void activateNotify(Level level);
-
     @Deprecated
     void disableNotify();
-
     void toggleNotify(Level level);
-
     Level getNotifyLevel();
 }
