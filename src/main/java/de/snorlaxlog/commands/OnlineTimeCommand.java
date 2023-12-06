@@ -3,6 +3,7 @@ package de.snorlaxlog.commands;
 import de.snorlaxlog.SnorlaxLOG;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
+import de.snorlaxlog.files.PermissionShotCut;
 import de.snorlaxlog.files.interfaces.CachedPlayer;
 import de.snorlaxlog.files.interfaces.LOGGEDPlayer;
 import de.snorlaxlog.files.interfaces.LOGPlayer;
@@ -35,7 +36,7 @@ public class OnlineTimeCommand extends Command {
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
         CachedPlayer cachedPlayer = logPlayer.getCachedPlayer();
 
-        if (cooldown.contains(player.getUniqueId()) && !logPlayer.hasPermission("slog.ot.bypass")){
+        if (cooldown.contains(player.getUniqueId()) && !logPlayer.hasPermission(PermissionShotCut.ONLINE_TIME_BYPASS)){
             player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorCMDCooldown").replace("%COOLDOWN%", String.valueOf(cooldownTime)));
             return;
         }
@@ -54,7 +55,7 @@ public class OnlineTimeCommand extends Command {
             return;
         }
         if (args.length == 1){
-            if (!logPlayer.hasPermission("slog.ot.other")){
+            if (!logPlayer.hasPermission(PermissionShotCut.ONLINE_TIME_OTHER)){
                 player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
                 return;
             }

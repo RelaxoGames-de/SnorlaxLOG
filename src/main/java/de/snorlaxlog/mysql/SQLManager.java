@@ -97,14 +97,16 @@ public class SQLManager {
 
         this.checkCon();
 
-        UUID uuid;
+        UUID uuid = null;
 
         String sql = SQLQuery.SELECT_USER_UUID_WITH_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
             statement.setString(1, name.toString());
 
             ResultSet rs = statement.executeQuery();
-            uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
+            while (rs.next()) {
+                uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getColumnPlace()));
+            }
         }catch (SQLException e){
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);

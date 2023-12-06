@@ -1,8 +1,13 @@
 package de.snorlaxlog.files.interfaces;
 
+import de.snorlaxlog.commands.SnorlaxLOGCommand;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.LanguageManager;
+import de.snorlaxlog.files.PermissionShotCut;
 import de.snorlaxlog.mysql.SQLManager;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.model.user.UserManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -71,8 +76,11 @@ public class LOGGEDPlayer implements LOGPlayer {
      * @return
      */
     @Override
-    public boolean hasPermission(String permission) {
-        return false;
+    public boolean hasPermission(PermissionShotCut permission) {
+        UserManager um = LuckPermsProvider.get().getUserManager();
+        User user = um.getUser(getPlayer().getUniqueId());
+
+        return user.getCachedData().getPermissionData().checkPermission(permission.getPermission()).asBoolean();
     }
 
     /**
@@ -143,5 +151,50 @@ public class LOGGEDPlayer implements LOGPlayer {
     @Override
     public long getLastJoinTime(){
         return sqlManager.getPlayerInfos(this).getLastOnline().getTime();
+    }
+
+    @Override
+    public boolean notifyIsActive() {
+        return SnorlaxLOGCommand.getLogPlayers().containsKey(this);
+    }
+
+    @Override
+    @Deprecated
+    public void activateNotify(Level level) {
+        if (!notifyIsActive()){
+            SnorlaxLOGCommand.getLogPlayers().put(this, level);
+            this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify")
+                    .replace("%STATE%", "§aenabled")
+                    .replace("%CHANNEL%", "§r§7§o" + level.getName()));
+        }
+    }
+
+    @Override
+    @Deprecated
+    public void disableNotify() {
+        if (notifyIsActive()){
+            SnorlaxLOGCommand.getLogPlayers().remove(this);
+            this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify")
+                    .replace("%STATE%", "§cdisabled")
+                    .replace("%CHANNEL%", ""));
+        }
+    }
+
+    @Override
+    public void toggleNotify(Level level) {
+        if (notifyIsActive()){
+            SnorlaxLOGCommand.getLogPlayers().remove(this);
+            this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify")
+                    .replace("%STATE%", "§cdisabled")
+                    .replace("%CHANNEL%", "§r§7§o" + level.getName()));
+            return;
+        }
+        SnorlaxLOGCommand.getLogPlayers().put(this, level);
+        this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify").replace("%STATE%", "§aenabled"));
+    }
+
+    @Override
+    public Level getNotifyLevel() {
+        return SnorlaxLOGCommand.getLogPlayers().get(this);
     }
 }

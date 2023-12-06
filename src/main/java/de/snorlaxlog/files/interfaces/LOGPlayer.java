@@ -1,5 +1,6 @@
 package de.snorlaxlog.files.interfaces;
 
+import de.snorlaxlog.files.PermissionShotCut;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -17,7 +18,7 @@ public interface LOGPlayer {
     String getUserIP();
     void changePlayerEntry(PlayerEntryData setting, String newValue);
     String getPlayerEntry(PlayerEntryData setting);
-    boolean hasPermission(String permission);
+    boolean hasPermission(PermissionShotCut permission);
     Language language();
     void sendMessage(String fileKey);
     void sendMessage(TextComponent message);
@@ -29,4 +30,14 @@ public interface LOGPlayer {
     CachedPlayer getCachedPlayer();
 
     long getLastJoinTime();
+    boolean notifyIsActive();
+    @Deprecated
+    void activateNotify(Level level);
+
+    @Deprecated
+    void disableNotify();
+
+    void toggleNotify(Level level);
+
+    Level getNotifyLevel();
 }

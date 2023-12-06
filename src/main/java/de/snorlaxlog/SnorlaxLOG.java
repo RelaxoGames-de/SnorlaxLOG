@@ -1,27 +1,30 @@
 package de.snorlaxlog;
 
 import de.snorlaxlog.commands.OnlineTimeCommand;
-import de.snorlaxlog.files.APIManager;
+import de.snorlaxlog.commands.SnorlaxLOGCommand;
+import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.FileManager;
+import de.snorlaxlog.files.PermissionShotCut;
+import de.snorlaxlog.files.interfaces.LOGPlayer;
 import de.snorlaxlog.listener.JoinListener;
+import de.snorlaxlog.listener.KickEvent;
 import de.snorlaxlog.listener.QuitListener;
 import de.snorlaxlog.mysql.MySQL;
 import de.snorlaxlog.mysql.SQLManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.plugin.PluginManager;
 
 import java.util.logging.Level;
 
 public final class SnorlaxLOG extends Plugin {
-
     private static SnorlaxLOG instance;
+    private static String version = "inDev-1.7";
     public MySQL mySQL;
-    private APIManager apiManager = new APIManager();
     @Override
     public void onLoad() {
         super.onLoad();
         instance = this;
-        apiManager = new APIManager();
     }
 
     @Override
@@ -36,6 +39,7 @@ public final class SnorlaxLOG extends Plugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        mySQL.close();
     }
 
     private void loadMySQL(){
@@ -47,6 +51,7 @@ public final class SnorlaxLOG extends Plugin {
         String database = FileManager.getDatabase();
 
         if (host == null || user == null || port == null || password == null || database == null){
+            onDisable();
             return;
         }
 
@@ -55,22 +60,33 @@ public final class SnorlaxLOG extends Plugin {
     }
 
     private void registerListener(){
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new JoinListener());
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new QuitListener());
+        PluginManager pm = ProxyServer.getInstance().getPluginManager();
+        pm.registerListener(this, new JoinListener());
+        pm.registerListener(this, new QuitListener());
+        pm.registerListener(this, new KickEvent());
     }
 
     private void registerCommands(){
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, new OnlineTimeCommand());
+        PluginManager pm = ProxyServer.getInstance().getPluginManager();
+        pm.registerCommand(this, new OnlineTimeCommand());
+        pm.registerCommand(this, new SnorlaxLOGCommand());
     }
     public static void logMessage(Level level, String message){
         ProxyServer.getInstance().getLogger().log(level, message);
+        for (LOGPlayer logPlayer : SnorlaxLOGCommand.getLogPlayers().keySet()){
+            Level logLVL = logPlayer.getNotifyLevel();
+            if (logLVL.equals(level)){
+                logPlayer.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + "§b§l[" + logLVL.getName() + "]§r " + message);
+                return;
+            }
+        }
     }
 
     public static SnorlaxLOG getInstance() {
         return instance;
     }
 
-    public APIManager getApiManager() {
-        return apiManager;
+    public static String getVersion() {
+        return version;
     }
 }

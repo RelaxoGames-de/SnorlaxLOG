@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class FileManager {
 
@@ -51,7 +52,7 @@ public class FileManager {
                 Files.copy(is, mySQLConfig.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
-                ProxyServer.getInstance().getLogger().warning("Could not create database.yml in the BungeeCord Plugins folder!");
+                SnorlaxLOG.logMessage(Level.WARNING,"Could not create database.yml in the BungeeCord Plugins folder!");
                 throw new RuntimeException(e);
             }
         }
@@ -71,7 +72,7 @@ public class FileManager {
                 Files.copy(is, germanFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
-                ProxyServer.getInstance().getLogger().warning("Could not create de_DE.yml!");
+                SnorlaxLOG.logMessage(Level.WARNING,"Could not create de_DE.yml!");
                 throw new RuntimeException(e);
             }
         }
@@ -83,7 +84,7 @@ public class FileManager {
                 Files.copy(is, english.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
-                ProxyServer.getInstance().getLogger().warning("Could not create en_US.yml!");
+                SnorlaxLOG.logMessage(Level.WARNING,"Could not create en_US.yml!");
                 throw new RuntimeException(e);
             }
         }
@@ -108,7 +109,6 @@ public class FileManager {
             }
             String fileName = file.getName().split(".yml")[0];
             messageList.put(fileName, localeMessages);
-            System.out.println(file.getName() + "loaded!");
         }
     }
 

@@ -1,11 +1,18 @@
 #This is currently not in use!
 "Usages":
-  "LanguageSelected": "&7Your current language is &2Englisch (US)"
-  "kickScreen": "&7You were kicked from &3RelaxoGames.de. \n&7Reason: &a%REASON% \n\n&7If this keeps happening,\n please consider to report it: &3support@relaxogames.de\n&7or on our Discord Server:\n&3discord.relaxogames.de"
+  "LanguageSelected": "&7Deine aktuelle Sprache ist &2Deutsch (DE)"
+  "kickScreen": "&7Du wurdest vom &3RelaxoGames.de Netzwerk &7gekickt. \n&7Grund: &a%REASON% \n\n&7Falls dieser Fehler bestehen bleiben sollte,\n dann melde dich bitte im Support: &3support@relaxogames.de\n&7oder auf unserem Discord:\n&3discord.relaxogames.de"
+  "LogCMDUsage": "&7Nutzung: /log <toggle|credits|version>"
 
 "Responses":
-  "OnlineTimeResponse": "&7You spent &b%TIME% &7hours on &3&lRelaxoGames&7!"
+  "OnlineTimeResponse": "&7Du hast eine Onlinezeit von &b%TIME% &7Stunden!"
+  "PluginVersion": "&7Dieses Plugin ist aktuell auf der Version &e%VERSION%"
+  "LogToggleNotify": "&7LOG-Benachrichtigungen wurden %STATE% %CHANNEL%"
+  "credits": "&7Dieses Plugin wurden von &eDevTexx &7und &eJotrorox &7entwickelt!"
 
 "Error":
-  "NoPermission1": "&7You &cdon't &7have the right permission to execute this command!"
-  "ErrorCMDCooldown": "&7This Command has a cooldown of &e%COOLDOWN% Minutes&7!"
+  "OnlyPlayer": "&7Dieser Befehl kann nur von Spielern ausgeführt werden!"
+  "NoPermission1": "&7Für diesen Befehl hast du &cnicht&7 die benötigten Berechtigungen!"
+  "ErrorCMDCooldown": "&7Dieser befehl hat einen Cooldown von &e%COOLDOWN% Minuten&7!"
+  "ErrorNoChannel": "&7Nutzung: /log toggle <info|warning|off|all|servere>"
+  "NoPermForChannel": "&7Für diesen LOG-Channel hast du &cnicht &7die benötigten Rechte!"
