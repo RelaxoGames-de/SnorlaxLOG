@@ -238,8 +238,50 @@ public class SQLManager {
         }
     }
 
-    //TODO: Implementierung für Updating der Discord und Forums IDs.
+    public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, String newValue){
+        if (index.equals(PlayerEntryData.USER_UUID))return;
+        String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
 
+            statement.setString(1, newValue);
+            statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
+
+            statement.execute();
+        }catch (SQLException e){
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'updatePlayerSetting();'");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, Integer newValue){
+        if (index.equals(PlayerEntryData.USER_UUID))return;
+        String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
+
+            statement.setInt(1, newValue);
+            statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
+
+            statement.execute();
+        }catch (SQLException e){
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'updatePlayerSetting();'");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, Timestamp newValue){
+        if (index.equals(PlayerEntryData.USER_UUID))return;
+        String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
+
+            statement.setTimestamp(1, newValue);
+            statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
+
+            statement.execute();
+        }catch (SQLException e){
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'updatePlayerSetting();'");
+            throw new RuntimeException(e);
+        }
+    }
     public void updatePlayerProfileIP(LOGPlayer logPlayer){
 
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);

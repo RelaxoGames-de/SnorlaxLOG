@@ -15,6 +15,9 @@ public interface LOGPlayer {
     boolean isInDatabase();
     String getUserIP();
     void changePlayerEntry(PlayerEntryData setting, String newValue);
+
+    void changePlayerEntry(PlayerEntryData setting, Integer newValue);
+
     String getPlayerEntry(PlayerEntryData setting);
     boolean hasPermission(PermissionShotCut permission);
     Language language();

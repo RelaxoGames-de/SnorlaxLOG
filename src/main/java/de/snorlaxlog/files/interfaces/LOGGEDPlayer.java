@@ -61,10 +61,15 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public void changePlayerEntry(PlayerEntryData setting, String newValue) {
-
+        sqlManager.updatePlayerSetting(this, setting, newValue);
     }
 
     @Override
+    public void changePlayerEntry(PlayerEntryData setting, Integer newValue) {
+        sqlManager.updatePlayerSetting(this, setting, newValue);
+    }
+    @Override
+    @Deprecated
     public String getPlayerEntry(PlayerEntryData setting) {
         return null;
     }

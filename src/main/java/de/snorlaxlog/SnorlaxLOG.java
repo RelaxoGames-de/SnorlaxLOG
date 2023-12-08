@@ -4,7 +4,6 @@ import de.snorlaxlog.commands.OnlineTimeCommand;
 import de.snorlaxlog.commands.SnorlaxLOGCommand;
 import de.snorlaxlog.files.CommandPrefix;
 import de.snorlaxlog.files.FileManager;
-import de.snorlaxlog.files.PermissionShotCut;
 import de.snorlaxlog.files.interfaces.LOGPlayer;
 import de.snorlaxlog.listener.JoinListener;
 import de.snorlaxlog.listener.KickEvent;
@@ -19,17 +18,24 @@ import java.util.logging.Level;
 
 public final class SnorlaxLOG extends Plugin {
     private static SnorlaxLOG instance;
-    private static String version = "inDev-1.7";
+    private static String version;
     public MySQL mySQL;
     @Override
     public void onLoad() {
         super.onLoad();
         instance = this;
+        version = getInstance().getDescription().getVersion();
     }
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+
+        if (version == null){
+            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Plugin version is null! Disabling SnorlaxLOG");
+            this.onDisable();
+        }
+
         FileManager.loadFiles();
         this.loadMySQL();
         this.registerListener();
@@ -51,6 +57,7 @@ public final class SnorlaxLOG extends Plugin {
         String database = FileManager.getDatabase();
 
         if (host == null || user == null || port == null || password == null || database == null){
+            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not open Connection to the MySQL Database! Disabling SnorlaxLOG!");
             onDisable();
             return;
         }
