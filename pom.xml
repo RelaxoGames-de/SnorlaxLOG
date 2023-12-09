@@ -6,7 +6,7 @@
 
     <groupId>de</groupId>
     <artifactId>SnorlaxLOG</artifactId>
-    <version>inDev-1.9</version>
+    <version>inDev-1.9.2</version>
     <packaging>jar</packaging>
 
     <name>SnorlaxLOG</name>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>de</groupId>
             <artifactId>SnorlaxLOG</artifactId>
-            <version>inDev-1.9</version>
+            <version>inDev-1.9.2</version>
         </dependency>
     </dependencies>
 </project>

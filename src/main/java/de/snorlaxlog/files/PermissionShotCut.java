@@ -1,6 +1,6 @@
 package de.snorlaxlog.files;
 
-public enum PermissionShotCut {
+public enum     PermissionShotCut {
 
     SL_LOG_COMMAND_USE("snorlax.log.command.use"),
     SL_LOG_NOTIFY_READ("snorlax.log.notify"),
