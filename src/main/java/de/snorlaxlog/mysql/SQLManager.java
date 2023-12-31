@@ -114,6 +114,23 @@ public class SQLManager {
 
         return uuid;
     }
+    public String getCorrectNameFromLOWERCASE(String index){
+
+        this.checkCon();
+        String sql = SQLQuery.SELECT_USER_WITH_L_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
+            statement.setString(1, index.toLowerCase());
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                return rs.getString("user_name");
+            }
+        }catch (SQLException e){
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
+            throw new RuntimeException(e);
+        }
+        return index;
+    }
     public long getSavedOnlineTime(ProxiedPlayer player){
         this.checkCon();
 
