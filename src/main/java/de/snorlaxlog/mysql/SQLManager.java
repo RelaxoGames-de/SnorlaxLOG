@@ -129,7 +129,7 @@ public class SQLManager {
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
-        return index;
+        return null;
     }
     public long getSavedOnlineTime(ProxiedPlayer player){
         this.checkCon();
