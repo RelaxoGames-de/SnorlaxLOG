@@ -1,6 +1,6 @@
 name: "SnorlaxLOG"
 version: '${project.version}'
-main: spigot.api.LOGLaxAPI
+main: de.snorlaxlog.bukkit.LOGLaxAPI
 api-version: '1.20'
 authors: [vazyx]
 website: http://www.relaxogames.de
