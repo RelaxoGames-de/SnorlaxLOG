@@ -1,7 +1,7 @@
 package de.snorlaxlog.listener;
 
-import de.snorlaxlog.files.CommandPrefix;
-import de.snorlaxlog.files.LanguageManager;
+import api.shared.util.CommandPrefix;
+import api.shared.util.LanguageManager;
 import de.snorlaxlog.files.interfaces.LOGGEDPlayer;
 import de.snorlaxlog.files.interfaces.LOGPlayer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

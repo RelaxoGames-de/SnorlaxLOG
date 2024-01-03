@@ -1,18 +1,18 @@
 #This is currently not in use!
-"Usages":
-  "LanguageSelected": "&7Deine aktuelle Sprache ist &2Deutsch (DE)"
-  "kickScreen": "&7Du wurdest vom &3RelaxoGames.de Netzwerk &7gekickt. \n&7Grund: &a%REASON% \n\n&7Falls dieser Fehler bestehen bleiben sollte,\n dann melde dich bitte im Support: &3support@relaxogames.de\n&7oder auf unserem Discord:\n&3discord.relaxogames.de"
-  "LogCMDUsage": "&7Nutzung: /log <toggle|credits|version>"
+Usages:
+  "LanguageSelected": "&7Your current language is &2ENGLISH (US)"
+  "kickScreen": "&7You have been kicked from the &3RelaxoGames.de Network &7.\n&7Reason: &a%REASON% \n\n&7If this issue persists,\n please contact support: &3support@relaxogames.de\n&7or join our Discord:\n&3discord.relaxogames.de"
+  "LogCMDUsage": "&7Usage: /log <toggle|credits|version>"
 
-"Responses":
-  "OnlineTimeResponse": "&7Du hast eine Onlinezeit von &b%TIME% &7Stunden!"
-  "PluginVersion": "&7Dieses Plugin ist aktuell auf der Version &e%VERSION%"
-  "LogToggleNotify": "&7LOG-Benachrichtigungen wurden %STATE% %CHANNEL%"
-  "credits": "&7Dieses Plugin wurden von &eDevTexx &7und &eJotrorox &7entwickelt!"
+Responses:
+  "OnlineTimeResponse": "&7You have an online time of &b%TIME% &7hours!"
+  "PluginVersion": "&7This plugin is currently on version &e%VERSION%"
+  "LogToggleNotify": "&7LOG notifications have been %STATE% %CHANNEL%"
+  "credits": "&7This plugin was developed by &eDevTexx &7and &eJotrorox &7!"
 
-"Error":
-  "OnlyPlayer": "&7Dieser Befehl kann nur von Spielern ausgeführt werden!"
-  "NoPermission1": "&7Für diesen Befehl hast du &cnicht&7 die benötigten Berechtigungen!"
-  "ErrorCMDCooldown": "&7Dieser befehl hat einen Cooldown von &e%COOLDOWN% Minuten&7!"
-  "ErrorNoChannel": "&7Nutzung: /log toggle <info|warning|off|all|servere>"
-  "NoPermForChannel": "&7Für diesen LOG-Channel hast du &cnicht &7die benötigten Rechte!"
+Error:
+  "OnlyPlayer": "&7This command can only be executed by players!"
+  "NoPermission1": "&7You do not have the necessary permissions for this command!"
+  "ErrorCMDCooldown": "&7This command has a cooldown of &e%COOLDOWN% minutes&7!"
+  "ErrorNoChannel": "&7Usage: /log toggle <info|warning|off|all|servere>"
+  "NoPermForChannel": "&7You do not have the necessary permissions for this LOG channel!"

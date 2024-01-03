@@ -1,12 +1,12 @@
 package de.snorlaxlog.commands;
 
 import de.snorlaxlog.SnorlaxLOG;
-import de.snorlaxlog.files.CommandPrefix;
-import de.snorlaxlog.files.LanguageManager;
+import api.shared.util.CommandPrefix;
+import api.shared.util.LanguageManager;
 import de.snorlaxlog.files.PermissionShotCut;
 import de.snorlaxlog.files.interfaces.LOGGEDPlayer;
 import de.snorlaxlog.files.interfaces.LOGPlayer;
-import de.snorlaxlog.files.interfaces.Language;
+import api.shared.util.Language;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;

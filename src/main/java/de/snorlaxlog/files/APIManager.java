@@ -1,9 +1,8 @@
 package de.snorlaxlog.files;
 
 import de.snorlaxlog.SnorlaxLOG;
-import de.snorlaxlog.mysql.MySQL;
 import de.snorlaxlog.mysql.SQLManager;
-import org.checkerframework.checker.units.qual.C;
+import api.shared.util.LanguageManager;
 
 import java.sql.Connection;
 

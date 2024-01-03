@@ -1,8 +1,8 @@
 package de.snorlaxlog.commands;
 
 import de.snorlaxlog.SnorlaxLOG;
-import de.snorlaxlog.files.CommandPrefix;
-import de.snorlaxlog.files.LanguageManager;
+import api.shared.util.CommandPrefix;
+import api.shared.util.LanguageManager;
 import de.snorlaxlog.files.PermissionShotCut;
 import de.snorlaxlog.files.interfaces.CachedPlayer;
 import de.snorlaxlog.files.interfaces.LOGGEDPlayer;

@@ -1,3 +1,6 @@
+# IF YOU MAKE CHANGES HERE, MAKE SURE THAT YOU MAKE THESE CHANGES IN
+# THE database.yml OF THE BACKENDSERVERS AS WELL!!! IF THERE ARE SOME VALUES INCORRECT,
+# THE PLUGIN MAY NOT WORK AS EXPECTED!!!
 MySQL:
   Host:
   Port:
@@ -6,4 +9,5 @@ MySQL:
   Password:
 
 DatabaseTables:
+  # This is the Table where the informations about the users are stored. :)
   SnorlaxUserProfile: "snorlax_users_profile"

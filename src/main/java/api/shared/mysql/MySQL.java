@@ -1,6 +1,6 @@
-package de.snorlaxlog.mysql;
+package api.shared.mysql;
 
-import de.snorlaxlog.files.CommandPrefix;
+import api.shared.util.CommandPrefix;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -47,21 +47,21 @@ public class MySQL {
     public void connect() {
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_PATH + "?autoReconnect=true", USER, PASSWORD);
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
+            ProxyServer.getInstance().getConsole().sendMessage(" ");
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\tMySQL - Datenbank wurde erfolgreich initialisiert!"));
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\tDas System ist jetzt einsatzbereit!\n"));
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
+            ProxyServer.getInstance().getConsole().sendMessage(" ");
         } catch (SQLException e) {
             e.printStackTrace();
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
+            ProxyServer.getInstance().getConsole().sendMessage(" ");
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\tKonnte keine Verbindung mit MySQL - Datenbank herstellen"));
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\tSollte dies ein Fehler sein, starte bitte das System neu!"));
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\t" + ChatColor.RED + "Fehler: " + e.getMessage() + "\n"));
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
+            ProxyServer.getInstance().getConsole().sendMessage(" ");
         }
     }
 

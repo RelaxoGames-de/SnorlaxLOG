@@ -1,4 +1,4 @@
-package de.snorlaxlog.mysql;
+package api.shared.mysql;
 
 import java.sql.Connection;
 import java.sql.SQLException;

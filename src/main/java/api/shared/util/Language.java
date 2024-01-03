@@ -1,4 +1,4 @@
-package de.snorlaxlog.files.interfaces;
+package api.shared.util;
 
 public enum Language {
 

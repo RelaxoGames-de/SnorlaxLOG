@@ -1,4 +1,7 @@
-package de.snorlaxlog.files.interfaces;
+package api.shared.util;
+
+import api.shared.util.DatabaseData;
+
 public enum PlayerEntryData {
 
     USER_ID("user_id", 1, DatabaseData.INTEGER),

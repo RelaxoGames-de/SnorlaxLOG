@@ -1,5 +1,7 @@
 package de.snorlaxlog.files.interfaces;
 
+import api.shared.util.Language;
+import api.shared.util.PlayerEntryData;
 import de.snorlaxlog.files.PermissionShotCut;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

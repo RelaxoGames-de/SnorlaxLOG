@@ -1,11 +1,7 @@
-package de.snorlaxlog.files;
+package api.shared.util;
 
-import de.snorlaxlog.files.interfaces.LOGPlayer;
-import de.snorlaxlog.files.interfaces.LOGGEDPlayer;
-import de.snorlaxlog.files.interfaces.Language;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import de.snorlaxlog.files.FileManager;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class LanguageManager {

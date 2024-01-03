@@ -2,13 +2,13 @@ package de.snorlaxlog;
 
 import de.snorlaxlog.commands.OnlineTimeCommand;
 import de.snorlaxlog.commands.SnorlaxLOGCommand;
-import de.snorlaxlog.files.CommandPrefix;
+import api.shared.util.CommandPrefix;
 import de.snorlaxlog.files.FileManager;
 import de.snorlaxlog.files.interfaces.LOGPlayer;
 import de.snorlaxlog.listener.JoinListener;
 import de.snorlaxlog.listener.KickEvent;
 import de.snorlaxlog.listener.QuitListener;
-import de.snorlaxlog.mysql.MySQL;
+import api.shared.mysql.MySQL;
 import de.snorlaxlog.mysql.SQLManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;

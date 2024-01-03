@@ -1,8 +1,10 @@
 package de.snorlaxlog.files.interfaces;
 
+import api.shared.util.Language;
+import api.shared.util.PlayerEntryData;
 import de.snorlaxlog.commands.SnorlaxLOGCommand;
-import de.snorlaxlog.files.CommandPrefix;
-import de.snorlaxlog.files.LanguageManager;
+import api.shared.util.CommandPrefix;
+import api.shared.util.LanguageManager;
 import de.snorlaxlog.files.PermissionShotCut;
 import de.snorlaxlog.mysql.SQLManager;
 import net.luckperms.api.LuckPermsProvider;
