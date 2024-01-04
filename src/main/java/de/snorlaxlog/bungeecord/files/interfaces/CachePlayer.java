@@ -1,13 +1,9 @@
 package de.snorlaxlog.bungeecord.files.interfaces;
 
-import de.snorlaxlog.bungeecord.mysql.SQLManager;
-
 import java.sql.Timestamp;
 import java.util.UUID;
 
 public class CachePlayer implements CachedPlayer{
-
-    private SQLManager sqlManager = new SQLManager();
 
     int id;
     String uuid;

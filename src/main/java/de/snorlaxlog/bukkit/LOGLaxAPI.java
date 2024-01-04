@@ -1,5 +1,6 @@
 package de.snorlaxlog.bukkit;
 
+import de.snorlaxlog.bukkit.mysql.SQLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.snorlaxlog.bukkit.mysql.MySQL;
@@ -42,6 +43,7 @@ public class LOGLaxAPI extends JavaPlugin {
     public void onStartUp(){
         FileManager.createFiles();
         this.loadMySQL();
+        SQLManager.initializeDatabase();
     }
 
     public static void logMessage(Level level, String message){

@@ -5,7 +5,6 @@ import java.util.UUID;
 
 public class CachePlayer implements CachedPlayer{
 
-    int id;
     String name;
     UUID uuid;
     Timestamp firstJoin;
@@ -16,8 +15,7 @@ public class CachePlayer implements CachedPlayer{
     String language;
     String ip;
 
-    public CachePlayer(int id, String name, UUID uuid, Timestamp firstJoin, Timestamp lastJoin, String discordID, String forumID, long onlineTime, String language, String ip) {
-        this.id = id;
+    public CachePlayer(String name, UUID uuid, Timestamp firstJoin, Timestamp lastJoin, String discordID, String forumID, long onlineTime, String language, String ip) {
         this.name = name;
         this.uuid = uuid;
         this.firstJoin = firstJoin;
@@ -27,11 +25,6 @@ public class CachePlayer implements CachedPlayer{
         this.onlineTime = onlineTime;
         this.language = language;
         this.ip = ip;
-    }
-
-    @Override
-    public int getID() {
-        return id;
     }
 
     @Override

@@ -4,7 +4,6 @@ import de.snorlaxlog.shared.mysql.ConnectionUtil;
 import de.snorlaxlog.shared.mysql.SQLQuery;
 import de.snorlaxlog.shared.util.CommandPrefix;
 import de.snorlaxlog.shared.util.PlayerEntryData;
-import de.snorlaxlog.bungeecord.files.FileManager;
 import de.snorlaxlog.shared.util.Language;
 import org.bukkit.entity.Player;
 import de.snorlaxlog.bukkit.LOGLaxAPI;
@@ -17,8 +16,8 @@ import java.util.logging.Level;
 
 public class SQLManager {
 
-    private static String userDataTable = FileManager.getUsersProfileTable();
-    private static String database_path = FileManager.getDatabase();
+    private static String userDataTable = de.snorlaxlog.bukkit.util.FileManager.getUsersProfileTable();
+    private static String database_path = de.snorlaxlog.bukkit.util.FileManager.getDatabase();
 
     private static Connection con = LOGLaxAPI.getInstance().mysql.openConnection();
 
@@ -109,7 +108,7 @@ public class SQLManager {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getColumnPlace()));
+                uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
             }
         }catch (SQLException e){
             LOGLaxAPI.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
@@ -120,13 +119,13 @@ public class SQLManager {
     }
     public String getCorrectNameFromLOWERCASE(String index){
 
-        this.checkCon();
+        checkCon();
         String sql = SQLQuery.SELECT_USER_WITH_L_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = con.prepareStatement(sql)){
             statement.setString(1, index.toLowerCase());
 
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 return rs.getString("user_name");
             }
         }catch (SQLException e){
@@ -157,18 +156,75 @@ public class SQLManager {
         }
     }
 
+    public Timestamp getLastSeen(String name){
+        this.checkCon();
+        UUID uuid = getUUIDThroughName(getCorrectNameFromLOWERCASE(name.toLowerCase()));
+        if (uuid == null){
+            return null;
+        }
+
+        String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+        try (PreparedStatement statement = con.prepareStatement(sql)){
+
+            statement.setString(1, uuid.toString());
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                return rs.getTimestamp(PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public de.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(String name){
+        this.checkCon();
+
+        UUID uuid = getUUIDThroughName(name);
+        if (uuid == null){
+            return null;
+        }
+
+        String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+        try (PreparedStatement statement = con.prepareStatement(sql)){
+
+            statement.setString(1, uuid.toString());
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                UUID uuid1 = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
+                String name1 = rs.getString(PlayerEntryData.USER_NAME.getTableColumnName());
+                Timestamp firstJoin = rs.getTimestamp(PlayerEntryData.USER_FIRST_JOINED.getTableColumnName());
+                Timestamp lastJoin = rs.getTimestamp(PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
+                String discordID = rs.getString(PlayerEntryData.USER_LINKS_DISCORD.getTableColumnName());
+                String forumID = rs.getString(PlayerEntryData.USER_LINKS_FORUM.getTableColumnName());
+                long onlineTime = rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
+                String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
+                String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
+
+                return new de.snorlaxlog.bukkit.interfaces.CachePlayer(name1, uuid1, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
+            }
+            return null;
+        }catch (SQLException e){
+            //ERROR #502
+            LOGLaxAPI.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
+            throw new RuntimeException(e);
+        }
+    }
+
     public de.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
         this.checkCon();
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-        try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = con.prepareStatement(sql)){
 
             statement.setString(1, logPlayer.getPlayer().getUniqueId().toString());
 
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                int id = rs.getInt(PlayerEntryData.USER_ID.getTableColumnName());
                 UUID uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
                 String name = rs.getString(PlayerEntryData.USER_NAME.getTableColumnName());
                 Timestamp firstJoin = rs.getTimestamp(PlayerEntryData.USER_FIRST_JOINED.getTableColumnName());
@@ -179,7 +235,7 @@ public class SQLManager {
                 String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
                 String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
 
-                return new de.snorlaxlog.bukkit.interfaces.CachePlayer(id, name, uuid, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
+                return new de.snorlaxlog.bukkit.interfaces.CachePlayer(name, uuid, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
             }
             return null;
         }catch (SQLException e){
