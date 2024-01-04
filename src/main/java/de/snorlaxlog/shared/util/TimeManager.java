@@ -7,7 +7,7 @@ import java.util.TimeZone;
 
 public class TimeManager {
 
-    public String getFormattedTime(Timestamp time){
+    public static String getFormattedTime(Timestamp time){
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
@@ -20,7 +20,7 @@ public class TimeManager {
         return formattedDate;
     }
 
-    public String getFormattedHours(Timestamp time){
+    public static String getFormattedHours(Timestamp time){
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
@@ -33,7 +33,7 @@ public class TimeManager {
         return formattedDate;
     }
 
-    public String getFormattedYears(Timestamp time){
+    public static String getFormattedYears(Timestamp time){
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
@@ -46,7 +46,7 @@ public class TimeManager {
         return formattedDate;
     }
 
-    public String getFormattedTimeLore(Timestamp time){
+    public static String getFormattedTimeLore(Timestamp time){
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
