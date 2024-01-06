@@ -1,18 +1,22 @@
 package de.snorlaxlog.bukkit;
 
+import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 import de.snorlaxlog.bukkit.mysql.SQLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.snorlaxlog.bukkit.mysql.MySQL;
 import de.snorlaxlog.bukkit.util.FileManager;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class LOGLaxAPI extends JavaPlugin {
 
     private static LOGLaxAPI instance;
     public de.snorlaxlog.bukkit.mysql.MySQL mysql;
-
+    private List<CachedPlayer> allCachedPlayers = new ArrayList<>();
     @Override
     public void onLoad() {
         instance = this;
@@ -20,7 +24,6 @@ public class LOGLaxAPI extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         this.CommandRegistration();
         this.ListenerRegistration();
         this.onStartUp();
@@ -44,6 +47,12 @@ public class LOGLaxAPI extends JavaPlugin {
         FileManager.createFiles();
         this.loadMySQL();
         SQLManager.initializeDatabase();
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                allCachedPlayers.addAll(SQLManager.getAllCachedPlayers());
+            }
+        }.runTaskAsynchronously(this);
     }
 
     public static void logMessage(Level level, String message){
@@ -63,6 +72,10 @@ public class LOGLaxAPI extends JavaPlugin {
             logMessage(Level.OFF, "Disabling SnorlaxLOG-API cause the MySQL-Connection has been lost!");
             this.onDisable();
         }
+    }
+
+    public List<CachedPlayer> getAllCachedPlayers() {
+        return allCachedPlayers;
     }
 
     public static LOGLaxAPI getInstance() {

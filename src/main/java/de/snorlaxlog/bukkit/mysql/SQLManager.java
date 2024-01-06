@@ -1,5 +1,6 @@
 package de.snorlaxlog.bukkit.mysql;
 
+import de.snorlaxlog.bukkit.interfaces.LOGPlayer;
 import de.snorlaxlog.shared.mysql.ConnectionUtil;
 import de.snorlaxlog.shared.mysql.SQLQuery;
 import de.snorlaxlog.shared.util.CommandPrefix;
@@ -10,7 +11,9 @@ import de.snorlaxlog.bukkit.LOGLaxAPI;
 import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -357,6 +360,24 @@ public class SQLManager {
             statement.execute();
         }catch (SQLException e){
             LOGLaxAPI.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
+            throw new RuntimeException(e);
+        }
+    }
+    public static List<CachedPlayer> getAllCachedPlayers() {
+        try {
+            if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) {
+                con = LOGLaxAPI.getInstance().mysql.openConnection();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = SQLQuery.SELECT_ALL_ENTRIES.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+            return ResultSetConverter.convertResultSetToList(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
