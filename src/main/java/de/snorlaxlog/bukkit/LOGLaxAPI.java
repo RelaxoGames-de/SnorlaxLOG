@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.snorlaxlog.bukkit.mysql.MySQL;
 import de.snorlaxlog.bukkit.util.FileManager;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +15,6 @@ public class LOGLaxAPI extends JavaPlugin {
 
     private static LOGLaxAPI instance;
     public de.snorlaxlog.bukkit.mysql.MySQL mysql;
-    private List<CachedPlayer> allCachedPlayers;
     private HashMap<String, CachedPlayer> allCachedPlayersByName;
     @Override
     public void onLoad() {
@@ -48,12 +46,6 @@ public class LOGLaxAPI extends JavaPlugin {
         FileManager.createFiles();
         this.loadMySQL();
         SQLManager.initializeDatabase();
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                allCachedPlayers = SQLManager.getAllCachedPlayers();
-            }
-        }.runTaskAsynchronously(this);
     }
 
     public static void logMessage(Level level, String message){
@@ -75,9 +67,6 @@ public class LOGLaxAPI extends JavaPlugin {
         }
     }
 
-    public List<CachedPlayer> getAllCachedPlayers() {
-        return allCachedPlayers;
-    }
     public HashMap<String, CachedPlayer> getAllCachedPlayersByName() {
         return allCachedPlayersByName;
     }

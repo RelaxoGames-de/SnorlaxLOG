@@ -103,11 +103,13 @@ public class SQLManager {
 
         this.checkCon();
 
+        if (name == null)return null;
+
         UUID uuid = null;
 
         String sql = SQLQuery.SELECT_USER_UUID_WITH_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)){
-            statement.setString(1, name.toString());
+            statement.setString(1, name);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
