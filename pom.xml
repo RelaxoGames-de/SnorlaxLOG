@@ -119,12 +119,5 @@
             <version>5.4</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>de</groupId>
-            <artifactId>SnorlaxLOG</artifactId>
-            <version>inDev-1.9.3</version>
-        </dependency>
-
     </dependencies>
 </project>
