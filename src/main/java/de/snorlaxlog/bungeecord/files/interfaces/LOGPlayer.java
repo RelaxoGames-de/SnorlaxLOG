@@ -22,6 +22,7 @@ public interface LOGPlayer {
 
     String getPlayerEntry(PlayerEntryData setting);
     boolean hasPermission(PermissionShotCut permission);
+    boolean hasPermission(String permission);
     Language language();
     void sendMessage(String fileKey);
     void sendMessage(TextComponent message);

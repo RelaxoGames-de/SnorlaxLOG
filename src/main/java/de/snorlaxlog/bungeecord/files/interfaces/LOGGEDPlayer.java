@@ -91,6 +91,20 @@ public class LOGGEDPlayer implements LOGPlayer {
     }
 
     /**
+     * The hasPermission Method is used to check via LuckPerms if a Player has
+     * a specified Permission. As result a boolean will be given back.
+     * @param permission is the that will be checked
+     * @return
+     */
+    @Override
+    public boolean hasPermission(String permission) {
+        UserManager um = LuckPermsProvider.get().getUserManager();
+        User user = um.getUser(getPlayer().getUniqueId());
+
+        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
+    }
+
+    /**
      * This Code is used to send the Player a message of a language File (prepared Messages)
      * if you want to send the player a custom message, please use the sendMessage() method below.
      * @param fileKey is the KEY of the message wich are deposited in the language Files
