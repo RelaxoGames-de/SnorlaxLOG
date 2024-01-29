@@ -35,7 +35,7 @@ public class WarpCommand extends Command {
         }
 
         String server = args[0];
-        if (args.length != 1 || ProxyServer.getInstance().getServerInfo(server) == null){
+        if (args.length < 1 || ProxyServer.getInstance().getServerInfo(server) == null){
             p.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoDirection"));
             return;
         }
