@@ -3,7 +3,7 @@ package de.snorlaxlog.bungeecord.commands;
 import de.snorlaxlog.bungeecord.SnorlaxLOG;
 import de.snorlaxlog.shared.util.CommandPrefix;
 import de.snorlaxlog.shared.util.LanguageManager;
-import de.snorlaxlog.bungeecord.files.PermissionShotCut;
+import de.snorlaxlog.shared.PermissionShotCut;
 import de.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
 import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
 import de.snorlaxlog.shared.util.Language;

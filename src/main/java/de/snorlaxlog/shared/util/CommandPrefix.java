@@ -11,6 +11,7 @@ public class CommandPrefix {
 
 
     private static String NetworkPrefix = ChatColor.BLUE + "Netzwerk " + ChatColor.DARK_GRAY + "┃" + ChatColor.GRAY + " ";
+    private static String AbraxPrefix = ChatColor.BLUE + "Abrax " + ChatColor.DARK_GRAY + "┃" + ChatColor.GRAY + " ";
     private static String consolePrefix = "LOG ┃ ";
     private static String LOGPrefix = ChatColor.BLUE + "LOG " + ChatColor.DARK_GRAY + "┃" + ChatColor.GRAY + " ";
     public static String getNetworkPrefix() {
@@ -26,5 +27,9 @@ public class CommandPrefix {
 
     public static String getLOGPrefix() {
         return LOGPrefix;
+    }
+
+    public static String getAbraxPrefix() {
+        return AbraxPrefix;
     }
 }

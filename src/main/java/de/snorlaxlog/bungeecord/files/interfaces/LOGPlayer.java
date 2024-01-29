@@ -2,7 +2,7 @@ package de.snorlaxlog.bungeecord.files.interfaces;
 
 import de.snorlaxlog.shared.util.Language;
 import de.snorlaxlog.shared.util.PlayerEntryData;
-import de.snorlaxlog.bungeecord.files.PermissionShotCut;
+import de.snorlaxlog.shared.PermissionShotCut;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 

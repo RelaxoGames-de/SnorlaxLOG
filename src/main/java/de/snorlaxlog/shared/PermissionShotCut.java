@@ -1,6 +1,6 @@
-package de.snorlaxlog.bungeecord.files;
+package de.snorlaxlog.shared;
 
-public enum     PermissionShotCut {
+public enum PermissionShotCut {
 
     SL_LOG_COMMAND_USE("snorlax.log.command.use"),
     SL_LOG_NOTIFY_READ("snorlax.log.notify"),
@@ -15,7 +15,9 @@ public enum     PermissionShotCut {
     SL_LOG_LEVEL_EVERY("snorlax.log.*"),
 
     ONLINE_TIME_BYPASS("snorlax.log.command.ot.bypass"),
-    ONLINE_TIME_OTHER("snorlax.log.command.ot.other");
+    ONLINE_TIME_OTHER("snorlax.log.command.ot.other"),
+    ABRAX_JOIN_SERVER("snorlax.abrax.warp.command"),
+    ABRAX_JOIN_SERVER_PRE("snorlax.abrax.warp.");
 
     String permission;
 

@@ -17,3 +17,10 @@
   "ErrorCMDCooldown": "&7Dieser befehl hat einen Cooldown von &e%COOLDOWN% Minuten&7!"
   "ErrorNoChannel": "&7Nutzung: /log toggle <info|warning|off|all|servere>"
   "NoPermForChannel": "&7Für diesen LOG-Channel hast du &cnicht &7die benötigten Rechte!"
+  "ErrorUnknownError": "&7Oh nein! Es ist ein unbekannter Fehler aufgetreten!"
+
+AbraxErrors:
+  "NoDirection": "&7Bitte gib einen Validen Server ein!"
+  "NoPermForDir": "&7Du hast leider &cnicht &7die Berrechtigung um dem Server &4{SERVER} &7zu joinen!"
+  "ConnectionSuccess": "&7Du wurdest erfolgreich zum Server &9{SERVER} &7verbunden"
+  "ErrorDirEqualsOrigin": "&7Du befindest dich bereits auf diesem Server"

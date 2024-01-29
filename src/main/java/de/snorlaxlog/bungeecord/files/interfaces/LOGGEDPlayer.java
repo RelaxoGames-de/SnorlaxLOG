@@ -6,7 +6,7 @@ import de.snorlaxlog.shared.util.PlayerEntryData;
 import de.snorlaxlog.bungeecord.commands.*;
 import de.snorlaxlog.shared.util.CommandPrefix;
 import de.snorlaxlog.shared.util.LanguageManager;
-import de.snorlaxlog.bungeecord.files.PermissionShotCut;
+import de.snorlaxlog.shared.PermissionShotCut;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
