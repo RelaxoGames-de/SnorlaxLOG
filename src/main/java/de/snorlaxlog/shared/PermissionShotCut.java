@@ -17,7 +17,8 @@ public enum PermissionShotCut {
     ONLINE_TIME_BYPASS("snorlax.log.command.ot.bypass"),
     ONLINE_TIME_OTHER("snorlax.log.command.ot.other"),
     ABRAX_JOIN_SERVER("snorlax.abrax.warp.command"),
-    ABRAX_JOIN_SERVER_PRE("snorlax.abrax.warp.");
+    ABRAX_JOIN_SERVER_PRE("snorlax.abrax.warp."),
+    PERMISSION_GRANT_COMMAND("snorlax.permission.command");
 
     String permission;
 
@@ -27,5 +28,19 @@ public enum PermissionShotCut {
 
     public String getPermission() {
         return permission;
+    }
+
+
+    public static PermissionShotCut getPermissionSC(String pmsc){
+        for (PermissionShotCut permissionShotCut : PermissionShotCut.values()){
+            if (permissionShotCut.getPermission().toLowerCase().equals(pmsc.toLowerCase())){
+                return permissionShotCut;
+            }
+        }
+        return null;
+    }
+
+    public static boolean isPermission(String pmsc){
+        return getPermissionSC(pmsc) != null;
     }
 }

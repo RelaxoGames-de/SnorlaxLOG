@@ -21,6 +21,7 @@ public enum SQLQuery {
 
     ADD_ENTRY_TO_DATABASE("INSERT INTO `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` (`user_id`, `user_uuid`, `user_name`, `user_first_seen`, `user_last_seen`, `user_discord_id`, `user_forum_id`, `user_total_onlinetime`, `user_language_selected`, `user_last_cached_IP`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"),
     SELECT_EVERYTHING_WHERE_UUID_A_N("SELECT * FROM `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` WHERE `user_uuid` = ?;"),
+    SELECT_EVERYTHING_WHERE_NAME_A_N("SELECT * FROM `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` WHERE `user_name` = ?;"),
     SELECT_USER_UUID_WITH_NAME("SELECT * FROM `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` WHERE `user_name` = ?;"),
     SELECT_USER_WITH_L_NAME("SELECT * FROM `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` WHERE LOWER(`user_name`) = ?;"),
     SELECT_USER_ONLINE_TIME("SELECT `user_total_onlinetime` FROM `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` WHERE `user_uuid` = ? AND `user_name` = ?;"),

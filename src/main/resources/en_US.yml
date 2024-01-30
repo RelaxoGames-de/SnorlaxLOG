@@ -18,6 +18,7 @@ Error:
   "NoPermForChannel": "&7You do not have the necessary permissions for this LOG channel!"
   "ErrorUnknownError": "&7Oh nein! Es ist ein unbekannter Fehler aufgetreten!"
 
+  "ErrorPermissionNEArgs": "&7Nutzung: /permission <grant | revoke> <permission>"
 AbraxErrors:
   "NoDirection": "&7Pleas enter a valid server name"
   "NoPermForDir": "&7Du hast leider &cnicht &7die Berrechtigung um dem Server &4{SERVER} &7zu joinen!"
