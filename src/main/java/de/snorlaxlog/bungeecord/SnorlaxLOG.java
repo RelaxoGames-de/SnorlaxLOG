@@ -1,6 +1,7 @@
 package de.snorlaxlog.bungeecord;
 
 import de.snorlaxlog.bungeecord.channels.BungeePluginMessageListener;
+import de.snorlaxlog.bungeecord.commands.abrax.PermissionCommand;
 import de.snorlaxlog.bungeecord.commands.abrax.WarpCommand;
 import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
 import de.snorlaxlog.bungeecord.listener.JoinListener;
@@ -82,6 +83,7 @@ public final class SnorlaxLOG extends Plugin {
         pm.registerCommand(this, new OnlineTimeCommand());
         pm.registerCommand(this, new SnorlaxLOGCommand());
         pm.registerCommand(this, new WarpCommand());
+        pm.registerCommand(this, new PermissionCommand());
     }
     public static void logMessage(Level level, String message){
         ProxyServer.getInstance().getLogger().log(level, message);

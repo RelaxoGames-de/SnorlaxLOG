@@ -189,6 +189,37 @@ public class SQLManager {
         }
     }
 
+    public CachedPlayer getPlayerInfos(String index){
+        this.checkCon();
+
+        String sql = SQLQuery.SELECT_EVERYTHING_WHERE_NAME_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
+
+            statement.setString(1, index);
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                String uuid = rs.getString(PlayerEntryData.USER_UUID.getTableColumnName());
+                String name = rs.getString(PlayerEntryData.USER_NAME.getTableColumnName());
+                Timestamp firstJoin = rs.getTimestamp(PlayerEntryData.USER_FIRST_JOINED.getTableColumnName());
+                Timestamp lastJoin = rs.getTimestamp(PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
+                String discordID = rs.getString(PlayerEntryData.USER_LINKS_DISCORD.getTableColumnName());
+                String forumID = rs.getString(PlayerEntryData.USER_LINKS_FORUM.getTableColumnName());
+                long onlineTime = rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
+                String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
+                String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
+
+                return new CachePlayer(uuid, name, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
+            }
+            return null;
+        }catch (SQLException e){
+            //ERROR #502
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setSavedOnlineTime(LOGPlayer logPlayer, long newOnlineTime){
         this.checkCon();
 

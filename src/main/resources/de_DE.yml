@@ -10,6 +10,8 @@
   "LogToggleNotify": "&7LOG-Benachrichtigungen wurden %STATE% %CHANNEL%"
   "credits": "&7Dieses Plugin wurden von &eDevTexx &7und &eJotrorox &7entwickelt!"
 
+  "PermissionGranted": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7hinzugefügt!"
+  "PermissionRevoked": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7entfernt!"
 
 "Error":
   "OnlyPlayer": "&7Dieser Befehl kann nur von Spielern ausgeführt werden!"
@@ -18,6 +20,11 @@
   "ErrorNoChannel": "&7Nutzung: /log toggle <info|warning|off|all|servere>"
   "NoPermForChannel": "&7Für diesen LOG-Channel hast du &cnicht &7die benötigten Rechte!"
   "ErrorUnknownError": "&7Oh nein! Es ist ein unbekannter Fehler aufgetreten!"
+
+  "ErrorPermissionNEArgs": "&7Nutzung: /permission <grant | revoke> <player> <permission>"
+  "ErrorNotPSCAvailable": "&7Für diese Permission kannst du diesen Befehl nicht nutzen!"
+  "ErrorHasPermission": "&7Dieser Spieler hat bereits diese Berechtigung!"
+  "ErrorHasNotPermission": "&7Dieser Spieler hat diese Berechtigung nicht!"
 
 AbraxErrors:
   "NoDirection": "&7Bitte gib einen Validen Server ein!"
