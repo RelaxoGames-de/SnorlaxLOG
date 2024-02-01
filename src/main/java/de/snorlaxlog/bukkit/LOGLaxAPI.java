@@ -46,6 +46,8 @@ public class LOGLaxAPI extends JavaPlugin {
         FileManager.createFiles();
         this.loadMySQL();
         SQLManager.initializeDatabase();
+
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
     public static void logMessage(Level level, String message){

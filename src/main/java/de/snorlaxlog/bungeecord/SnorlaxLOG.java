@@ -1,5 +1,6 @@
 package de.snorlaxlog.bungeecord;
 
+import de.snorlaxlog.bungeecord.channels.BungeePluginMessageListener;
 import de.snorlaxlog.bungeecord.commands.abrax.WarpCommand;
 import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
 import de.snorlaxlog.bungeecord.listener.JoinListener;
@@ -40,6 +41,9 @@ public final class SnorlaxLOG extends Plugin {
         this.loadMySQL();
         this.registerListener();
         this.registerCommands();
+
+        getProxy().registerChannel("BungeeCord");
+        getProxy().getPluginManager().registerListener(this, new BungeePluginMessageListener());
     }
 
     @Override
