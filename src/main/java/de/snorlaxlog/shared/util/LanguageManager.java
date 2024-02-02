@@ -5,7 +5,6 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,31 +37,12 @@ public class LanguageManager {
      * @param fileKey The File key, how the Message is called in the language Files
      * @return returns the converted message as a String
      */
-    public static String getMessage(Language language, String fileKey){
+    public static String getMessage(Language language, String fileKey) {
         return messages.getOrDefault(language.getInitials(), messages.get(Language.system_default.getInitials())).getOrDefault(fileKey, "KEY NOT SET!");
     }
 
-    public static Map<String, Map<String, String>> getMessages() {
-        return messages;
-    }
-
-    public static void loadBukkitMessage(){
-        if (de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles().length > 0) {
-            for (File file : de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles()) {
-                Map<String, String> localeMessages = new HashMap<>();
-
-                FileConfiguration lang = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(file);
-                for (String key : lang.getKeys(false)) {
-                    for (String messName : lang.getConfigurationSection(key).getKeys(false)) {
-                        String message = org.bukkit.ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
-                        localeMessages.put(messName, message);
-                    }
-                }
-                String fileName = file.getName().split(".yml")[0];
-                messages.put(fileName, localeMessages);
-                System.out.println(file.getName() + " loaded!");
-            }
-        }
+    public static void loadBukkitMessage(String fileName, Map<String, String> localeMessages){
+        messages.put(fileName, localeMessages);
     }
 
     public static void loadBungeeMessage() {
@@ -76,8 +56,8 @@ public class LanguageManager {
                 lang = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            }
 
+            }
             for (String key : lang.getKeys()) {
                 for (String messName : lang.getSection(key).getKeys()) {
                     String message = ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));

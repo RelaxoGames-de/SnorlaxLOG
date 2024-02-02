@@ -39,7 +39,7 @@ public final class SnorlaxLOG extends Plugin {
             this.onDisable();
         }
 
-        FileManager.loadFiles();
+        de.snorlaxlog.bungeecord.files.FileManager.loadFiles();
         this.loadMySQL();
         this.registerListener();
         this.registerCommands();

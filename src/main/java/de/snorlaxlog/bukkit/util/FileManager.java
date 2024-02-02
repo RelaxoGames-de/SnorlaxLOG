@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileManager {
 
@@ -25,7 +27,7 @@ public class FileManager {
                 }
 
 
-                langFolder = new File(datafolder.getPath() + "//messages");
+                langFolder = new File(datafolder.getPath() + "//languages");
                 if (!langFolder.exists()) {
                         langFolder.mkdir();
                 }
@@ -61,7 +63,23 @@ public class FileManager {
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
-                LanguageManager.loadBukkitMessage();
+
+                if (de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles().length > 0) {
+                        for (File file : de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles()) {
+                                Map<String, String> localeMessages = new HashMap<>();
+
+                                FileConfiguration lang = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(file);
+                                for (String key : lang.getKeys(false)) {
+                                        for (String messName : lang.getConfigurationSection(key).getKeys(false)) {
+                                                String message = org.bukkit.ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
+                                                localeMessages.put(messName, message);
+                                        }
+                                }
+                                String fileName = file.getName().split(".yml")[0];
+                                LanguageManager.loadBukkitMessage(fileName, localeMessages);
+                                System.out.println(file.getName() + " loaded!");
+                        }
+                }
         }
 
 

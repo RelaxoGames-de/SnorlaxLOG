@@ -10,6 +10,9 @@ Responses:
   "LogToggleNotify": "&7LOG notifications have been %STATE% %CHANNEL%"
   "credits": "&7This plugin was developed by &eDevTexx &7and &eJotrorox &7!"
 
+  "PermissionGranted": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7hinzugefügt!"
+  "PermissionRevoked": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7entfernt!"
+
 Error:
   "OnlyPlayer": "&7This command can only be executed by players!"
   "NoPermission1": "&7You do not have the necessary permissions for this command!"
@@ -18,7 +21,11 @@ Error:
   "NoPermForChannel": "&7You do not have the necessary permissions for this LOG channel!"
   "ErrorUnknownError": "&7Oh nein! Es ist ein unbekannter Fehler aufgetreten!"
 
-  "ErrorPermissionNEArgs": "&7Nutzung: /permission <grant | revoke> <permission>"
+  "ErrorPermissionNEArgs": "&7Nutzung: /permission <grant | revoke> <player> <permission>"
+  "ErrorNotPSCAvailable": "&7Für diese Permission kannst du diesen Befehl nicht nutzen!"
+  "ErrorHasPermission": "&7Dieser Spieler hat bereits diese Berechtigung!"
+  "ErrorHasNotPermission": "&7Dieser Spieler hat diese Berechtigung nicht!"
+
 AbraxErrors:
   "NoDirection": "&7Pleas enter a valid server name"
   "NoPermForDir": "&7Du hast leider &cnicht &7die Berrechtigung um dem Server &4{SERVER} &7zu joinen!"

@@ -1,10 +1,10 @@
 #This is currently not in use!
-"Usages":
+Usages:
   "LanguageSelected": "&7Deine aktuelle Sprache ist &2DEUTSCH (DE)"
   "kickScreen": "&7Du wurdest vom &3RelaxoGames.de Netzwerk &7gekickt. \n&7Grund: &a%REASON% \n\n&7Falls dieser Fehler bestehen bleiben sollte,\n dann melde dich bitte im Support: &3support@relaxogames.de\n&7oder auf unserem Discord:\n&3discord.relaxogames.de"
   "LogCMDUsage": "&7Nutzung: /log <toggle|credits|version>"
 
-"Responses":
+Responses:
   "OnlineTimeResponse": "&7Du hast eine Onlinezeit von &b%TIME% &7Stunden!"
   "PluginVersion": "&7Dieses Plugin ist aktuell auf der Version &e%VERSION%"
   "LogToggleNotify": "&7LOG-Benachrichtigungen wurden %STATE% %CHANNEL%"
@@ -13,7 +13,7 @@
   "PermissionGranted": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7hinzugefügt!"
   "PermissionRevoked": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7entfernt!"
 
-"Error":
+Error:
   "OnlyPlayer": "&7Dieser Befehl kann nur von Spielern ausgeführt werden!"
   "NoPermission1": "&7Für diesen Befehl hast du &cnicht&7 die benötigten Berechtigungen!"
   "ErrorCMDCooldown": "&7Dieser befehl hat einen Cooldown von &e%COOLDOWN% Minuten&7!"

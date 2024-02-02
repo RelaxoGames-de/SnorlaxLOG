@@ -10,19 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Map;
 import java.util.logging.Level;
 
 public class FileManager {
-
-
-    /** Creates a HashMap. In this HashMap all messages are saved. This following
-     * pattern is used for this
-     * @impl language = is a variable that changes from Player to Player
-     * @impl key = is the name of the messages
-     * @impl message = is the Message themselves with converted '&' ColorCodes
-     */
-    private static Map<String, Map<String, String>> messageList = LanguageManager.getMessages();
 
     /**
      * Is the File where all the informations about the MySQL-Connection is stored.
@@ -90,15 +80,6 @@ public class FileManager {
 
         LanguageManager.loadBungeeMessage();
     }
-
-    /**
-     * Gets the MessagesList
-     * @return the MessagesList itself.
-     */
-    public static Map<String, Map<String, String>> getMessageList() {
-        return messageList;
-    }
-
 
     /**
      * Gets the IP of the MySQL Server out of the File
