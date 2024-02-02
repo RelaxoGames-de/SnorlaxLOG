@@ -10,7 +10,6 @@ import de.snorlaxlog.bukkit.mysql.MySQL;
 import de.snorlaxlog.bukkit.util.FileManager;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 
 public class LOGLaxAPI extends JavaPlugin {

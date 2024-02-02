@@ -14,12 +14,41 @@ public class FileManager {
         private static File datafolder;
         private static File mySQLConfig;
         private static File taskConfig;
+        private static File langFolder;
 
 
         public static void createFiles() {
                 datafolder = LOGLaxAPI.getInstance().getDataFolder();
                 if (!datafolder.exists()) {
                         datafolder.mkdir();
+                }
+
+
+                langFolder = new File(datafolder.getPath() + "//messages");
+                if (!langFolder.exists()) {
+                        langFolder.mkdir();
+                }
+
+                File enFile = new File(langFolder, "en_US.yml");
+                try {
+                        if (!enFile.exists()) {
+                                InputStream is = LOGLaxAPI.getInstance().getResource("en_US.yml");
+                                Files.copy(is, enFile.toPath());
+                        }
+                } catch (IOException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException(e);
+                }
+
+                File deFile = new File(langFolder, "de_DE.yml");
+                try {
+                        if (!deFile.exists()) {
+                                InputStream in = LOGLaxAPI.getInstance().getResource("de_DE.yml");
+                                Files.copy(in, deFile.toPath());
+                        }
+                } catch (IOException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException(e);
                 }
 
                 mySQLConfig = new File(datafolder + "//database.yml");
