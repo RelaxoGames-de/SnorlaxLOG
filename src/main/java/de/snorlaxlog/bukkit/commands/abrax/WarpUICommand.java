@@ -32,7 +32,7 @@ public class WarpUICommand implements CommandExecutor {
             return false;
         }
 
-        InventoryManager inventoryManager = new InventoryManager(player, 53, "Choose a Server!");
+        InventoryManager inventoryManager = new InventoryManager(player, 9*6, "Choose a Server!");
         
         int iter = 0;
         /*
