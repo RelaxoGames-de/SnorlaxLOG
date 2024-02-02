@@ -14,8 +14,6 @@ import de.snorlaxlog.shared.PermissionShotCut;
 import de.snorlaxlog.shared.util.CommandPrefix;
 import de.snorlaxlog.shared.util.Language;
 import de.snorlaxlog.shared.util.LanguageManager;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.config.ServerInfo;
 
 public class WarpUICommand implements CommandExecutor {
 
@@ -34,7 +32,7 @@ public class WarpUICommand implements CommandExecutor {
             return false;
         }
 
-        InventoryManager inventoryManager = new InventoryManager(player, 52, "Choose a Server!");
+        InventoryManager inventoryManager = new InventoryManager(player, 53, "Choose a Server!");
         
         int iter = 0;
         /*
