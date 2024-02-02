@@ -1,5 +1,6 @@
 package de.snorlaxlog.bukkit;
 
+import de.snorlaxlog.bukkit.commands.abrax.WarpUICommand;
 import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 import de.snorlaxlog.bukkit.mysql.SQLManager;
 import de.snorlaxlog.bukkit.ui.InventoryManagerClickListener;
@@ -50,6 +51,8 @@ public class LOGLaxAPI extends JavaPlugin {
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
+
+        getCommand("warpui").setExecutor(new WarpUICommand());
     }
 
     public static void logMessage(Level level, String message){
