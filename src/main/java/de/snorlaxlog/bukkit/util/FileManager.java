@@ -157,4 +157,8 @@ public class FileManager {
                         datafolder.delete();
                 }
         }
+
+        public static File getLangFolder() {
+                return langFolder;
+        }
 }

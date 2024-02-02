@@ -29,6 +29,11 @@ public class WarpCommand extends Command {
         ProxiedPlayer p = (ProxiedPlayer) sender;
         LOGPlayer logPlayer = new LOGGEDPlayer(p);
 
+        if (args.length == 0){
+            p.sendMessage(CommandPrefix.getAbraxPrefix() + "§7Nutzung: /warp <server>");
+            return;
+        }
+
         if (!logPlayer.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER)){
              p.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
              return;
