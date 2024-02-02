@@ -19,12 +19,11 @@ public class WarpUICommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player player)){
             sender.sendMessage(CommandPrefix.getConsolePrefix() + LanguageManager.getMessage(Language.system_default, "OnlyPlayer"));
             return false;
         }
-
-        Player player = (Player) sender;
+        
         LOGPlayer logPlayer = new LOGBukkitPlayer(player);
 
         if (!player.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER.getPermission())){
