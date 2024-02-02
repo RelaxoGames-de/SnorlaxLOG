@@ -3,6 +3,7 @@ package de.snorlaxlog.bungeecord;
 import de.snorlaxlog.bungeecord.channels.BungeePluginMessageListener;
 import de.snorlaxlog.bungeecord.commands.abrax.PermissionCommand;
 import de.snorlaxlog.bungeecord.commands.abrax.WarpCommand;
+import de.snorlaxlog.bungeecord.commands.abrax.WarpUICommand;
 import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
 import de.snorlaxlog.bungeecord.listener.JoinListener;
 import de.snorlaxlog.bungeecord.listener.KickEvent;
@@ -76,6 +77,7 @@ public final class SnorlaxLOG extends Plugin {
         pm.registerListener(this, new JoinListener());
         pm.registerListener(this, new QuitListener());
         pm.registerListener(this, new KickEvent());
+        pm.registerListener(this, new BungeePluginMessageListener());
     }
 
     private void registerCommands(){
@@ -83,6 +85,7 @@ public final class SnorlaxLOG extends Plugin {
         pm.registerCommand(this, new OnlineTimeCommand());
         pm.registerCommand(this, new SnorlaxLOGCommand());
         pm.registerCommand(this, new WarpCommand());
+        pm.registerCommand(this, new WarpUICommand());
         pm.registerCommand(this, new PermissionCommand());
     }
     public static void logMessage(Level level, String message){

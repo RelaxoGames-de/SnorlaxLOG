@@ -2,6 +2,7 @@ package de.snorlaxlog.bukkit;
 
 import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 import de.snorlaxlog.bukkit.mysql.SQLManager;
+import de.snorlaxlog.bukkit.ui.InventoryManagerClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.snorlaxlog.bukkit.mysql.MySQL;
@@ -48,6 +49,7 @@ public class LOGLaxAPI extends JavaPlugin {
         SQLManager.initializeDatabase();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
     }
 
     public static void logMessage(Level level, String message){
