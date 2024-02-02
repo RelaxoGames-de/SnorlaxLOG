@@ -1,11 +1,14 @@
 package de.snorlaxlog.shared.util;
 
 import de.snorlaxlog.bungeecord.files.FileManager;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +18,7 @@ public class LanguageManager {
     /** This Class returns messages using the Message list from the FileManager.java
      */
 
-    private static Map<String, Map<String, String>> messages = FileManager.getMessageList();
+    private static Map<String, Map<String, String>> messages = new HashMap<>();
 
     /**
      * Gets a Message using a specified local to return the specified message in a language
@@ -39,15 +42,19 @@ public class LanguageManager {
         return messages.getOrDefault(language.getInitials(), messages.get(Language.system_default.getInitials())).getOrDefault(fileKey, "KEY NOT SET!");
     }
 
-    public static void loadMessage(){
+    public static Map<String, Map<String, String>> getMessages() {
+        return messages;
+    }
+
+    public static void loadBukkitMessage(){
         if (de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles().length > 0) {
             for (File file : de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles()) {
                 Map<String, String> localeMessages = new HashMap<>();
 
-                FileConfiguration lang = YamlConfiguration.loadConfiguration(file);
+                FileConfiguration lang = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(file);
                 for (String key : lang.getKeys(false)) {
-                    for (String messName : lang.getConfigurationSection(key).getKeys(false )) {
-                        String message = ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
+                    for (String messName : lang.getConfigurationSection(key).getKeys(false)) {
+                        String message = org.bukkit.ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
                         localeMessages.put(messName, message);
                     }
                 }
@@ -58,4 +65,27 @@ public class LanguageManager {
         }
     }
 
+    public static void loadBungeeMessage() {
+        /* This Code Section gets all the Keys and Messages of the Language Files and put them in a HashMap.
+         */
+        for (File file : FileManager.getLangFolder().listFiles()) {
+            Map<String, String> localeMessages = new HashMap<>();
+
+            Configuration lang = null;
+            try {
+                lang = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            for (String key : lang.getKeys()) {
+                for (String messName : lang.getSection(key).getKeys()) {
+                    String message = ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
+                    localeMessages.put(messName, message);
+                }
+            }
+            String fileName = file.getName().split(".yml")[0];
+            messages.put(fileName, localeMessages);
+        }
+    }
 }
