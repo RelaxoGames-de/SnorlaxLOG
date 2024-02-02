@@ -6,3 +6,6 @@ authors: [vazyx]
 website: http://www.relaxogames.de
 loadbefore:
   - SnorlaxLobby-V3
+commands:
+  warpui:
+    description: Opens the Warp Inventory
