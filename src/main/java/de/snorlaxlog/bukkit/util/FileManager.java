@@ -1,5 +1,6 @@
 package de.snorlaxlog.bukkit.util;
 
+import de.snorlaxlog.shared.util.LanguageManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import de.snorlaxlog.bukkit.LOGLaxAPI;
@@ -60,6 +61,7 @@ public class FileManager {
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
+                LanguageManager.loadBukkitMessage();
         }
 
 

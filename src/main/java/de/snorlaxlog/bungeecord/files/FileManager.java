@@ -1,7 +1,7 @@
 package de.snorlaxlog.bungeecord.files;
 
 import de.snorlaxlog.bungeecord.SnorlaxLOG;
-import net.md_5.bungee.api.ChatColor;
+import de.snorlaxlog.shared.util.LanguageManager;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -23,12 +22,13 @@ public class FileManager {
      * @impl key = is the name of the messages
      * @impl message = is the Message themselves with converted '&' ColorCodes
      */
-    private static Map<String, Map<String, String>> messageList = new HashMap<>();
+    private static Map<String, Map<String, String>> messageList = LanguageManager.getMessages();
 
     /**
      * Is the File where all the informations about the MySQL-Connection is stored.
      */
     private static File mySQLConfig;
+    private static File langFolder;
 
     /** This Method is triggered at the start of the Minecraft Server.
      * It creates the different Types of files that are used to operate.
@@ -59,7 +59,7 @@ public class FileManager {
         /* Creates the different Types of the messages.yml and a Folder called 'languages'. In these Files every message is defined.
          */
 
-        File langFolder = new File(SnorlaxLOG.getInstance().getDataFolder().getPath() + "//languages");
+        langFolder = new File(SnorlaxLOG.getInstance().getDataFolder().getPath() + "//languages");
         if (!langFolder.exists()) {
             langFolder.mkdirs();
         }
@@ -88,27 +88,7 @@ public class FileManager {
             }
         }
 
-        /* This Code Section gets all the Keys and Messages of the Language Files and put them in a HashMap.
-         */
-        for (File file : langFolder.listFiles()) {
-            Map<String, String> localeMessages = new HashMap<>();
-
-            Configuration lang = null;
-            try {
-                lang = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            for (String key : lang.getKeys()) {
-                for (String messName : lang.getSection(key).getKeys()) {
-                    String message = ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
-                    localeMessages.put(messName, message);
-                }
-            }
-            String fileName = file.getName().split(".yml")[0];
-            messageList.put(fileName, localeMessages);
-        }
+        LanguageManager.loadBungeeMessage();
     }
 
     /**
@@ -223,4 +203,7 @@ public class FileManager {
         return mySQLConfig;
     }
 
+    public static File getLangFolder() {
+        return langFolder;
+    }
 }
