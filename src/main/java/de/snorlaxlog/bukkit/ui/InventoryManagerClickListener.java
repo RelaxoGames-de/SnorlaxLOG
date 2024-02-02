@@ -1,7 +1,7 @@
 package de.snorlaxlog.bukkit.ui;
 
 import de.snorlaxlog.bukkit.LOGLaxAPI;
-import de.snorlaxlog.bungeecord.commands.abrax.AbraxUIClickEventHandler;
+import de.snorlaxlog.bukkit.commands.abrax.AbraxUIClickEventHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

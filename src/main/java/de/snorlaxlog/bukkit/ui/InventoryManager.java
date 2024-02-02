@@ -8,9 +8,11 @@ import org.bukkit.inventory.Inventory;
 public class InventoryManager {
     private Inventory inventory;
     private Player player;
+    private String title;
 
     public InventoryManager(Player player, int size, String title) {
         this.inventory = Bukkit.createInventory(player, size, title);
+        this.title = title;
         this.player = player;
     }
 

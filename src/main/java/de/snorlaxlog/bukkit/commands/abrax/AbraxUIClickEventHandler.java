@@ -1,4 +1,4 @@
-package de.snorlaxlog.bungeecord.commands.abrax;
+package de.snorlaxlog.bukkit.commands.abrax;
 
 import de.snorlaxlog.bukkit.LOGLaxAPI;
 import org.bukkit.Bukkit;
