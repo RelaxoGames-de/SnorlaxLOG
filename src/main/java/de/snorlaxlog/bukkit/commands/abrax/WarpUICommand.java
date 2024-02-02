@@ -28,7 +28,7 @@ public class WarpUICommand implements CommandExecutor {
         LOGPlayer logPlayer = new LOGBukkitPlayer(player);
 
         if (!player.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER.getPermission())){
-            player.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
+            player.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(Language.system_default, "NoPermission1"));
             return false;
         }
 
