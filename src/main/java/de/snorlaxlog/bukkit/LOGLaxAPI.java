@@ -18,6 +18,7 @@ public class LOGLaxAPI extends JavaPlugin {
     private static LOGLaxAPI instance;
     public de.snorlaxlog.bukkit.mysql.MySQL mysql;
     private HashMap<String, CachedPlayer> allCachedPlayersByName;
+
     @Override
     public void onLoad() {
         instance = this;
@@ -37,30 +38,30 @@ public class LOGLaxAPI extends JavaPlugin {
         FileManager.deleteFiles();
     }
 
-    public void CommandRegistration(){
+    public void CommandRegistration() {
         getCommand("warpui").setExecutor(new WarpUICommand());
     }
 
-    public void ListenerRegistration(){
+    public void ListenerRegistration() {
         getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginChannelMessageListener());
     }
 
-    public void startEssentials(){
+    public void startEssentials() {
         FileManager.createFiles();
         this.loadMySQL();
         SQLManager.initializeDatabase();
     }
 
-    public void onStartUp(){
+    public void onStartUp() {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
-    public static void logMessage(Level level, String message){
+    public static void logMessage(Level level, String message) {
         Bukkit.getLogger().log(level, message);
     }
 
-    public void loadMySQL(){
+    public void loadMySQL() {
 
         String host = FileManager.getHost();
         int port = FileManager.getPort();
@@ -69,7 +70,7 @@ public class LOGLaxAPI extends JavaPlugin {
         String password = FileManager.getPassword();
 
         mysql = new MySQL(host, port, database, user, password);
-        if (mysql.getConnection() == null || !mysql.hasConnection()){
+        if (mysql.getConnection() == null || !mysql.hasConnection()) {
             logMessage(Level.OFF, "Disabling SnorlaxLOG-API cause the MySQL-Connection has been lost!");
             this.onDisable();
         }

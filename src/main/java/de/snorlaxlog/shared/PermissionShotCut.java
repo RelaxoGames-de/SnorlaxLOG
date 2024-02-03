@@ -31,16 +31,16 @@ public enum PermissionShotCut {
     }
 
 
-    public static PermissionShotCut getPermissionSC(String pmsc){
-        for (PermissionShotCut permissionShotCut : PermissionShotCut.values()){
-            if (permissionShotCut.getPermission().toLowerCase().equals(pmsc.toLowerCase())){
+    public static PermissionShotCut getPermissionSC(String pmsc) {
+        for (PermissionShotCut permissionShotCut : PermissionShotCut.values()) {
+            if (permissionShotCut.getPermission().toLowerCase().equals(pmsc.toLowerCase())) {
                 return permissionShotCut;
             }
         }
         return null;
     }
 
-    public static boolean isPermission(String pmsc){
+    public static boolean isPermission(String pmsc) {
         return getPermissionSC(pmsc) != null;
     }
 }
