@@ -23,6 +23,7 @@ public final class SnorlaxLOG extends Plugin {
     private static SnorlaxLOG instance;
     private static String version;
     public MySQL mySQL;
+
     @Override
     public void onLoad() {
         super.onLoad();
@@ -34,7 +35,7 @@ public final class SnorlaxLOG extends Plugin {
     public void onEnable() {
         // Plugin startup logic
 
-        if (version == null){
+        if (version == null) {
             logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Plugin version is null! Disabling SnorlaxLOG");
             this.onDisable();
         }
@@ -54,7 +55,7 @@ public final class SnorlaxLOG extends Plugin {
         mySQL.close();
     }
 
-    private void loadMySQL(){
+    private void loadMySQL() {
 
         String host = FileManager.getHost();
         String user = FileManager.getUser();
@@ -62,7 +63,7 @@ public final class SnorlaxLOG extends Plugin {
         String password = FileManager.getPassword();
         String database = FileManager.getDatabase();
 
-        if (host == null || user == null || port == null || password == null || database == null){
+        if (host == null || user == null || port == null || password == null || database == null) {
             logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not open Connection to the MySQL Database! Disabling SnorlaxLOG!");
             onDisable();
             return;
@@ -72,26 +73,26 @@ public final class SnorlaxLOG extends Plugin {
         SQLManager.initializeDatabase();
     }
 
-    private void registerListener(){
+    private void registerListener() {
         PluginManager pm = ProxyServer.getInstance().getPluginManager();
         pm.registerListener(this, new JoinListener());
         pm.registerListener(this, new QuitListener());
         pm.registerListener(this, new KickEvent());
-        pm.registerListener(this, new BungeePluginMessageListener());
     }
 
-    private void registerCommands(){
+    private void registerCommands() {
         PluginManager pm = ProxyServer.getInstance().getPluginManager();
         pm.registerCommand(this, new OnlineTimeCommand());
         pm.registerCommand(this, new SnorlaxLOGCommand());
         pm.registerCommand(this, new WarpCommand());
         pm.registerCommand(this, new PermissionCommand());
     }
-    public static void logMessage(Level level, String message){
+
+    public static void logMessage(Level level, String message) {
         ProxyServer.getInstance().getLogger().log(level, message);
-        for (LOGPlayer logPlayer : SnorlaxLOGCommand.getLogPlayers().keySet()){
+        for (LOGPlayer logPlayer : SnorlaxLOGCommand.getLogPlayers().keySet()) {
             Level logLVL = logPlayer.getNotifyLevel();
-            if (logLVL.equals(level)){
+            if (logLVL.equals(level)) {
                 logPlayer.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + "§b§l[" + logLVL.getName() + "]§r " + message);
                 return;
             }
