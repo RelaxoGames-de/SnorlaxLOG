@@ -19,7 +19,7 @@ public class AbraxWarpUI {
 
         int inventorySize = serverNames.size();
 
-        if (inventorySize % 9 != 0) inventorySize = round(inventorySize / 9) + 9;
+        if (inventorySize % 9 != 0) inventorySize = (round(inventorySize / 9) * 9) + 9;
 
         InventoryManager inventoryManager = new InventoryManager(player, inventorySize, "Choose a Server!");
 
