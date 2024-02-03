@@ -1,13 +1,9 @@
 package de.snorlaxlog.bukkit;
 
-import de.snorlaxlog.bukkit.api.APIBukkitManager;
-import de.snorlaxlog.bukkit.commands.abrax.DebugCommand;
 import de.snorlaxlog.bukkit.commands.abrax.WarpUICommand;
 import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 import de.snorlaxlog.bukkit.mysql.SQLManager;
 import de.snorlaxlog.bukkit.ui.InventoryManagerClickListener;
-import eu.cloudnetservice.driver.registry.ServiceRegistry;
-import eu.cloudnetservice.modules.bridge.node.player.NodePlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.snorlaxlog.bukkit.mysql.MySQL;
@@ -41,26 +37,21 @@ public class LOGLaxAPI extends JavaPlugin {
     }
 
     public void CommandRegistration(){
-        getCommand("debug").setExecutor(new DebugCommand());
+        getCommand("warpui").setExecutor(new WarpUICommand());
     }
 
     public void ListenerRegistration(){
-
+        getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
     }
 
     public void startEssentials(){
+        FileManager.createFiles();
         this.loadMySQL();
         SQLManager.initializeDatabase();
     }
 
     public void onStartUp(){
-        APIBukkitManager.setPlayerManager(ServiceRegistry.first(NodePlayerManager.class));
-        FileManager.createFiles();
-
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
-
-        getCommand("warpui").setExecutor(new WarpUICommand());
     }
 
     public static void logMessage(Level level, String message){

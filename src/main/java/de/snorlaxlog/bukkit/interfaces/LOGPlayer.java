@@ -2,6 +2,7 @@ package de.snorlaxlog.bukkit.interfaces;
 
 import de.snorlaxlog.shared.util.PlayerEntryData;
 import de.snorlaxlog.shared.util.Language;
+import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor;
 import eu.cloudnetservice.modules.bridge.player.executor.ServerSelectorType;
 import org.bukkit.entity.Player;
 
@@ -19,7 +20,7 @@ public interface LOGPlayer {
     Language language();
     Long getOnlineTime();
     CachedPlayer getCachedPlayer();
-
+    PlayerExecutor getCloudNetPlayer();
     void connectToTask(String taskName, ServerSelectorType selectorType);
     void connectToGroup(String groupName, ServerSelectorType selectorType);
     void connectToFallback();

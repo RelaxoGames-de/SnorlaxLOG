@@ -1,8 +1,9 @@
 package de.snorlaxlog.bukkit.interfaces;
 
-import de.snorlaxlog.bukkit.api.APIBukkitManager;
 import de.snorlaxlog.shared.util.PlayerEntryData;
 import de.snorlaxlog.shared.util.Language;
+import eu.cloudnetservice.driver.registry.ServiceRegistry;
+import eu.cloudnetservice.modules.bridge.player.PlayerManager;
 import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor;
 import eu.cloudnetservice.modules.bridge.player.executor.ServerSelectorType;
 import org.bukkit.entity.Player;
@@ -22,9 +23,10 @@ public class LOGBukkitPlayer implements LOGPlayer{
     ///////////////////////////////////////////////////
 
     public LOGBukkitPlayer(Player player){
+        PlayerManager playerManager = ServiceRegistry.first(PlayerManager.class);
         this.uuid = player.getUniqueId();
         this.player = player;
-        this.cloudNetPlayer = APIBukkitManager.getPlayerManager().playerExecutor(player.getUniqueId());
+        this.cloudNetPlayer = playerManager.playerExecutor(player.getUniqueId());
     }
     ///////////////////////////////////////////////////
     @Override
@@ -85,6 +87,12 @@ public class LOGBukkitPlayer implements LOGPlayer{
     public CachedPlayer getCachedPlayer() {
         return sqlManager.getPlayerInfos(this);
     }
+
+    @Override
+    public PlayerExecutor getCloudNetPlayer() {
+        return cloudNetPlayer;
+    }
+
     @Override
     public void connectToTask(String taskName, ServerSelectorType selectorType) {
         cloudNetPlayer.connectToTask(taskName, selectorType);
