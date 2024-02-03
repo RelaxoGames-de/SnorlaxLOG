@@ -9,3 +9,5 @@ loadbefore:
 commands:
   warpui:
     description: Opens the Warp Inventory
+  debug:
+    description: DEBUG

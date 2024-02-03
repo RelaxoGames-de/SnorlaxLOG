@@ -1,7 +1,10 @@
 package de.snorlaxlog.bukkit.interfaces;
 
+import de.snorlaxlog.bukkit.api.APIBukkitManager;
 import de.snorlaxlog.shared.util.PlayerEntryData;
 import de.snorlaxlog.shared.util.Language;
+import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor;
+import eu.cloudnetservice.modules.bridge.player.executor.ServerSelectorType;
 import org.bukkit.entity.Player;
 import de.snorlaxlog.bukkit.mysql.SQLManager;
 
@@ -12,6 +15,7 @@ public class LOGBukkitPlayer implements LOGPlayer{
     private SQLManager sqlManager = new SQLManager();
     ///////////////////////////////////////////////////
     Player player;
+    PlayerExecutor cloudNetPlayer;
     UUID uuid;
     String name;
     Language language;
@@ -20,6 +24,7 @@ public class LOGBukkitPlayer implements LOGPlayer{
     public LOGBukkitPlayer(Player player){
         this.uuid = player.getUniqueId();
         this.player = player;
+        this.cloudNetPlayer = APIBukkitManager.getPlayerManager().playerExecutor(player.getUniqueId());
     }
     ///////////////////////////////////////////////////
     @Override
@@ -79,5 +84,19 @@ public class LOGBukkitPlayer implements LOGPlayer{
     @Override
     public CachedPlayer getCachedPlayer() {
         return sqlManager.getPlayerInfos(this);
+    }
+    @Override
+    public void connectToTask(String taskName, ServerSelectorType selectorType) {
+        cloudNetPlayer.connectToTask(taskName, selectorType);
+    }
+
+    @Override
+    public void connectToGroup(String groupName, ServerSelectorType selectorType) {
+        cloudNetPlayer.connectToGroup(groupName, selectorType);
+    }
+
+    @Override
+    public void connectToFallback() {
+        cloudNetPlayer.connectToFallback();
     }
 }

@@ -93,15 +93,15 @@
 
         <!-- CloudNet -->
         <dependency>
-            <groupId>de.dytanic.cloudnet</groupId>
-            <artifactId>cloudnet-driver</artifactId>
-            <version>3.4.5-RELEASE</version>
+            <groupId>eu.cloudnetservice.cloudnet</groupId>
+            <artifactId>driver</artifactId>
+            <version>4.0.0-RC1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.dytanic.cloudnet</groupId>
-            <artifactId>cloudnet-bridge</artifactId>
-            <version>3.4.5-RELEASE</version>
+            <groupId>eu.cloudnetservice.cloudnet</groupId>
+            <artifactId>bridge</artifactId>
+            <version>4.0.0-RC1</version>
             <scope>provided</scope>
         </dependency>
         <!-- CloudNet Core -->
