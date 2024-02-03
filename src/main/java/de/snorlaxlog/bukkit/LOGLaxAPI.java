@@ -1,6 +1,5 @@
 package de.snorlaxlog.bukkit;
 
-import de.snorlaxlog.bukkit.channels.PluginChannelMessage;
 import de.snorlaxlog.bukkit.channels.PluginChannelMessageListener;
 import de.snorlaxlog.bukkit.commands.abrax.WarpUICommand;
 import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
