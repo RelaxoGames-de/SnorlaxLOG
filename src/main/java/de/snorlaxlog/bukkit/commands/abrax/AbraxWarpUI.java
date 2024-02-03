@@ -17,11 +17,7 @@ public class AbraxWarpUI {
         final Player player = Bukkit.getPlayer(data.split(":")[1]);
         List<String> serverNames = new ArrayList<>(Arrays.asList((data.split(":")[2].split(";"))));
 
-        int inventorySize = serverNames.size();
-
-        if (inventorySize % 9 != 0) inventorySize = (round(inventorySize / 9) * 9) + 9;
-
-        InventoryManager inventoryManager = new InventoryManager(player, inventorySize, "§l§3Choose a Server!");
+        InventoryManager inventoryManager = new InventoryManager(player, 6 * 9, "§l§3Choose a Server!");
 
         int iter = 0;
         for (String serverName : serverNames) {
