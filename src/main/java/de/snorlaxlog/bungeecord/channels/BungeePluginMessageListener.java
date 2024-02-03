@@ -26,7 +26,14 @@ public class BungeePluginMessageListener implements Listener {
             String subChannel = in.readUTF();
     
             if (subChannel.equals("warpui")) {
-                WarpUICommand.handleWarpUIMessage(in.readUTF());
+                String data = in.readUTF();
+
+                if (data.startsWith("getServers")) {
+                    WarpUICommand.handleGetServerRequest(data);
+                    return;
+                }
+
+                WarpUICommand.handleWarpUIMessage(data);
             }
     
         } catch (IOException e) {

@@ -7,20 +7,26 @@ import de.snorlaxlog.shared.util.CommandPrefix;
 import de.snorlaxlog.shared.util.LanguageManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Map;
 
 public class WarpUICommand {
     public static void handleWarpUIMessage(String data) {
         LOGGEDPlayer loggedPlayer = new LOGGEDPlayer(ProxyServer.getInstance().getPlayer(data.split(":")[0]));
-        
+
         ServerInfo relocatedServer = ProxyServer.getInstance().getServerInfo(data.split(":")[1]);
         String serverName = data.split(":")[1].replace("-", ".");
-        
-        if (!loggedPlayer.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER_PRE.getPermission() + serverName)){
+
+        if (!loggedPlayer.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER_PRE.getPermission() + serverName)) {
             loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(loggedPlayer.language(), "NoPermForDir").replace("{SERVER}", relocatedServer.getName()));
             return;
         }
-        
-        if (relocatedServer.equals(loggedPlayer.getPlayer().getServer().getInfo())){
+
+        if (relocatedServer.equals(loggedPlayer.getPlayer().getServer().getInfo())) {
             loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(loggedPlayer.language(), "ErrorDirEqualsOrigin"));
             return;
         }
@@ -35,7 +41,28 @@ public class WarpUICommand {
             SnorlaxLOG.getInstance().getProxy().getPluginManager().callEvent(connectPlayerEvent);
             return;
         }
-        
+
         loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix() + connectPlayerEvent.getAbortMessage());
+    }
+
+    public static void handleGetServerRequest(String data) {
+        final String playerName = data.split(":")[1];
+        final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(playerName);
+        final Map<String, ServerInfo> servers = ProxyServer.getInstance().getServersCopy();
+        StringBuilder encodedResponse = new StringBuilder("getServerResponse" + ":" + playerName + ":");
+
+        for (ServerInfo server : servers.values()) encodedResponse.append(server.getName() + ";");
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+
+        try {
+            dataOutputStream.writeUTF("warpui");
+            dataOutputStream.writeUTF(encodedResponse.toString());
+
+            player.getServer().getInfo().sendData("BungeeCord", byteArrayOutputStream.toByteArray());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 }

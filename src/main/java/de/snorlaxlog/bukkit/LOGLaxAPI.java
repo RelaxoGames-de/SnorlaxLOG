@@ -1,5 +1,7 @@
 package de.snorlaxlog.bukkit;
 
+import de.snorlaxlog.bukkit.channels.PluginChannelMessage;
+import de.snorlaxlog.bukkit.channels.PluginChannelMessageListener;
 import de.snorlaxlog.bukkit.commands.abrax.WarpUICommand;
 import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 import de.snorlaxlog.bukkit.mysql.SQLManager;
@@ -42,6 +44,7 @@ public class LOGLaxAPI extends JavaPlugin {
 
     public void ListenerRegistration(){
         getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginChannelMessageListener());
     }
 
     public void startEssentials(){
