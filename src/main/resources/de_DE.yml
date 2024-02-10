@@ -13,6 +13,7 @@ Responses:
   "PermissionGranted": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7hinzugefügt!"
   "PermissionRevoked": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7entfernt!"
 
+  "AntiOP": "&7Bist du sicher, dass du diesem Nutzer diese Rechte geben möchtest?"
 Error:
   "OnlyPlayer": "&7Dieser Befehl kann nur von Spielern ausgeführt werden!"
   "NoPermission1": "&7Für diesen Befehl hast du &cnicht&7 die benötigten Berechtigungen!"
@@ -26,6 +27,7 @@ Error:
   "ErrorHasPermission": "&7Dieser Spieler hat bereits diese Berechtigung!"
   "ErrorHasNotPermission": "&7Dieser Spieler hat diese Berechtigung nicht!"
 
+  "ErrorNothingToConfirm": "&cEs gibt aktuell nicht zum bestätigen!"
 AbraxErrors:
   "NoDirection": "&7Bitte gib einen Validen Server ein!"
   "NoPermForDir": "&7Du hast leider &cnicht &7die Berrechtigung um dem Server &4{SERVER} &7zu joinen!"

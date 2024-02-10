@@ -44,7 +44,7 @@ public class OnlineTimeCommand extends Command {
         long gainedOT = cachedPlayer.getOnlineTime();
         Date date = new Date(gainedOT);
         if (args.length == 0){
-            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getTime())));
+            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getHours())));
             cooldown.add(player.getUniqueId());
 
             ScheduledTask task;

@@ -18,7 +18,8 @@ public enum PermissionShotCut {
     ONLINE_TIME_OTHER("snorlax.log.command.ot.other"),
     ABRAX_JOIN_SERVER("snorlax.abrax.warp.command"),
     ABRAX_JOIN_SERVER_PRE("snorlax.abrax.warp."),
-    PERMISSION_GRANT_COMMAND("snorlax.permission.command");
+    PERMISSION_GRANT_COMMAND("snorlax.permission.command"),
+    OP_COMMAND_BYPASS("snorlax.op.bypass");
 
     String permission;
 

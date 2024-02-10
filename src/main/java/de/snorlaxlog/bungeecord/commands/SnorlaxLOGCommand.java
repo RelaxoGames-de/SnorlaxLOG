@@ -53,12 +53,9 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
 
         switch (args[0]){
 
-            case "credits":{
-                player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPla.language(), "credits"));
-                break;
-            }
-
+            case "credits":
             case "version":{
+                player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPla.language(), "credits"));
                 player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPla.language(), "PluginVersion").replace("%VERSION%", SnorlaxLOG.getVersion()));
                 break;
             }
@@ -114,6 +111,7 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
 
     private void noPermissionForChannel(LOGPlayer player){
         player.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(player.language(), "NoPermForChannel"));
+        return;
     }
 
     public static HashMap<LOGPlayer, Level> getLogPlayers() {
