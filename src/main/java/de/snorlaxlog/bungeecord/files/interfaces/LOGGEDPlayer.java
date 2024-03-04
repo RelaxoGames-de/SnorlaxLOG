@@ -34,11 +34,10 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public void addPlayerEntry() {
-        if (!isInDatabase()) {
-            sqlManager.addEntry(player);
-            ProxyServer.getInstance().getLogger().log(Level.INFO, CommandPrefix.getConsolePrefix() + "Registered a new Database entry [name:" + getPlayer().getName() + "] [uuid: " + getPlayer().getUniqueId() + "]");
-        }
-        return;
+        if (isInDatabase()) return;
+
+        sqlManager.addEntry(player);
+        ProxyServer.getInstance().getLogger().log(Level.INFO, CommandPrefix.getConsolePrefix() + "Registered a new Database entry [name:" + getPlayer().getName() + "] [uuid: " + getPlayer().getUniqueId() + "]");
     }
 
     @Override
@@ -137,7 +136,6 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public void updateOnlineTime() {
-
         long joinOn = getLastJoinTime();
         long leftOn = System.currentTimeMillis();
         long savedOnlineTime = getOnlineTime();
@@ -182,23 +180,21 @@ public class LOGGEDPlayer implements LOGPlayer {
     @Override
     @Deprecated
     public void activateNotify(Level level) {
-        if (!notifyIsActive()){
-            SnorlaxLOGCommand.getLogPlayers().put(this, level);
-            this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify")
-                    .replace("%STATE%", "§aenabled")
-                    .replace("%CHANNEL%", "§r§7§o" + level.getName()));
-        }
+        if (notifyIsActive()) return;
+        SnorlaxLOGCommand.getLogPlayers().put(this, level);
+        this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify")
+                .replace("%STATE%", "§aenabled")
+                .replace("%CHANNEL%", "§r§7§o" + level.getName()));
     }
 
     @Override
     @Deprecated
     public void disableNotify() {
-        if (notifyIsActive()){
-            SnorlaxLOGCommand.getLogPlayers().remove(this);
-            this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify")
-                    .replace("%STATE%", "§cdisabled")
-                    .replace("%CHANNEL%", ""));
-        }
+        if (!notifyIsActive()) return;
+        SnorlaxLOGCommand.getLogPlayers().remove(this);
+        this.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(getCachedPlayer().getLanguage(), "LogToggleNotify")
+                .replace("%STATE%", "§cdisabled")
+                .replace("%CHANNEL%", ""));
     }
 
     @Override

@@ -43,22 +43,19 @@ public class OnlineTimeCommand extends Command {
 
         long gainedOT = cachedPlayer.getOnlineTime();
         Date date = new Date(gainedOT);
-        if (args.length == 0){
-            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getTime())));
-            cooldown.add(player.getUniqueId());
-
-            ScheduledTask task;
-            task = SnorlaxLOG.getInstance().getProxy().getScheduler().schedule(SnorlaxLOG.getInstance(), (Runnable) () -> {
-                cooldown.remove(player.getUniqueId());
-            }, cooldownTime, TimeUnit.MINUTES);
-
+        if (args.length == 1 && logPlayer.hasPermission(PermissionShotCut.ONLINE_TIME_OTHER)){
+            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
             return;
         }
-        if (args.length == 1){
-            if (!logPlayer.hasPermission(PermissionShotCut.ONLINE_TIME_OTHER)){
-                player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
-                return;
-            }
-        }
+
+        if (args.length != 0) return;
+
+        player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getTime())));
+        cooldown.add(player.getUniqueId());
+
+        ScheduledTask task;
+        task = SnorlaxLOG.getInstance().getProxy().getScheduler().schedule(SnorlaxLOG.getInstance(), (Runnable) () -> {
+            cooldown.remove(player.getUniqueId());
+        }, cooldownTime, TimeUnit.MINUTES);
     }
 }

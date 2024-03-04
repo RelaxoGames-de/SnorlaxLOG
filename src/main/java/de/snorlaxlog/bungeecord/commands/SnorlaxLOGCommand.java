@@ -14,6 +14,7 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class SnorlaxLOGCommand extends Command implements TabExecutor {
@@ -132,19 +133,21 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
             return tab;
         }
 
-        if (args.length == 1){
-            if (args[0].equalsIgnoreCase("toggle ")){
-                if (!logPlayer.notifyIsActive()){
-                    if (logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_INFO) || logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)) tab.add("info");
-                    if (logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_OFF) || logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)) tab.add("off");
-                    if (logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_WARNING) || logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)) tab.add("warning");
-                    if (logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_SERVERE) || logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)) tab.add("servere");
-                    if (logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_ALL) || logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)) tab.add("all");
-                    return tab;
-                }
-            }
-        }
+        Map<String, PermissionShotCut> logLevels = Map.of(
+                "info", PermissionShotCut.SL_LOG_LEVEL_INFO,
+                "off", PermissionShotCut.SL_LOG_LEVEL_OFF,
+                "warning", PermissionShotCut.SL_LOG_LEVEL_WARNING,
+                "severe", PermissionShotCut.SL_LOG_LEVEL_SERVERE,
+                "all", PermissionShotCut.SL_LOG_LEVEL_ALL
+        );
 
+        if (args.length == 1 && args[0].equalsIgnoreCase("toggle ") && !logPlayer.notifyIsActive()) {
+            for (Map.Entry<String, PermissionShotCut> entry : logLevels.entrySet()) {
+                if (logPlayer.hasPermission(entry.getValue()) || logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY))
+                    tab.add(entry.getKey());
+            }
+            return tab;
+        }
         return tab;
     }
 }

@@ -56,7 +56,6 @@ public final class SnorlaxLOG extends Plugin {
     }
 
     private void loadMySQL() {
-
         String host = FileManager.getHost();
         String user = FileManager.getUser();
         Integer port = FileManager.getPort();

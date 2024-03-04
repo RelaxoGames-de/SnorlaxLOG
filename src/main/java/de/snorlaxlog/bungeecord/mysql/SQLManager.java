@@ -29,17 +29,13 @@ public class SQLManager {
      * It initializes the MySQL Database.
      */
     public static void initializeDatabase(){
-
         try {
-            if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) {
-                con = SnorlaxLOG.getInstance().mySQL.openConnection();
-            }
+            if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = SnorlaxLOG.getInstance().mySQL.openConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         try {
-
             String createUserCacheTable = SQLQuery.CREATE_MYSQL_USER_CACHE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
             try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(createUserCacheTable)) {
                 statement.execute();
@@ -51,31 +47,26 @@ public class SQLManager {
     }
 
     public boolean isInDatabase(ProxiedPlayer player){
-
         this.checkCon();
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setString(1, player.getUniqueId().toString());
 
             ResultSet rs = statement.executeQuery();
 
             return rs.next();
-
-        }catch (SQLException e){
+        } catch (SQLException e){
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
     }
 
     public void addEntry(ProxiedPlayer player){
-
         this.checkCon();
 
         String sql = SQLQuery.ADD_ENTRY_TO_DATABASE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             Date today = new Date();
             Timestamp firstSeen = new Timestamp(today.getTime());
 
@@ -91,7 +82,6 @@ public class SQLManager {
             statement.setString(10, player.getAddress().getAddress().getHostAddress());
 
             statement.execute();
-
         }catch (SQLException e){
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
@@ -100,7 +90,6 @@ public class SQLManager {
     }
 
     public UUID getUUIDThroughName(String name){
-
         this.checkCon();
 
         UUID uuid = null;
@@ -110,10 +99,8 @@ public class SQLManager {
             statement.setString(1, name.toString());
 
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getColumnPlace()));
-            }
-        }catch (SQLException e){
+            while (rs.next()) uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getColumnPlace()));
+        } catch (SQLException e){
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
@@ -128,9 +115,7 @@ public class SQLManager {
             statement.setString(1, index.toLowerCase());
 
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                return rs.getString("user_name");
-            }
+            while (rs.next()) return rs.getString("user_name");
         }catch (SQLException e){
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
@@ -148,7 +133,7 @@ public class SQLManager {
 
             ResultSet rs = statement.executeQuery();
 
-            if (!rs.next())return 0;
+            if (!rs.next()) return 0;
 
             return rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
         }catch (SQLException e){
@@ -168,20 +153,19 @@ public class SQLManager {
 
             ResultSet rs = statement.executeQuery();
 
-            if (rs.next()) {
-                String uuid = rs.getString(PlayerEntryData.USER_UUID.getTableColumnName());
-                String name = rs.getString(PlayerEntryData.USER_NAME.getTableColumnName());
-                Timestamp firstJoin = rs.getTimestamp(PlayerEntryData.USER_FIRST_JOINED.getTableColumnName());
-                Timestamp lastJoin = rs.getTimestamp(PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
-                String discordID = rs.getString(PlayerEntryData.USER_LINKS_DISCORD.getTableColumnName());
-                String forumID = rs.getString(PlayerEntryData.USER_LINKS_FORUM.getTableColumnName());
-                long onlineTime = rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
-                String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
-                String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
+            if (!rs.next()) return null;
 
-                return new CachePlayer(uuid, name, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
-            }
-            return null;
+            String uuid = rs.getString(PlayerEntryData.USER_UUID.getTableColumnName());
+            String name = rs.getString(PlayerEntryData.USER_NAME.getTableColumnName());
+            Timestamp firstJoin = rs.getTimestamp(PlayerEntryData.USER_FIRST_JOINED.getTableColumnName());
+            Timestamp lastJoin = rs.getTimestamp(PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
+            String discordID = rs.getString(PlayerEntryData.USER_LINKS_DISCORD.getTableColumnName());
+            String forumID = rs.getString(PlayerEntryData.USER_LINKS_FORUM.getTableColumnName());
+            long onlineTime = rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
+            String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
+            String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
+
+            return new CachePlayer(uuid, name, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
         }catch (SQLException e){
             //ERROR #502
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
@@ -199,20 +183,18 @@ public class SQLManager {
 
             ResultSet rs = statement.executeQuery();
 
-            if (rs.next()) {
-                String uuid = rs.getString(PlayerEntryData.USER_UUID.getTableColumnName());
-                String name = rs.getString(PlayerEntryData.USER_NAME.getTableColumnName());
-                Timestamp firstJoin = rs.getTimestamp(PlayerEntryData.USER_FIRST_JOINED.getTableColumnName());
-                Timestamp lastJoin = rs.getTimestamp(PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
-                String discordID = rs.getString(PlayerEntryData.USER_LINKS_DISCORD.getTableColumnName());
-                String forumID = rs.getString(PlayerEntryData.USER_LINKS_FORUM.getTableColumnName());
-                long onlineTime = rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
-                String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
-                String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
+            if (rs.next()) return null;
+            String uuid = rs.getString(PlayerEntryData.USER_UUID.getTableColumnName());
+            String name = rs.getString(PlayerEntryData.USER_NAME.getTableColumnName());
+            Timestamp firstJoin = rs.getTimestamp(PlayerEntryData.USER_FIRST_JOINED.getTableColumnName());
+            Timestamp lastJoin = rs.getTimestamp(PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
+            String discordID = rs.getString(PlayerEntryData.USER_LINKS_DISCORD.getTableColumnName());
+            String forumID = rs.getString(PlayerEntryData.USER_LINKS_FORUM.getTableColumnName());
+            long onlineTime = rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
+            String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
+            String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
 
-                return new CachePlayer(uuid, name, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
-            }
-            return null;
+            return new CachePlayer(uuid, name, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
         }catch (SQLException e){
             //ERROR #502
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
@@ -225,7 +207,6 @@ public class SQLManager {
 
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setLong(1, newOnlineTime);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
             statement.setString(3, logPlayer.getPlayer().getName());
@@ -237,7 +218,7 @@ public class SQLManager {
                 return;
             }
             SnorlaxLOG.logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not save onlinetime of user: [name: " + logPlayer.getPlayer().getName() + "] [uuid: " + logPlayer.getPlayer().getUniqueId().toString() + "]. New Onlinetime: " + newOnlineTime);
-        }catch (SQLException e){
+        } catch (SQLException e){
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'setSavedOnlineTime();'");
             throw new RuntimeException(e);
         }
@@ -247,15 +228,12 @@ public class SQLManager {
 
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
-        if (newName.length() < 3 || cachedPlayer.getName().equals(newName)){
-            return;
-        }
+        if (newName.length() < 3 || cachedPlayer.getName().equals(newName)) return;
 
         this.checkCon();
 
         String sql = SQLQuery.UPDATE_USER_PROFILE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", PlayerEntryData.USER_NAME.getTableColumnName());
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setString(1, newName);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
@@ -267,21 +245,17 @@ public class SQLManager {
     }
 
     public void updatePlayerProfileLastSeen(LOGPlayer logPlayer){
-
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
 
-        if (cachedPlayer.getLastOnline().equals(timestamp) && cachedPlayer.getLastOnline() != null){
-            return;
-        }
+        if (cachedPlayer.getLastOnline().equals(timestamp) && cachedPlayer.getLastOnline() != null) return;
 
         this.checkCon();
 
         String sql = SQLQuery.UPDATE_USER_PROFILE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", PlayerEntryData.USER_LAST_JOINED.getTableColumnName());
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setTimestamp(1, timestamp);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
@@ -293,10 +267,9 @@ public class SQLManager {
     }
 
     public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, String newValue){
-        if (index.equals(PlayerEntryData.USER_UUID))return;
+        if (index.equals(PlayerEntryData.USER_UUID)) return;
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setString(1, newValue);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
@@ -308,10 +281,9 @@ public class SQLManager {
     }
 
     public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, Integer newValue){
-        if (index.equals(PlayerEntryData.USER_UUID))return;
+        if (index.equals(PlayerEntryData.USER_UUID)) return;
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setInt(1, newValue);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
@@ -323,10 +295,9 @@ public class SQLManager {
     }
 
     public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, Timestamp newValue){
-        if (index.equals(PlayerEntryData.USER_UUID))return;
+        if (index.equals(PlayerEntryData.USER_UUID)) return;
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setTimestamp(1, newValue);
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
@@ -337,18 +308,14 @@ public class SQLManager {
         }
     }
     public void updatePlayerProfileIP(LOGPlayer logPlayer){
-
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
-        if (cachedPlayer.getIP().equals(logPlayer.getUserIP())){
-            return;
-        }
+        if (cachedPlayer.getIP().equals(logPlayer.getUserIP())) return;
 
         this.checkCon();
 
         String sql = SQLQuery.UPDATE_USER_PROFILE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", PlayerEntryData.USER_CACHED_IP.getTableColumnName());
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
-
             statement.setString(1, logPlayer.getUserIP());
             statement.setString(2, logPlayer.getPlayer().getUniqueId().toString());
 
@@ -360,11 +327,8 @@ public class SQLManager {
     }
 
     private void checkCon(){
-
         try {
-            if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) {
-                con = SnorlaxLOG.getInstance().mySQL.openConnection();
-            }
+            if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = SnorlaxLOG.getInstance().mySQL.openConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

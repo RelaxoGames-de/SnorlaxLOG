@@ -29,9 +29,7 @@ public class FileManager {
          * If it doesn't, it creates a new folder
          */
         File datafolder = SnorlaxLOG.getInstance().getDataFolder();
-        if (!datafolder.exists()) {
-            datafolder.mkdirs();
-        }
+        if (!datafolder.exists()) datafolder.mkdirs();
 
         /* Creates the database.yml wich is used for the login to the MySQL Database
          */
@@ -50,9 +48,7 @@ public class FileManager {
          */
 
         langFolder = new File(SnorlaxLOG.getInstance().getDataFolder().getPath() + "//languages");
-        if (!langFolder.exists()) {
-            langFolder.mkdirs();
-        }
+        if (!langFolder.exists()) langFolder.mkdirs();
 
         //GERMAN FILE
         File germanFile = new File(langFolder, "de_DE.yml");
@@ -169,7 +165,7 @@ public class FileManager {
         Configuration fc;
         try {
             fc = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config);
-        }catch (IOException e){
+        } catch (IOException e){
             throw new RuntimeException(e);
         }
 

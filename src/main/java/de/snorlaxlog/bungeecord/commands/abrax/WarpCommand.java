@@ -62,12 +62,14 @@ public class WarpCommand extends Command {
         String abort = LanguageManager.getMessage(logPlayer.language(), "ErrorUnknownError");
 
         AbraxConnectPlayerEvent connectPlayerEvent = new AbraxConnectPlayerEvent(p, logPlayer, server, p.getServer().getInfo(), relocatedServer, msg, abort);
+
         if (!connectPlayerEvent.isCancelled()) {
             p.connect(ProxyServer.getInstance().getServerInfo(server));
             p.sendMessage(CommandPrefix.getAbraxPrefix() + connectPlayerEvent.getConnectMessage());
             SnorlaxLOG.getInstance().getProxy().getPluginManager().callEvent(connectPlayerEvent);
             return;
         }
+
         p.sendMessage(CommandPrefix.getAbraxPrefix() + connectPlayerEvent.getAbortMessage());
     }
 }

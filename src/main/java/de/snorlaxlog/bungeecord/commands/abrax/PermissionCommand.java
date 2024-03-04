@@ -67,7 +67,7 @@ public class PermissionCommand extends Command implements TabExecutor {
             targetUser.data().add(Node.builder(pmSc.getPermission()).build());
             userManager.saveUser(targetUser);
             p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "PermissionGranted").replace("{PERMISSION}", pmSc.getPermission()).replace("{PLAYER}", target.getName()));
-        }else if (args[0].equalsIgnoreCase("revoke")) {
+        } else if (args[0].equalsIgnoreCase("revoke")) {
             if (!targetUser.getCachedData().getPermissionData().checkPermission(pmSc.getPermission()).asBoolean()){
                 p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorHasNotPermission"));
                 return;

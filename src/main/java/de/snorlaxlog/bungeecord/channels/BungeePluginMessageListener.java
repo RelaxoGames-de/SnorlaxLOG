@@ -13,9 +13,7 @@ public class BungeePluginMessageListener implements Listener {
 
     @EventHandler
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!event.getTag().equals("BungeeCord")) {
-            return;
-        }
+        if (!event.getTag().equals("BungeeCord")) return;
     
         event.setCancelled(true);
     
