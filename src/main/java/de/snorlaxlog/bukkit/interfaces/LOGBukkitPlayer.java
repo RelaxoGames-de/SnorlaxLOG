@@ -36,16 +36,15 @@ public class LOGBukkitPlayer implements LOGPlayer{
 
     @Override
     public UUID getUUIDFromDatabase() {
-        if (uuid == null){
-            uuid = sqlManager.getUUIDThroughName(player.getName());
-        }
+        if (uuid == null) uuid = sqlManager.getUUIDThroughName(player.getName());
         return uuid;
     }
 
     @Override
-    public String getName() {
+    public String getName () {
         if (name == null) {
-            name = sqlManager.getCorrectNameFromLOWERCASE(name.toLowerCase());
+            String lowercaseName = player.getName().toLowerCase();
+            name = sqlManager.getCorrectNameFromLOWERCASE(lowercaseName);
         }
         return name;
     }
@@ -72,9 +71,7 @@ public class LOGBukkitPlayer implements LOGPlayer{
 
     @Override
     public Language language() {
-        if (language == null){
-            language = Language.convertLanguage(sqlManager.getPlayerInfos(this).getLanguage());
-        }
+        if (language == null) language = Language.convertLanguage(sqlManager.getPlayerInfos(this).getLanguage());
         return language;
     }
 

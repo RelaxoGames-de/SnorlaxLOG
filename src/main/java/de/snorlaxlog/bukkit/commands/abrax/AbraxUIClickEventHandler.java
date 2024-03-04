@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class AbraxUIClickEventHandler {
     public static void handleClick(InventoryClickEvent event) {
@@ -19,7 +20,7 @@ public class AbraxUIClickEventHandler {
         try {
             Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
 
-            String serverName = event.getCurrentItem().getItemMeta().getLocalizedName().replace("snorlaxlog.ui.inventorymanager.warpui.", "");
+            String serverName = Objects.requireNonNull(Objects.requireNonNull(event.getCurrentItem()).getItemMeta()).getLocalizedName().replace("snorlaxlog.ui.inventorymanager.warpui.", "");
 
             dataOutputStream.writeUTF("warpui");
             dataOutputStream.writeUTF(player.getName() + ":" + serverName);
