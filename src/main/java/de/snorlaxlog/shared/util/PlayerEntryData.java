@@ -13,9 +13,9 @@ public enum PlayerEntryData {
     USER_LANGUAGE("user_language_selected", 9, DatabaseData.VARCHAR),
     USER_CACHED_IP("user_last_cached_IP", 10, DatabaseData.VARCHAR);
 
-    String tableColumnName;
-    int columnPlace;
-    DatabaseData datatype;
+    final String tableColumnName;
+    final int columnPlace;
+    final DatabaseData datatype;
 
     PlayerEntryData(String tableColumnName, int columnPlace, DatabaseData datatype) {
         this.tableColumnName = tableColumnName;

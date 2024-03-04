@@ -1,12 +1,11 @@
 package de.snorlaxlog.shared.util;
 
 public enum Language {
-
     de_DE("de_DE"),
     en_US("en_US"),
     system_default("de_DE");
 
-    String initials;
+    final String initials;
 
     Language(String initials) {
         this.initials = initials;

@@ -68,15 +68,14 @@ public class MySQL {
     /** This Method closes the MySQL-Database connection */
     public void close() {
         try {
-            if (con != null) {
-                con.close();
-                ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
-                ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
-                ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\tVerbindung zur MySQL - Datenbank abgebrochen!"));
-                ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\tSollte dies ein Fehler sein, starte bitte das System neu!!\n"));
-                ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
-                ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
-            }
+            if (con == null) return;
+            con.close();
+            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
+            ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
+            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\tVerbindung zur MySQL - Datenbank abgebrochen!"));
+            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\tSollte dies ein Fehler sein, starte bitte das System neu!!\n"));
+            ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
+            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
         } catch (SQLException e) {
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
@@ -93,10 +92,7 @@ public class MySQL {
      * @return if the connection is opend or not.
      */
     public boolean hasConnection() {
-        if (this.con != null) {
-            return true;
-        }
-        return false;
+        return this.con != null;
     }
 
     /**

@@ -10,14 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class LanguageManager {
 
-
     /** This Class returns messages using the Message list from the FileManager.java
      */
-
-    private static Map<String, Map<String, String>> messages = new HashMap<>();
+    private static final Map<String, Map<String, String>> messages = new HashMap<>();
 
     /**
      * Gets a Message using a specified local to return the specified message in a language
@@ -27,7 +26,6 @@ public class LanguageManager {
      */
     @Deprecated
     public static String getMessage(String locale, String fileKey){
-
         return messages.getOrDefault(locale, messages.get(Language.system_default.getInitials())).getOrDefault(fileKey, "KEY NOT SET!");
     }
 
@@ -48,7 +46,7 @@ public class LanguageManager {
     public static void loadBungeeMessage() {
         /* This Code Section gets all the Keys and Messages of the Language Files and put them in a HashMap.
          */
-        for (File file : FileManager.getLangFolder().listFiles()) {
+        for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles())) {
             Map<String, String> localeMessages = new HashMap<>();
 
             Configuration lang = null;

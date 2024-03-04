@@ -20,7 +20,7 @@ public enum PermissionShotCut {
     ABRAX_JOIN_SERVER_PRE("snorlax.abrax.warp."),
     PERMISSION_GRANT_COMMAND("snorlax.permission.command");
 
-    String permission;
+    final String permission;
 
     PermissionShotCut(String permission) {
         this.permission = permission;
@@ -32,11 +32,9 @@ public enum PermissionShotCut {
 
 
     public static PermissionShotCut getPermissionSC(String pmsc) {
-        for (PermissionShotCut permissionShotCut : PermissionShotCut.values()) {
-            if (permissionShotCut.getPermission().toLowerCase().equals(pmsc.toLowerCase())) {
-                return permissionShotCut;
-            }
-        }
+        for (PermissionShotCut permissionShotCut : PermissionShotCut.values())
+            if (permissionShotCut.getPermission().equalsIgnoreCase(pmsc)) return permissionShotCut;
+
         return null;
     }
 

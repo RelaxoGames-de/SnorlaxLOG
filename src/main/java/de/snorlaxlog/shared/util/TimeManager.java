@@ -16,8 +16,7 @@ public class TimeManager {
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         formatter.setTimeZone(timezone);
-        String formattedDate = formatter.format(date);
-        return formattedDate;
+        return formatter.format(date);
     }
 
     public static String getFormattedHours(Timestamp time){
@@ -29,8 +28,7 @@ public class TimeManager {
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         formatter.setTimeZone(timezone);
-        String formattedDate = formatter.format(date);
-        return formattedDate;
+        return formatter.format(date);
     }
 
     public static String getFormattedYears(Timestamp time){
@@ -42,8 +40,7 @@ public class TimeManager {
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         formatter.setTimeZone(timezone);
-        String formattedDate = formatter.format(date);
-        return formattedDate;
+        return formatter.format(date);
     }
 
     public static String getFormattedTimeLore(Timestamp time){
@@ -55,7 +52,6 @@ public class TimeManager {
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM HH:mm");
         formatter.setTimeZone(timezone);
-        String formattedDate = formatter.format(date);
-        return formattedDate;
+        return formatter.format(date);
     }
 }

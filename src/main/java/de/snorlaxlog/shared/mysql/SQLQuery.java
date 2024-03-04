@@ -29,7 +29,7 @@ public enum SQLQuery {
     UPDATE_USER_ONLINE_TIME("UPDATE `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` SET `user_total_onlinetime` = ? WHERE `user_uuid` = ? AND `user_name` = ?;"),
     UPDATE_USER_PROFILE("UPDATE `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` SET `%ENTRY_DATA%` = ? WHERE `user_uuid` = ?;");
 
-    String sql;
+    final String sql;
 
     SQLQuery(String sql) {
         this.sql = sql;
