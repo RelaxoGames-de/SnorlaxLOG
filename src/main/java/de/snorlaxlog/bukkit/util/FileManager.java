@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class FileManager {
 
@@ -22,21 +23,17 @@ public class FileManager {
 
         public static void createFiles() {
                 datafolder = LOGLaxAPI.getInstance().getDataFolder();
-                if (!datafolder.exists()) {
-                        datafolder.mkdir();
-                }
+                if (!datafolder.exists()) datafolder.mkdir();
 
 
                 langFolder = new File(datafolder.getPath() + "//languages");
-                if (!langFolder.exists()) {
-                        langFolder.mkdir();
-                }
+                if (!langFolder.exists()) langFolder.mkdir();
 
                 File enFile = new File(langFolder, "en_US.yml");
                 try {
                         if (!enFile.exists()) {
                                 InputStream is = LOGLaxAPI.getInstance().getResource("en_US.yml");
-                                Files.copy(is, enFile.toPath());
+                            Files.copy(is, enFile.toPath());
                         }
                 } catch (IOException e) {
                         e.printStackTrace();
@@ -64,22 +61,21 @@ public class FileManager {
                         e.printStackTrace();
                 }
 
-                if (de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles().length > 0) {
-                        for (File file : de.snorlaxlog.bukkit.util.FileManager.getLangFolder().listFiles()) {
-                                Map<String, String> localeMessages = new HashMap<>();
+            Objects.requireNonNull(FileManager.getLangFolder().listFiles());
+            for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles())) {
+                Map<String, String> localeMessages = new HashMap<>();
 
-                                FileConfiguration lang = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(file);
-                                for (String key : lang.getKeys(false)) {
-                                        for (String messName : lang.getConfigurationSection(key).getKeys(false)) {
-                                                String message = org.bukkit.ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
-                                                localeMessages.put(messName, message);
-                                        }
-                                }
-                                String fileName = file.getName().split(".yml")[0];
-                                LanguageManager.loadBukkitMessage(fileName, localeMessages);
-                                System.out.println(file.getName() + " loaded!");
-                        }
+                FileConfiguration lang = YamlConfiguration.loadConfiguration(file);
+                for (String key : lang.getKeys(false)) {
+                    for (String messName : Objects.requireNonNull(lang.getConfigurationSection(key)).getKeys(false)) {
+                        String message = org.bukkit.ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(lang.getString(key + "." + messName)));
+                        localeMessages.put(messName, message);
+                    }
                 }
+                String fileName = file.getName().split(".yml")[0];
+                LanguageManager.loadBukkitMessage(fileName, localeMessages);
+                System.out.println(file.getName() + " loaded!");
+            }
         }
 
 
@@ -173,9 +169,7 @@ public class FileManager {
         }
 
         public static void deleteFiles() {
-                if (datafolder != null || datafolder.exists()) {
-                        datafolder.delete();
-                }
+                if (datafolder != null || datafolder.exists()) datafolder.delete();
         }
 
         public static File getLangFolder() {
