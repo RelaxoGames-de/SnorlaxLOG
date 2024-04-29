@@ -8,6 +8,11 @@
 # IntelliJ
 out/
 
+# Editor Files
+.fleet
+.vscode
+.idea
+
 # Compiled class file
 *.class
 
