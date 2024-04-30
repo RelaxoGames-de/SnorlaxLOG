@@ -3,7 +3,7 @@ package de.relaxogames.snorlaxlog.bungeecord.commands.abrax;
 import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
@@ -34,7 +34,7 @@ public class WarpCommand extends Command {
             return;
         }
 
-        if (!logPlayer.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER)){
+        if (!logPlayer.hasPermission(PermissionShortCut.ABRAX_JOIN_SERVER)){
              p.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
              return;
         }
@@ -48,7 +48,7 @@ public class WarpCommand extends Command {
 
         String serverName = server.replace("-", ".");
 
-        if (!logPlayer.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER_PRE.getPermission() + serverName)){
+        if (!logPlayer.hasPermission(PermissionShortCut.ABRAX_JOIN_SERVER_PRE.getPermission() + serverName)){
             p.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermForDir").replace("{SERVER}", relocatedServer.getName()));
             return;
         }

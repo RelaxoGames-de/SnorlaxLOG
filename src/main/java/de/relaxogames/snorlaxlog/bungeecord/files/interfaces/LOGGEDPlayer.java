@@ -2,7 +2,7 @@ package de.relaxogames.snorlaxlog.bungeecord.files.interfaces;
 
 import de.relaxogames.snorlaxlog.bungeecord.commands.SnorlaxLOGCommand;
 import de.relaxogames.snorlaxlog.bungeecord.mysql.SQLManager;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
@@ -81,7 +81,7 @@ public class LOGGEDPlayer implements LOGPlayer {
      * @return
      */
     @Override
-    public boolean hasPermission(PermissionShotCut permission) {
+    public boolean hasPermission(PermissionShortCut permission) {
         UserManager um = LuckPermsProvider.get().getUserManager();
         User user = um.getUser(getPlayer().getUniqueId());
 

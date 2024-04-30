@@ -2,7 +2,7 @@ package de.relaxogames.snorlaxlog.shared;
 
 import java.util.Arrays;
 
-public enum PermissionShotCut {
+public enum PermissionShortCut {
     SL_LOG_COMMAND_USE("snorlax.log.command.use"),
     SL_LOG_NOTIFY_READ("snorlax.log.notify"),
     SL_LOG_LEVEL_INFO("snorlax.log.info"),
@@ -23,7 +23,7 @@ public enum PermissionShotCut {
 
     final String permission;
 
-    PermissionShotCut(String permission) {
+    PermissionShortCut(String permission) {
         this.permission = permission;
     }
 
@@ -31,8 +31,8 @@ public enum PermissionShotCut {
         return permission;
     }
 
-    public static PermissionShotCut getPermissionSC(String pmsc) {
-        return Arrays.stream(PermissionShotCut.values())
+    public static PermissionShortCut getPermissionSC(String pmsc) {
+        return Arrays.stream(PermissionShortCut.values())
             .filter(permissionShotCut -> permissionShotCut.getPermission().equalsIgnoreCase(pmsc))
             .findFirst()
             .orElse(null);

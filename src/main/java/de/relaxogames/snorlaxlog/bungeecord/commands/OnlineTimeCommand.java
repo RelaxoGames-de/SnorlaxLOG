@@ -4,7 +4,7 @@ import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.CachedPlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 import net.md_5.bungee.api.CommandSender;
@@ -36,14 +36,14 @@ public class OnlineTimeCommand extends Command {
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
         CachedPlayer cachedPlayer = logPlayer.getCachedPlayer();
 
-        if (cooldown.contains(player.getUniqueId()) && !logPlayer.hasPermission(PermissionShotCut.ONLINE_TIME_BYPASS)){
+        if (cooldown.contains(player.getUniqueId()) && !logPlayer.hasPermission(PermissionShortCut.ONLINE_TIME_BYPASS)){
             player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorCMDCooldown").replace("%COOLDOWN%", String.valueOf(cooldownTime)));
             return;
         }
 
         long gainedOT = cachedPlayer.getOnlineTime();
         Date date = new Date(gainedOT);
-        if (args.length == 1 && logPlayer.hasPermission(PermissionShotCut.ONLINE_TIME_OTHER)){
+        if (args.length == 1 && logPlayer.hasPermission(PermissionShortCut.ONLINE_TIME_OTHER)){
             player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
             return;
         }

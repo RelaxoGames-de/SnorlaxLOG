@@ -5,7 +5,7 @@ import de.relaxogames.snorlaxlog.bungeecord.api.APIBungeeManager;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.CachedPlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
@@ -18,7 +18,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PermissionCommand extends Command implements TabExecutor {
 
@@ -37,7 +39,7 @@ public class PermissionCommand extends Command implements TabExecutor {
         ProxiedPlayer p = (ProxiedPlayer) sender;
         LOGPlayer logPlayer = new LOGGEDPlayer(p);
 
-        if (!logPlayer.hasPermission(PermissionShotCut.PERMISSION_GRANT_COMMAND)){
+        if (!logPlayer.hasPermission(PermissionShortCut.PERMISSION_GRANT_COMMAND)){
             p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
             return;
         }
@@ -47,7 +49,7 @@ public class PermissionCommand extends Command implements TabExecutor {
             return;
         }
 
-        if (!PermissionShotCut.isPermission(args[2])){
+        if (!PermissionShortCut.isPermission(args[2])){
             p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorNotPSCAvailable"));
             return;
         }
@@ -56,19 +58,19 @@ public class PermissionCommand extends Command implements TabExecutor {
         User targetUser = userManager.getUser(target.getName());
 
         String perm = args[2];
-        PermissionShotCut pmSc = PermissionShotCut.getPermissionSC(perm);
+        PermissionShortCut pmSc = PermissionShortCut.getPermissionSC(perm);
 
         if (args[0].equalsIgnoreCase("grant")) {
-            if (targetUser.getCachedData().getPermissionData().checkPermission(pmSc.getPermission()).asBoolean()){
+            if (targetUser != null && targetUser.getCachedData().getPermissionData().checkPermission(pmSc.getPermission()).asBoolean()){
                 p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorHasPermission"));
                 return;
             }
 
-            targetUser.data().add(Node.builder(pmSc.getPermission()).build());
+            Objects.requireNonNull(targetUser).data().add(Node.builder(pmSc.getPermission()).build());
             userManager.saveUser(targetUser);
             p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "PermissionGranted").replace("{PERMISSION}", pmSc.getPermission()).replace("{PLAYER}", target.getName()));
         } else if (args[0].equalsIgnoreCase("revoke")) {
-            if (!targetUser.getCachedData().getPermissionData().checkPermission(pmSc.getPermission()).asBoolean()){
+            if (!(targetUser != null && targetUser.getCachedData().getPermissionData().checkPermission(pmSc.getPermission()).asBoolean())){
                 p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorHasNotPermission"));
                 return;
             }
@@ -81,26 +83,9 @@ public class PermissionCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-        if (args.length == 1){
-            ArrayList<String> tab = new ArrayList<>();
-            tab.add("revoke");
-            tab.add("grant");
-            return tab;
-        }
-        if (args.length == 2){
-            ArrayList<String> tab = new ArrayList<>();
-            for (ProxiedPlayer pp : SnorlaxLOG.getInstance().getProxy().getPlayers()){
-                tab.add(pp.getName());
-            }
-            return tab;
-        }
-        if (args.length == 3){
-            ArrayList<String> tab = new ArrayList<>();
-            for (PermissionShotCut permissionShotCut : PermissionShotCut.values()){
-                tab.add(permissionShotCut.getPermission());
-            }
-            return tab;
-        }
+        if (args.length == 1) return Arrays.asList("revoke", "grant");
+        else if(args.length == 2) return SnorlaxLOG.getInstance().getProxy().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toList());
+        else if (args.length == 3) return Arrays.stream(PermissionShortCut.values()).map(PermissionShortCut::getPermission).collect(Collectors.toList());
         return null;
     }
 }

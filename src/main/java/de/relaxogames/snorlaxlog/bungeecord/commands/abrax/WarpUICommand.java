@@ -2,7 +2,7 @@ package de.relaxogames.snorlaxlog.bungeecord.commands.abrax;
 
 import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 import net.md_5.bungee.api.ProxyServer;
@@ -21,7 +21,7 @@ public class WarpUICommand {
         ServerInfo relocatedServer = ProxyServer.getInstance().getServerInfo(data.split(":")[1]);
         String serverName = data.split(":")[1].replace("-", ".");
 
-        if (!loggedPlayer.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER_PRE.getPermission() + serverName)) {
+        if (!loggedPlayer.hasPermission(PermissionShortCut.ABRAX_JOIN_SERVER_PRE.getPermission() + serverName)) {
             loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(loggedPlayer.language(), "NoPermForDir").replace("{SERVER}", relocatedServer.getName()));
             return;
         }

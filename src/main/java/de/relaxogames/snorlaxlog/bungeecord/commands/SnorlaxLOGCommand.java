@@ -3,7 +3,7 @@ package de.relaxogames.snorlaxlog.bungeecord.commands;
 import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
@@ -23,7 +23,7 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
 
 
     public SnorlaxLOGCommand(){
-        super("log", PermissionShotCut.SL_LOG_COMMAND_USE.getPermission(), "sl", "snorlaxlog");
+        super("log", PermissionShortCut.SL_LOG_COMMAND_USE.getPermission(), "sl", "snorlaxlog");
     }
 
     /**
@@ -40,7 +40,7 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
         ProxiedPlayer player = (ProxiedPlayer) sender;
         LOGPlayer logPla = new LOGGEDPlayer(player);
 
-        if (!logPla.hasPermission(PermissionShotCut.SL_LOG_COMMAND_USE)){
+        if (!logPla.hasPermission(PermissionShortCut.SL_LOG_COMMAND_USE)){
             player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPla.language(), "NoPermission1"));
             SnorlaxLOG.logMessage(Level.INFO, player.getName() + " issued the Command " + this.getName() + " without any permission for that!");
             return;
@@ -76,23 +76,23 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
                 }
                 Level loggingLvl = Level.parse(args[1]);
 
-                if (loggingLvl.equals(Level.INFO) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_INFO) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)){
+                if (loggingLvl.equals(Level.INFO) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_INFO) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_EVERY)){
                     noPermissionForChannel(logPla);
                     return;
                 }
-                if (loggingLvl.equals(Level.OFF) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_OFF) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)){
+                if (loggingLvl.equals(Level.OFF) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_OFF) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_EVERY)){
                     noPermissionForChannel(logPla);
                     return;
                 }
-                if (loggingLvl.equals(Level.WARNING) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_WARNING) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)){
+                if (loggingLvl.equals(Level.WARNING) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_WARNING) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_EVERY)){
                     noPermissionForChannel(logPla);
                     return;
                 }
-                if (loggingLvl.equals(Level.ALL) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_ALL) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)){
+                if (loggingLvl.equals(Level.ALL) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_ALL) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_EVERY)){
                     noPermissionForChannel(logPla);
                     return;
                 }
-                if (loggingLvl.equals(Level.SEVERE) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_SERVERE) && !logPla.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY)){
+                if (loggingLvl.equals(Level.SEVERE) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_SERVERE) && !logPla.hasPermission(PermissionShortCut.SL_LOG_LEVEL_EVERY)){
                     noPermissionForChannel(logPla);
                     return;
                 }
@@ -127,23 +127,23 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
         LOGPlayer logPlayer = new LOGGEDPlayer((ProxiedPlayer) sender);
         ArrayList<String> tab = new ArrayList<>();
         if (args.length == 0){
-            if (logPlayer.hasPermission(PermissionShotCut.SL_LOG_NOTIFY_READ)) tab.add("toggle");
+            if (logPlayer.hasPermission(PermissionShortCut.SL_LOG_NOTIFY_READ)) tab.add("toggle");
             tab.add("credits");
             tab.add("version");
             return tab;
         }
 
-        Map<String, PermissionShotCut> logLevels = Map.of(
-                "info", PermissionShotCut.SL_LOG_LEVEL_INFO,
-                "off", PermissionShotCut.SL_LOG_LEVEL_OFF,
-                "warning", PermissionShotCut.SL_LOG_LEVEL_WARNING,
-                "severe", PermissionShotCut.SL_LOG_LEVEL_SERVERE,
-                "all", PermissionShotCut.SL_LOG_LEVEL_ALL
+        Map<String, PermissionShortCut> logLevels = Map.of(
+                "info", PermissionShortCut.SL_LOG_LEVEL_INFO,
+                "off", PermissionShortCut.SL_LOG_LEVEL_OFF,
+                "warning", PermissionShortCut.SL_LOG_LEVEL_WARNING,
+                "severe", PermissionShortCut.SL_LOG_LEVEL_SERVERE,
+                "all", PermissionShortCut.SL_LOG_LEVEL_ALL
         );
 
         if (args.length == 1 && args[0].equalsIgnoreCase("toggle ") && !logPlayer.notifyIsActive()) {
-            for (Map.Entry<String, PermissionShotCut> entry : logLevels.entrySet()) {
-                if (logPlayer.hasPermission(entry.getValue()) || logPlayer.hasPermission(PermissionShotCut.SL_LOG_LEVEL_EVERY))
+            for (Map.Entry<String, PermissionShortCut> entry : logLevels.entrySet()) {
+                if (logPlayer.hasPermission(entry.getValue()) || logPlayer.hasPermission(PermissionShortCut.SL_LOG_LEVEL_EVERY))
                     tab.add(entry.getKey());
             }
             return tab;
