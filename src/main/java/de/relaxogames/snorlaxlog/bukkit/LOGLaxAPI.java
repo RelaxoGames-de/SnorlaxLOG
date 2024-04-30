@@ -1,14 +1,14 @@
-package de.snorlaxlog.bukkit;
+package de.relaxogames.snorlaxlog.bukkit;
 
-import de.snorlaxlog.bukkit.channels.PluginChannelMessageListener;
-import de.snorlaxlog.bukkit.commands.abrax.WarpUICommand;
-import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
-import de.snorlaxlog.bukkit.mysql.SQLManager;
-import de.snorlaxlog.bukkit.ui.InventoryManagerClickListener;
+import de.relaxogames.snorlaxlog.bukkit.channels.PluginChannelMessageListener;
+import de.relaxogames.snorlaxlog.bukkit.commands.abrax.WarpUICommand;
+import de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer;
+import de.relaxogames.snorlaxlog.bukkit.mysql.MySQL;
+import de.relaxogames.snorlaxlog.bukkit.mysql.SQLManager;
+import de.relaxogames.snorlaxlog.bukkit.ui.InventoryManagerClickListener;
+import de.relaxogames.snorlaxlog.bukkit.util.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import de.snorlaxlog.bukkit.mysql.MySQL;
-import de.snorlaxlog.bukkit.util.FileManager;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -16,7 +16,7 @@ import java.util.logging.Level;
 public class LOGLaxAPI extends JavaPlugin {
 
     private static LOGLaxAPI instance;
-    public de.snorlaxlog.bukkit.mysql.MySQL mysql;
+    public de.relaxogames.snorlaxlog.bukkit.mysql.MySQL mysql;
     private HashMap<String, CachedPlayer> allCachedPlayersByName;
 
     @Override

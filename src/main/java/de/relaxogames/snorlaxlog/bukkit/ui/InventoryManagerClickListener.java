@@ -1,6 +1,6 @@
-package de.snorlaxlog.bukkit.ui;
+package de.relaxogames.snorlaxlog.bukkit.ui;
 
-import de.snorlaxlog.bukkit.commands.abrax.AbraxUIClickEventHandler;
+import de.relaxogames.snorlaxlog.bukkit.commands.abrax.AbraxUIClickEventHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;

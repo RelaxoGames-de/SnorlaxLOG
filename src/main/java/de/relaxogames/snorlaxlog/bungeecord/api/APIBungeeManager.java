@@ -1,7 +1,7 @@
-package de.snorlaxlog.bungeecord.api;
+package de.relaxogames.snorlaxlog.bungeecord.api;
 
-import de.snorlaxlog.bungeecord.SnorlaxLOG;
-import de.snorlaxlog.bungeecord.mysql.SQLManager;
+import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
+import de.relaxogames.snorlaxlog.bungeecord.mysql.SQLManager;
 
 public class APIBungeeManager {
 

@@ -1,4 +1,4 @@
-package de.snorlaxlog.shared;
+package de.relaxogames.snorlaxlog.shared;
 
 import java.util.Arrays;
 

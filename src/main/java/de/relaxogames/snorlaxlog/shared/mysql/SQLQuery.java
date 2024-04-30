@@ -1,4 +1,4 @@
-package de.snorlaxlog.shared.mysql;
+package de.relaxogames.snorlaxlog.shared.mysql;
 
 public enum SQLQuery {
 

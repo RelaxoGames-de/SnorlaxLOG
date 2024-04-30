@@ -1,8 +1,8 @@
-package de.snorlaxlog.bukkit.mysql;
+package de.relaxogames.snorlaxlog.bukkit.mysql;
 
-import de.snorlaxlog.bukkit.LOGLaxAPI;
-import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
-import de.snorlaxlog.shared.util.PlayerEntryData;
+import de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI;
+import de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer;
+import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +26,7 @@ public class ResultSetConverter {
             String language = resultSet.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
             String ip = resultSet.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
 
-            CachedPlayer cached = new de.snorlaxlog.bukkit.interfaces.CachePlayer(name1, uuid1, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
+            CachedPlayer cached = new de.relaxogames.snorlaxlog.bukkit.interfaces.CachePlayer(name1, uuid1, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
             playerList.add(cached);
             LOGLaxAPI.getInstance().getAllCachedPlayersByName().put(name1, cached);
         }

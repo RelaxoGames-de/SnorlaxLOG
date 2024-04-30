@@ -1,15 +1,15 @@
-package de.snorlaxlog.bungeecord.mysql;
+package de.relaxogames.snorlaxlog.bungeecord.mysql;
 
-import de.snorlaxlog.bungeecord.SnorlaxLOG;
-import de.snorlaxlog.bungeecord.files.interfaces.CachePlayer;
-import de.snorlaxlog.bungeecord.files.interfaces.CachedPlayer;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.snorlaxlog.shared.mysql.ConnectionUtil;
-import de.snorlaxlog.shared.util.Language;
-import de.snorlaxlog.shared.util.PlayerEntryData;
-import de.snorlaxlog.shared.mysql.SQLQuery;
-import de.snorlaxlog.shared.util.CommandPrefix;
-import de.snorlaxlog.bungeecord.files.FileManager;
+import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
+import de.relaxogames.snorlaxlog.bungeecord.files.FileManager;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.CachePlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.CachedPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.shared.mysql.ConnectionUtil;
+import de.relaxogames.snorlaxlog.shared.mysql.SQLQuery;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
+import de.relaxogames.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.sql.*;

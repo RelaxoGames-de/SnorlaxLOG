@@ -1,8 +1,8 @@
-package de.snorlaxlog.bukkit.mysql;
+package de.relaxogames.snorlaxlog.bukkit.mysql;
 
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import de.snorlaxlog.shared.util.CommandPrefix;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -113,6 +113,4 @@ public class MySQL {
     public Connection getConnection() {
         return con;
     }
-
-
 }

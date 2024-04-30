@@ -1,8 +1,8 @@
-package de.snorlaxlog.bukkit.api;
+package de.relaxogames.snorlaxlog.bukkit.api;
 
-import de.snorlaxlog.bukkit.LOGLaxAPI;
-import de.snorlaxlog.bukkit.mysql.SQLManager;
-import de.snorlaxlog.bukkit.util.FileManager;
+import de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI;
+import de.relaxogames.snorlaxlog.bukkit.mysql.SQLManager;
+import de.relaxogames.snorlaxlog.bukkit.util.FileManager;
 
 public class APIBukkitManager {
     private static LOGLaxAPI logLaxAPI = LOGLaxAPI.getInstance();

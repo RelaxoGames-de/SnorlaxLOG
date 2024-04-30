@@ -1,4 +1,4 @@
-package de.snorlaxlog.shared.util;
+package de.relaxogames.snorlaxlog.shared.util;
 
 import de.snorlaxlog.bungeecord.files.FileManager;
 import net.md_5.bungee.api.ChatColor;

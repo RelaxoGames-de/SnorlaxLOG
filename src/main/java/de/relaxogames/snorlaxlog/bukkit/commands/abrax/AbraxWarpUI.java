@@ -1,7 +1,7 @@
-package de.snorlaxlog.bukkit.commands.abrax;
+package de.relaxogames.snorlaxlog.bukkit.commands.abrax;
 
-import de.snorlaxlog.bukkit.ui.InventoryManager;
-import de.snorlaxlog.bukkit.ui.ItemBuilder;
+import de.relaxogames.snorlaxlog.bukkit.ui.InventoryManager;
+import de.relaxogames.snorlaxlog.bukkit.ui.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

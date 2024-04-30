@@ -1,18 +1,18 @@
-package de.snorlaxlog.bungeecord;
+package de.relaxogames.snorlaxlog.bungeecord;
 
-import de.snorlaxlog.bungeecord.channels.BungeePluginMessageListener;
-import de.snorlaxlog.bungeecord.commands.abrax.PermissionCommand;
-import de.snorlaxlog.bungeecord.commands.abrax.WarpCommand;
-import de.snorlaxlog.bungeecord.commands.abrax.WarpUICommand;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.snorlaxlog.bungeecord.listener.JoinListener;
-import de.snorlaxlog.bungeecord.listener.KickEvent;
-import de.snorlaxlog.bungeecord.listener.QuitListener;
-import de.snorlaxlog.bungeecord.commands.*;
-import de.snorlaxlog.bungeecord.mysql.SQLManager;
-import de.snorlaxlog.shared.util.CommandPrefix;
-import de.snorlaxlog.bungeecord.files.FileManager;
-import de.snorlaxlog.shared.mysql.MySQL;
+import de.relaxogames.snorlaxlog.bungeecord.channels.BungeePluginMessageListener;
+import de.relaxogames.snorlaxlog.bungeecord.commands.OnlineTimeCommand;
+import de.relaxogames.snorlaxlog.bungeecord.commands.SnorlaxLOGCommand;
+import de.relaxogames.snorlaxlog.bungeecord.commands.abrax.PermissionCommand;
+import de.relaxogames.snorlaxlog.bungeecord.commands.abrax.WarpCommand;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.listener.JoinListener;
+import de.relaxogames.snorlaxlog.bungeecord.listener.KickEvent;
+import de.relaxogames.snorlaxlog.bungeecord.listener.QuitListener;
+import de.relaxogames.snorlaxlog.bungeecord.mysql.SQLManager;
+import de.relaxogames.snorlaxlog.bungeecord.files.FileManager;
+import de.relaxogames.snorlaxlog.shared.mysql.MySQL;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
@@ -40,7 +40,7 @@ public final class SnorlaxLOG extends Plugin {
             this.onDisable();
         }
 
-        de.snorlaxlog.bungeecord.files.FileManager.loadFiles();
+        de.relaxogames.snorlaxlog.bungeecord.files.FileManager.loadFiles();
         this.loadMySQL();
         this.registerListener();
         this.registerCommands();

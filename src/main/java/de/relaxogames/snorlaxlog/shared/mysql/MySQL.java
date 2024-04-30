@@ -1,6 +1,6 @@
-package de.snorlaxlog.shared.mysql;
+package de.relaxogames.snorlaxlog.shared.mysql;
 
-import de.snorlaxlog.shared.util.CommandPrefix;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;

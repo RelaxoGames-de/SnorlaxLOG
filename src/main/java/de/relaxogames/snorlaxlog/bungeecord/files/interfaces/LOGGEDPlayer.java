@@ -1,12 +1,12 @@
-package de.snorlaxlog.bungeecord.files.interfaces;
+package de.relaxogames.snorlaxlog.bungeecord.files.interfaces;
 
-import de.snorlaxlog.bungeecord.mysql.SQLManager;
-import de.snorlaxlog.shared.util.Language;
-import de.snorlaxlog.shared.util.PlayerEntryData;
-import de.snorlaxlog.bungeecord.commands.*;
-import de.snorlaxlog.shared.util.CommandPrefix;
-import de.snorlaxlog.shared.util.LanguageManager;
-import de.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.bungeecord.commands.SnorlaxLOGCommand;
+import de.relaxogames.snorlaxlog.bungeecord.mysql.SQLManager;
+import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
+import de.relaxogames.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
+import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
@@ -18,7 +18,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public class LOGGEDPlayer implements LOGPlayer {
-
     private SQLManager sqlManager = new SQLManager();
     private ProxiedPlayer player;
     public LOGGEDPlayer(ProxiedPlayer player) {

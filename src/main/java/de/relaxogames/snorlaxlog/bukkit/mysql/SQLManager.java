@@ -1,14 +1,13 @@
-package de.snorlaxlog.bukkit.mysql;
+package de.relaxogames.snorlaxlog.bukkit.mysql;
 
-import de.snorlaxlog.bukkit.interfaces.LOGPlayer;
-import de.snorlaxlog.shared.mysql.ConnectionUtil;
-import de.snorlaxlog.shared.mysql.SQLQuery;
-import de.snorlaxlog.shared.util.CommandPrefix;
-import de.snorlaxlog.shared.util.PlayerEntryData;
-import de.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI;
+import de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer;
+import de.relaxogames.snorlaxlog.shared.mysql.ConnectionUtil;
+import de.relaxogames.snorlaxlog.shared.mysql.SQLQuery;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
+import de.relaxogames.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
 import org.bukkit.entity.Player;
-import de.snorlaxlog.bukkit.LOGLaxAPI;
-import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 
 import java.sql.*;
 import java.util.*;
@@ -17,8 +16,8 @@ import java.util.logging.Level;
 
 public class SQLManager {
 
-    private static final String userDataTable = de.snorlaxlog.bukkit.util.FileManager.getUsersProfileTable();
-    private static final String database_path = de.snorlaxlog.bukkit.util.FileManager.getDatabase();
+    private static final String userDataTable = de.relaxogames.snorlaxlog.bukkit.util.FileManager.getUsersProfileTable();
+    private static final String database_path = de.relaxogames.snorlaxlog.bukkit.util.FileManager.getDatabase();
 
     private static Connection con = LOGLaxAPI.getInstance().mysql.openConnection();
 
@@ -160,7 +159,7 @@ public class SQLManager {
         return null;
     }
 
-    public de.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(String name){
+    public de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(String name){
         this.checkCon();
 
         UUID uuid = getUUIDThroughName(name);
@@ -185,7 +184,7 @@ public class SQLManager {
             String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
             String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
 
-            return new de.snorlaxlog.bukkit.interfaces.CachePlayer(name1, uuid1, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
+            return new de.relaxogames.snorlaxlog.bukkit.interfaces.CachePlayer(name1, uuid1, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
         }catch (SQLException e){
             //ERROR #502
             LOGLaxAPI.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
@@ -193,7 +192,7 @@ public class SQLManager {
         }
     }
 
-    public de.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
+    public de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
         this.checkCon();
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
@@ -214,7 +213,7 @@ public class SQLManager {
             String language = rs.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
             String ip = rs.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
 
-            return new de.snorlaxlog.bukkit.interfaces.CachePlayer(name, uuid, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
+            return new de.relaxogames.snorlaxlog.bukkit.interfaces.CachePlayer(name, uuid, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
         }catch (SQLException e){
             //ERROR #502
             LOGLaxAPI.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQL query 'getSavedOnlineTime' is not working! ERROR #502");
@@ -222,8 +221,8 @@ public class SQLManager {
         }
     }
 
-    public void updatePlayerProfileName(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, String newName){
-        de.snorlaxlog.bukkit.interfaces.CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
+    public void updatePlayerProfileName(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, String newName){
+        de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
         if (newName.length() < 3 || cachedPlayer.getName().equals(newName)) return;
 
@@ -241,8 +240,8 @@ public class SQLManager {
         }
     }
 
-    public void updatePlayerProfileLastSeen(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
-        de.snorlaxlog.bukkit.interfaces.CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
+    public void updatePlayerProfileLastSeen(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
+        de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
@@ -262,7 +261,7 @@ public class SQLManager {
         }
     }
 
-    public void updatePlayerSetting(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, PlayerEntryData index, String newValue){
+    public void updatePlayerSetting(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, PlayerEntryData index, String newValue){
         if (index.equals(PlayerEntryData.USER_UUID)) return;
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
         try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)) {
@@ -275,7 +274,7 @@ public class SQLManager {
         }
     }
 
-    public void updatePlayerSetting(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, PlayerEntryData index, Integer newValue){
+    public void updatePlayerSetting(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, PlayerEntryData index, Integer newValue){
         if (index.equals(PlayerEntryData.USER_UUID)) return;
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
         try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)) {
@@ -288,7 +287,7 @@ public class SQLManager {
         }
     }
 
-    public void updatePlayerSetting(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, PlayerEntryData index, Timestamp newValue){
+    public void updatePlayerSetting(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer, PlayerEntryData index, Timestamp newValue){
         if (index.equals(PlayerEntryData.USER_UUID)) return;
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
         try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)) {
@@ -300,7 +299,7 @@ public class SQLManager {
             throw new RuntimeException(e);
         }
     }
-    public void updatePlayerProfileIP(de.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
+    public void updatePlayerProfileIP(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
         if (cachedPlayer.getUUID().equals(logPlayer.getUUIDFromDatabase())) return;

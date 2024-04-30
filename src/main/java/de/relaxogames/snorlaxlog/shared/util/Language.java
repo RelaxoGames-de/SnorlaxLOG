@@ -1,4 +1,4 @@
-package de.snorlaxlog.shared.util;
+package de.relaxogames.snorlaxlog.shared.util;
 
 public enum Language {
     de_DE("de_DE"),

@@ -1,4 +1,4 @@
-package de.snorlaxlog.bukkit.ui;
+package de.relaxogames.snorlaxlog.bukkit.ui;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -44,45 +44,21 @@ public class ItemBuilder {
         return this;
     }
 
-    /**
-     * Constructs a new ItemBuilder object with the specified material and amount.
-     *
-     * @param mat the material of the item
-     * @param amount the amount of the item
-     */
     public ItemBuilder setLore(String... s){
         itemMeta.setLore(Arrays.asList(s));
         return this;
     }
 
-    /**
-     * Constructs a new ItemBuilder object with the specified material and amount.
-     *
-     * @param mat the material of the item
-     * @param amount the amount of the item
-     */
     public ItemBuilder setUnbreakable(boolean s){
         itemMeta.setUnbreakable(s);
         return this;
     }
 
-    /**
-     * Constructs a new ItemBuilder object with the specified material and amount.
-     *
-     * @param mat the material of the item
-     * @param amount the amount of the item
-     */
     public ItemBuilder addItemFlags(ItemFlag... s){
         itemMeta.addItemFlags(s);
         return this;
     }
 
-    /**
-     * Constructs a new ItemBuilder object with the specified material and amount.
-     *
-     * @param mat the material of the item
-     * @param amount the amount of the item
-     */
     @Override
     public String toString() {
         return "ItemBuilder{" +
@@ -91,12 +67,6 @@ public class ItemBuilder {
                 '}';
     }
     
-    /**
-     * Constructs a new ItemBuilder object with the specified material and amount.
-     *
-     * @param mat the material of the item
-     * @param amount the amount of the item
-     */
     public ItemStack build(){
         itemStack.setItemMeta(itemMeta);
         return itemStack;

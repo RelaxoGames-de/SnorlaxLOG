@@ -1,6 +1,6 @@
-package de.snorlaxlog.bungeecord.channels;
+package de.relaxogames.snorlaxlog.bungeecord.channels;
 
-import de.snorlaxlog.bungeecord.commands.abrax.WarpUICommand;
+import de.relaxogames.snorlaxlog.bungeecord.commands.abrax.WarpUICommand;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;

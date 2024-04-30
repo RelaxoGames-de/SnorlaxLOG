@@ -1,4 +1,4 @@
-package de.snorlaxlog.shared.util;
+package de.relaxogames.snorlaxlog.shared.util;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

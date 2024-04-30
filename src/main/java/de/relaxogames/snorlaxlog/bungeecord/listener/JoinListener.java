@@ -1,9 +1,9 @@
-package de.snorlaxlog.bungeecord.listener;
+package de.relaxogames.snorlaxlog.bungeecord.listener;
 
-import de.snorlaxlog.shared.util.CommandPrefix;
-import de.snorlaxlog.shared.util.LanguageManager;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
+import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;

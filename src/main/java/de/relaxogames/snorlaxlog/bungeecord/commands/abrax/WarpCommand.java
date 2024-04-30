@@ -1,12 +1,12 @@
-package de.snorlaxlog.bungeecord.commands.abrax;
+package de.relaxogames.snorlaxlog.bungeecord.commands.abrax;
 
-import de.snorlaxlog.bungeecord.SnorlaxLOG;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.snorlaxlog.shared.PermissionShotCut;
-import de.snorlaxlog.shared.util.CommandPrefix;
-import de.snorlaxlog.shared.util.Language;
-import de.snorlaxlog.shared.util.LanguageManager;
+import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
+import de.relaxogames.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;

@@ -1,4 +1,4 @@
-package de.snorlaxlog.bukkit.ui;
+package de.relaxogames.snorlaxlog.bukkit.ui;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

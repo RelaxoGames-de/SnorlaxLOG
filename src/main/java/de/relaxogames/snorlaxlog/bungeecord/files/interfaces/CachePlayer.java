@@ -1,4 +1,4 @@
-package de.snorlaxlog.bungeecord.files.interfaces;
+package de.relaxogames.snorlaxlog.bungeecord.files.interfaces;
 
 import java.sql.Timestamp;
 import java.util.UUID;

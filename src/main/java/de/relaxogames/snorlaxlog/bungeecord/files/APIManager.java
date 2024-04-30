@@ -1,8 +1,8 @@
-package de.snorlaxlog.bungeecord.files;
+package de.relaxogames.snorlaxlog.bungeecord.files;
 
-import de.snorlaxlog.bungeecord.SnorlaxLOG;
-import de.snorlaxlog.bungeecord.mysql.SQLManager;
-import de.snorlaxlog.shared.util.LanguageManager;
+import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
+import de.relaxogames.snorlaxlog.bungeecord.mysql.SQLManager;
+import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 
 import java.sql.Connection;
 

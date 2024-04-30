@@ -1,6 +1,6 @@
-package de.snorlaxlog.bungeecord.commands.abrax;
+package de.relaxogames.snorlaxlog.bungeecord.commands.abrax;
 
-import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Cancellable;

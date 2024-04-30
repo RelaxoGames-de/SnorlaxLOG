@@ -1,15 +1,14 @@
-package de.snorlaxlog.bungeecord.files.interfaces;
+package de.relaxogames.snorlaxlog.bungeecord.files.interfaces;
 
-import de.snorlaxlog.shared.util.Language;
-import de.snorlaxlog.shared.util.PlayerEntryData;
-import de.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.UUID;
 import java.util.logging.Level;
 public interface LOGPlayer {
-
     ProxiedPlayer getPlayer();
     void addPlayerEntry();
     UUID getUUIDFromDatabase();

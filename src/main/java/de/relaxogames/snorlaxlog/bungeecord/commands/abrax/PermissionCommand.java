@@ -1,14 +1,14 @@
-package de.snorlaxlog.bungeecord.commands.abrax;
+package de.relaxogames.snorlaxlog.bungeecord.commands.abrax;
 
-import de.snorlaxlog.bungeecord.SnorlaxLOG;
-import de.snorlaxlog.bungeecord.api.APIBungeeManager;
-import de.snorlaxlog.bungeecord.files.interfaces.CachedPlayer;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
-import de.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
-import de.snorlaxlog.shared.PermissionShotCut;
-import de.snorlaxlog.shared.util.CommandPrefix;
-import de.snorlaxlog.shared.util.Language;
-import de.snorlaxlog.shared.util.LanguageManager;
+import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
+import de.relaxogames.snorlaxlog.bungeecord.api.APIBungeeManager;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.CachedPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
+import de.relaxogames.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;

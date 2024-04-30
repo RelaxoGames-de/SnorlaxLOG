@@ -1,4 +1,4 @@
-package de.snorlaxlog.bukkit.interfaces;
+package de.relaxogames.snorlaxlog.bukkit.interfaces;
 
 import java.sql.Timestamp;
 import java.util.UUID;

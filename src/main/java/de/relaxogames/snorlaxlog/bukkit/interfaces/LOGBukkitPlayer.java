@@ -1,13 +1,13 @@
-package de.snorlaxlog.bukkit.interfaces;
+package de.relaxogames.snorlaxlog.bukkit.interfaces;
 
-import de.snorlaxlog.shared.util.PlayerEntryData;
-import de.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.bukkit.mysql.SQLManager;
+import de.relaxogames.snorlaxlog.shared.util.Language;
+import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
 import eu.cloudnetservice.driver.registry.ServiceRegistry;
 import eu.cloudnetservice.modules.bridge.player.PlayerManager;
 import eu.cloudnetservice.modules.bridge.player.executor.PlayerExecutor;
 import eu.cloudnetservice.modules.bridge.player.executor.ServerSelectorType;
 import org.bukkit.entity.Player;
-import de.snorlaxlog.bukkit.mysql.SQLManager;
 
 import java.util.UUID;
 

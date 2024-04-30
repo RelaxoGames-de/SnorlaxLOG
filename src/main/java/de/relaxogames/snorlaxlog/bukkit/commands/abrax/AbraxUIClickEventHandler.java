@@ -1,6 +1,6 @@
-package de.snorlaxlog.bukkit.commands.abrax;
+package de.relaxogames.snorlaxlog.bukkit.commands.abrax;
 
-import de.snorlaxlog.bukkit.LOGLaxAPI;
+import de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

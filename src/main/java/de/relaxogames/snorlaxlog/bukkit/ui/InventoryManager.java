@@ -1,6 +1,6 @@
-package de.snorlaxlog.bukkit.ui;
+package de.relaxogames.snorlaxlog.bukkit.ui;
 
-import de.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGGEDPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

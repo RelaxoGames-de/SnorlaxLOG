@@ -1,9 +1,9 @@
-package de.snorlaxlog.bukkit.util;
+package de.relaxogames.snorlaxlog.bukkit.util;
 
-import de.snorlaxlog.shared.util.LanguageManager;
+import de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI;
+import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import de.snorlaxlog.bukkit.LOGLaxAPI;
 
 import java.io.File;
 import java.io.IOException;

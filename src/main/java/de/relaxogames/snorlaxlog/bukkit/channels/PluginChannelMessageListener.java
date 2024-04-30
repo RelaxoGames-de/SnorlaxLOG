@@ -1,8 +1,8 @@
-package de.snorlaxlog.bukkit.channels;
+package de.relaxogames.snorlaxlog.bukkit.channels;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import de.snorlaxlog.bukkit.commands.abrax.AbraxWarpUI;
+import de.relaxogames.snorlaxlog.bukkit.commands.abrax.AbraxWarpUI;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
