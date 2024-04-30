@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.logging.Level;
 
 public class SQLManager {
-
     private static final String userDataTable = de.relaxogames.snorlaxlog.bukkit.util.FileManager.getUsersProfileTable();
     private static final String database_path = de.relaxogames.snorlaxlog.bukkit.util.FileManager.getDatabase();
 
@@ -26,7 +25,6 @@ public class SQLManager {
      * It initializes the MySQL Database.
      */
     public static void initializeDatabase(){
-
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = LOGLaxAPI.getInstance().mysql.openConnection();
         } catch (SQLException e) {
@@ -41,11 +39,9 @@ public class SQLManager {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-
     }
 
     public boolean isInDatabase(Player player){
-
         this.checkCon();
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
@@ -78,16 +74,13 @@ public class SQLManager {
             statement.setString(10, Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress());
 
             statement.execute();
-
-        }catch (SQLException e){
+        } catch (SQLException e){
             LOGLaxAPI.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
-
     }
 
     public UUID getUUIDThroughName(String name){
-
         this.checkCon();
 
         if (name == null) return null;
@@ -100,7 +93,7 @@ public class SQLManager {
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
-        }catch (SQLException e){
+        } catch (SQLException e) {
             LOGLaxAPI.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
@@ -108,7 +101,6 @@ public class SQLManager {
         return uuid;
     }
     public String getCorrectNameFromLOWERCASE(String index){
-
         checkCon();
         String sql = SQLQuery.SELECT_USER_WITH_L_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = con.prepareStatement(sql)){
@@ -299,6 +291,7 @@ public class SQLManager {
             throw new RuntimeException(e);
         }
     }
+
     public void updatePlayerProfileIP(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer){
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
@@ -316,6 +309,7 @@ public class SQLManager {
             throw new RuntimeException(e);
         }
     }
+
     public static List<CachedPlayer> getAllCachedPlayers() {
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = LOGLaxAPI.getInstance().mysql.openConnection();
@@ -340,6 +334,5 @@ public class SQLManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

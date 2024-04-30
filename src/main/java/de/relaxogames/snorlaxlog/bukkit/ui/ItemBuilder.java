@@ -8,10 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 
 public class ItemBuilder {
-
-    private ItemMeta itemMeta;
-    private ItemStack itemStack;
-
+    private final ItemMeta itemMeta;
+    private final ItemStack itemStack;
 
     /**
      * Constructs a new ItemBuilder object with the specified material.

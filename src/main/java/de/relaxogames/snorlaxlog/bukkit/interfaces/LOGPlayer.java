@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public interface LOGPlayer {
-
     Player getPlayer();
     UUID getUUIDFromDatabase();
     String getName();
@@ -24,5 +23,4 @@ public interface LOGPlayer {
     void connectToTask(String taskName, ServerSelectorType selectorType);
     void connectToGroup(String groupName, ServerSelectorType selectorType);
     void connectToFallback();
-
 }

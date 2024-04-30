@@ -1,5 +1,6 @@
 package de.relaxogames.snorlaxlog.bukkit.interfaces;
 
+import com.google.errorprone.annotations.DoNotCall;
 import de.relaxogames.snorlaxlog.bukkit.mysql.SQLManager;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 public class LOGBukkitPlayer implements LOGPlayer{
     ///////////////////////////////////////////////////
-    private SQLManager sqlManager = new SQLManager();
+    private final SQLManager sqlManager = new SQLManager();
     ///////////////////////////////////////////////////
     Player player;
     PlayerExecutor cloudNetPlayer;
@@ -55,16 +56,19 @@ public class LOGBukkitPlayer implements LOGPlayer{
     }
 
     @Override
+    @DoNotCall    
     public void changePlayerEntry(PlayerEntryData setting, String newValue) {
         return;
     }
 
     @Override
+    @DoNotCall
     public void changePlayerEntry(PlayerEntryData setting, Integer newValue) {
         return;
     }
 
     @Override
+    @DoNotCall
     public String getPlayerEntry(PlayerEntryData setting) {
         return null;
     }
@@ -76,6 +80,7 @@ public class LOGBukkitPlayer implements LOGPlayer{
     }
 
     @Override
+    @DoNotCall
     public Long getOnlineTime() {
         return null;
     }
