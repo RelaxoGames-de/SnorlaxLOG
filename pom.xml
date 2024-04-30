@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de</groupId>
+    <groupId>de.relaxogames</groupId>
     <artifactId>SnorlaxLOG</artifactId>
-    <version>inDev-1.9.3</version>
+    <version>inDev-1.10.0</version>
     <packaging>jar</packaging>
 
     <name>SnorlaxLOG</name>
