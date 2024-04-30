@@ -43,27 +43,23 @@ public class LanguageManager {
         messages.put(fileName, localeMessages);
     }
 
+    /**
+     * This function get's all the keys and messages of the LanguageFiles and puts them into a HashMap
+     */
     public static void loadBungeeMessage() {
-        /* This Code Section gets all the Keys and Messages of the Language Files and put them in a HashMap.
-         */
         for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles())) {
-            Map<String, String> localeMessages = new HashMap<>();
-
-            Configuration lang = null;
             try {
-                lang = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+                Configuration lang = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+                Map<String, String> localeMessages = new HashMap<>();
+                for (String key : lang.getKeys())
+                    lang.getSection(key).getKeys().forEach(messName -> {
+                        String message = ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
+                        localeMessages.put(messName, message);
+                    });
+                messages.put(file.getName().split(".yml")[0], localeMessages);
             } catch (IOException e) {
                 throw new RuntimeException(e);
-
             }
-            for (String key : lang.getKeys()) {
-                for (String messName : lang.getSection(key).getKeys()) {
-                    String message = ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
-                    localeMessages.put(messName, message);
-                }
-            }
-            String fileName = file.getName().split(".yml")[0];
-            messages.put(fileName, localeMessages);
         }
     }
 }

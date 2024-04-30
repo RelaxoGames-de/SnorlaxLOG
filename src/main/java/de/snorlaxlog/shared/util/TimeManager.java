@@ -11,7 +11,7 @@ public class TimeManager {
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
-        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin"); // example timezone
+        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
 
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -23,7 +23,7 @@ public class TimeManager {
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
-        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin"); // example timezone
+        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
 
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
@@ -35,7 +35,7 @@ public class TimeManager {
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
-        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin"); // example timezone
+        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
 
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -47,7 +47,7 @@ public class TimeManager {
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
 
-        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin"); // example timezone
+        TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
 
         Date date = new Date(until);
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM HH:mm");

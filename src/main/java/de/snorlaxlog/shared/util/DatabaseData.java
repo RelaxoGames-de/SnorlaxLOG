@@ -6,5 +6,4 @@ public enum DatabaseData {
     TIMESTAMP,
     BIGINT,
     LONGTEXT;
-
 }
