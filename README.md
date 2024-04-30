@@ -3,3 +3,9 @@
 ```sh
 mvn clean install
 ```
+
+# To package this for the server
+
+```sh
+mvn clean package
+```
