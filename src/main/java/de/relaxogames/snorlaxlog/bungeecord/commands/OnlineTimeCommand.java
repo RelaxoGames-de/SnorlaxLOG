@@ -23,16 +23,15 @@ public class OnlineTimeCommand extends Command {
         super("onlinetime", "", "ot", "ontime");
     }
 
-    private int cooldownTime = 5;
+    private final int cooldownTime = 5;
     public ArrayList<UUID> cooldown = new ArrayList<>();
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
 
-        if (!(commandSender instanceof ProxiedPlayer)){
+        if (!(commandSender instanceof ProxiedPlayer player)){
             return;
         }
-        ProxiedPlayer player = (ProxiedPlayer) commandSender;
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
         CachedPlayer cachedPlayer = logPlayer.getCachedPlayer();
 

@@ -33,8 +33,6 @@ public final class SnorlaxLOG extends Plugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
         if (version == null) {
             logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Plugin version is null! Disabling SnorlaxLOG");
             this.onDisable();
@@ -51,7 +49,6 @@ public final class SnorlaxLOG extends Plugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
         mySQL.close();
     }
 
@@ -62,7 +59,7 @@ public final class SnorlaxLOG extends Plugin {
         String password = FileManager.getPassword();
         String database = FileManager.getDatabase();
 
-        if (host == null || user == null || port == null || password == null || database == null) {
+        if (host == null || user == null || password == null || database == null) {
             logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not open Connection to the MySQL Database! Disabling SnorlaxLOG!");
             onDisable();
             return;

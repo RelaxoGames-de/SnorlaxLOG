@@ -7,7 +7,6 @@ import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
 import java.sql.Connection;
 
 public class APIManager {
-
     private static Connection databaseConnection = SnorlaxLOG.getInstance().mySQL.getConnection();
     private static SQLManager sqlManager = new SQLManager();
     private static LanguageManager languageManager = new LanguageManager();

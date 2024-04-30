@@ -14,7 +14,6 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class WarpCommand extends Command {
-
     public WarpCommand(){
         super("warp", "", "switch", "connect");
     }

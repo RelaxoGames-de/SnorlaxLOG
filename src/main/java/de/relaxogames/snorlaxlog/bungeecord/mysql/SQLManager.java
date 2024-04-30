@@ -18,9 +18,8 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public class SQLManager {
-
-    private static String userDataTable = FileManager.getUsersProfileTable();
-    private static String database_path = FileManager.getDatabase();
+    private static final String userDataTable = FileManager.getUsersProfileTable();
+    private static final String database_path = FileManager.getDatabase();
 
     private static Connection con = SnorlaxLOG.getInstance().mySQL.openConnection();
 
@@ -86,7 +85,6 @@ public class SQLManager {
             SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "Methode getUUIDThroughName() is not supported?!");
             throw new RuntimeException(e);
         }
-
     }
 
     public UUID getUUIDThroughName(String name){
@@ -108,7 +106,6 @@ public class SQLManager {
         return uuid;
     }
     public String getCorrectNameFromLOWERCASE(String index){
-
         this.checkCon();
         String sql = SQLQuery.SELECT_USER_WITH_L_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)){
@@ -225,7 +222,6 @@ public class SQLManager {
     }
 
     public void updatePlayerProfileName(LOGPlayer logPlayer, String newName){
-
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
         if (newName.length() < 3 || cachedPlayer.getName().equals(newName)) return;
@@ -332,6 +328,5 @@ public class SQLManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

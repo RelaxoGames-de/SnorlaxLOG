@@ -53,6 +53,7 @@ public class PermissionCommand extends Command implements TabExecutor {
             p.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorNotPSCAvailable"));
             return;
         }
+        
         CachedPlayer target = APIBungeeManager.getBungeeSqlManager().getPlayerInfos(args[1]);
         UserManager userManager = LuckPermsProvider.get().getUserManager();
         User targetUser = userManager.getUser(target.getName());

@@ -18,8 +18,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 public class SnorlaxLOGCommand extends Command implements TabExecutor {
-
-    private static HashMap<LOGPlayer, Level> logPlayers = new HashMap<>();
+    private static final HashMap<LOGPlayer, Level> logPlayers = new HashMap<>();
 
 
     public SnorlaxLOGCommand(){
@@ -28,8 +27,8 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
 
     /**
      * This Command implements the /log Command to get some Information about the Plugin an to Toggle the LOG-Notifications
-     * @param sender
-     * @param args
+     * @param sender The Player that sent the command
+     * @param args The Arguments passed into the command
      */
     @Override
     public void execute(CommandSender sender, String[] args) {
