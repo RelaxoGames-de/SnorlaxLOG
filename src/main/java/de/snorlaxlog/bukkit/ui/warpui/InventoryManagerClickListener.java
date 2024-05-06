@@ -1,4 +1,4 @@
-package de.snorlaxlog.bukkit.ui;
+package de.snorlaxlog.bukkit.ui.warpui;
 
 import de.snorlaxlog.bukkit.commands.abrax.AbraxUIClickEventHandler;
 import org.bukkit.event.EventHandler;

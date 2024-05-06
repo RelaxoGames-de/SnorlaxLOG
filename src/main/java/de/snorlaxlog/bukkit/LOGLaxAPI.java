@@ -4,7 +4,7 @@ import de.snorlaxlog.bukkit.channels.PluginChannelMessageListener;
 import de.snorlaxlog.bukkit.commands.abrax.WarpUICommand;
 import de.snorlaxlog.bukkit.interfaces.CachedPlayer;
 import de.snorlaxlog.bukkit.mysql.SQLManager;
-import de.snorlaxlog.bukkit.ui.InventoryManagerClickListener;
+import de.snorlaxlog.bukkit.ui.warpui.InventoryManagerClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.snorlaxlog.bukkit.mysql.MySQL;

@@ -21,8 +21,14 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     private SQLManager sqlManager = new SQLManager();
     private ProxiedPlayer player;
+    private String name;
     public LOGGEDPlayer(ProxiedPlayer player) {
         this.player = player;
+    }
+
+    public LOGGEDPlayer(String name){
+        this.name = name;
+        this.player = ProxyServer.getInstance().getPlayer(getNameFromDatabase());
     }
 
     /** Returns the actually ProxiedPlayer
@@ -48,7 +54,7 @@ public class LOGGEDPlayer implements LOGPlayer {
 
     @Override
     public String getNameFromDatabase() {
-        return null;
+        return sqlManager.getCorrectNameFromLOWERCASE(name);
     }
 
     @Override

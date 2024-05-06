@@ -1,5 +1,7 @@
-package de.snorlaxlog.bukkit.ui;
+package de.snorlaxlog.bukkit.ui.warpui;
 
+import de.snorlaxlog.bukkit.ui.InventoryManager;
+import de.snorlaxlog.bukkit.ui.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -29,4 +31,9 @@ public class InventoryPresets {
 
         return inventoryManager;
     }
+
+    public static InventoryManager getLanguageInv(Player player){
+        InventoryManager inventoryManager = new InventoryManager(player, 9*3)
+    }
+
 }

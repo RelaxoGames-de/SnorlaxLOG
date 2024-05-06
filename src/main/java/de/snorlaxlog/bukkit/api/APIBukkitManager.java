@@ -7,7 +7,6 @@ import de.snorlaxlog.bukkit.util.FileManager;
 public class APIBukkitManager {
     private static LOGLaxAPI logLaxAPI = LOGLaxAPI.getInstance();
     private static FileManager fileManager = new FileManager();
-
     public static SQLManager getSqlManager() {
         return new SQLManager();
     }
