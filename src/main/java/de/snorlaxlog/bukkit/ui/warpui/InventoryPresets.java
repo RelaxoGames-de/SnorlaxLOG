@@ -32,8 +32,4 @@ public class InventoryPresets {
         return inventoryManager;
     }
 
-    public static InventoryManager getLanguageInv(Player player){
-        InventoryManager inventoryManager = new InventoryManager(player, 9*3)
-    }
-
 }

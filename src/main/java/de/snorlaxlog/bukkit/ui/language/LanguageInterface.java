@@ -7,9 +7,4 @@ import org.bukkit.inventory.Inventory;
 
 public class LanguageInterface {
 
-    public Inventory getLanguageInventory(Player player){
-        InventoryManager im = InventoryPresets.
-        Inventory inventory = im.getInventory();
-    }
-
 }
