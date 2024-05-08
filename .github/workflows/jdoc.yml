@@ -17,7 +17,7 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
-      - run: javadoc -sourcepath ./src -d ./docs -subpackages main.java
+      - run: javadoc -sourcepath ./src/main/java -d ./docs -subpackages de.relaxogames.snorlaxlog
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
