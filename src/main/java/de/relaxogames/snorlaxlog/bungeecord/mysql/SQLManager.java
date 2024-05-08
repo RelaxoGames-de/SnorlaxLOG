@@ -273,6 +273,13 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the User settings of the player in the database.
+     *
+     * @param logPlayer the LOGPlayer object representing the player
+     * @param index     the PlayerEntryData representing the setting to be updated
+     * @param newValue  the new value to be set for the setting
+     */
     public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, Timestamp newValue){
         if (index.equals(PlayerEntryData.USER_UUID)) return;
         String sql = SQLQuery.UPDATE_USER_ONLINE_TIME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable).replace("%ENTRY_DATA%", index.getTableColumnName());
@@ -285,6 +292,12 @@ public class SQLManager {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Updates the User save of the player in the database.
+     *
+     * @param logPlayer the LOGPlayer object representing the player
+     */
     public void updatePlayerProfileIP(LOGPlayer logPlayer){
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
@@ -311,6 +324,11 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves a list of all the player names from the database.
+     *
+     * @return a List of player names
+     */
     public List<String> getPlayerNames() {
         this.checkCon();
         String sql = SQLQuery.SELECT_ALL_ENTRIES.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
