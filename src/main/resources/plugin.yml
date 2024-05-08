@@ -2,10 +2,8 @@ name: "SnorlaxLOG"
 version: '${project.version}'
 main: de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI
 api-version: '1.20'
-authors: [vazyx]
-website: http://www.relaxogames.de
-loadbefore:
-  - SnorlaxLobby-V3
+authors: [ "vazyx" "jotrorox" ]
+website: https://www.relaxogames.de
 commands:
   warpui:
     description: Opens the Warp Inventory
