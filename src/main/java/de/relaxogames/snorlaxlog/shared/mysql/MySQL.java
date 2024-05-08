@@ -10,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQL {
-
     private Connection con;
     private final String HOST;
     private final int PORT;
@@ -35,11 +34,8 @@ public class MySQL {
      */
     public Connection openConnection(){
         String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_PATH;
-        try {
-            con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        try { con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD); }
+        catch (SQLException e) { throw new RuntimeException(e); }
         return con;
     }
 

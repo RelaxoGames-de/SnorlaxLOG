@@ -28,7 +28,6 @@ public class PermissionCommand extends Command implements TabExecutor {
         super("permission", "", "perm");
     }
 
-    // /permission <grant | revoke> <player> <permission>
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!(sender instanceof ProxiedPlayer)){

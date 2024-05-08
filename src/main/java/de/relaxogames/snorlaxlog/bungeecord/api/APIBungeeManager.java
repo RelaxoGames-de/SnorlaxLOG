@@ -4,9 +4,8 @@ import de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG;
 import de.relaxogames.snorlaxlog.bungeecord.mysql.SQLManager;
 
 public class APIBungeeManager {
-
-    private static SnorlaxLOG snorlaxLOG = SnorlaxLOG.getInstance();
-    private static SQLManager sqlManager = new SQLManager();
+    private static final SnorlaxLOG snorlaxLOG = SnorlaxLOG.getInstance();
+    private static final SQLManager sqlManager = new SQLManager();
 
     public static SnorlaxLOG getSnorlaxLOG() {
         return snorlaxLOG;

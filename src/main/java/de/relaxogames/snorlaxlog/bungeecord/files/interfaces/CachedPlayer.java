@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 public interface CachedPlayer {
-
     int getID();
     String getName();
     UUID getUUID();
@@ -15,5 +14,4 @@ public interface CachedPlayer {
     long getOnlineTime();
     String getLanguage();
     String getIP();
-
 }

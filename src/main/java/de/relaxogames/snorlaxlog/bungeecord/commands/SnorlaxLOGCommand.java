@@ -20,7 +20,6 @@ import java.util.logging.Level;
 public class SnorlaxLOGCommand extends Command implements TabExecutor {
     private static final HashMap<LOGPlayer, Level> logPlayers = new HashMap<>();
 
-
     public SnorlaxLOGCommand(){
         super("log", PermissionShortCut.SL_LOG_COMMAND_USE.getPermission(), "sl", "snorlaxlog");
     }
@@ -96,10 +95,6 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
                     return;
                 }
 
-                if (loggingLvl == null){
-                    player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPla.language(), "ErrorNoChannel"));
-                    return;
-                }
                 logPla.activateNotify(loggingLvl);
                 break;
             }
@@ -122,7 +117,6 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-
         LOGPlayer logPlayer = new LOGGEDPlayer((ProxiedPlayer) sender);
         ArrayList<String> tab = new ArrayList<>();
         if (args.length == 0){
@@ -141,10 +135,9 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
         );
 
         if (args.length == 1 && args[0].equalsIgnoreCase("toggle ") && !logPlayer.notifyIsActive()) {
-            for (Map.Entry<String, PermissionShortCut> entry : logLevels.entrySet()) {
+            for (Map.Entry<String, PermissionShortCut> entry : logLevels.entrySet())
                 if (logPlayer.hasPermission(entry.getValue()) || logPlayer.hasPermission(PermissionShortCut.SL_LOG_LEVEL_EVERY))
                     tab.add(entry.getKey());
-            }
             return tab;
         }
         return tab;

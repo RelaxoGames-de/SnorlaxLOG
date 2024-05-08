@@ -23,7 +23,7 @@ public class AbraxUIClickEventHandler {
             String serverName = Objects.requireNonNull(Objects.requireNonNull(event.getCurrentItem()).getItemMeta()).getLocalizedName().replace("snorlaxlog.ui.inventorymanager.warpui.", "");
 
             dataOutputStream.writeUTF("warpui");
-            dataOutputStream.writeUTF(player.getName() + ":" + serverName);
+            dataOutputStream.writeUTF((player != null ? player.getName() : null) + ":" + serverName);
 
             player.sendPluginMessage(LOGLaxAPI.getInstance(), "BungeeCord", byteArrayOutputStream.toByteArray());
 
