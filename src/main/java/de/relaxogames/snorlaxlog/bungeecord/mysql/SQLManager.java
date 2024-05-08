@@ -5,6 +5,7 @@ import de.relaxogames.snorlaxlog.bungeecord.files.FileManager;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.CachePlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.CachedPlayer;
 import de.relaxogames.snorlaxlog.bungeecord.files.interfaces.LOGPlayer;
+import de.relaxogames.snorlaxlog.bungeecord.util.Converters;
 import de.relaxogames.snorlaxlog.shared.mysql.ConnectionUtil;
 import de.relaxogames.snorlaxlog.shared.mysql.SQLQuery;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
@@ -14,6 +15,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.sql.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -305,6 +307,18 @@ public class SQLManager {
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = SnorlaxLOG.getInstance().mySQL.openConnection();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getPlayerNames() {
+        this.checkCon();
+        String sql = SQLQuery.SELECT_ALL_ENTRIES.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+        try (PreparedStatement statement = SnorlaxLOG.getInstance().mySQL.getConnection().prepareStatement(sql)) {
+            ResultSet rs = statement.executeQuery();
+            return Converters.getNamesFromResultSet(rs);
+        } catch (SQLException e) {
+            SnorlaxLOG.logMessage(Level.OFF, CommandPrefix.getConsolePrefix() + "SQLException in SnorlaxLOG in Method: 'getPlayerNames();'");
             throw new RuntimeException(e);
         }
     }

@@ -23,6 +23,7 @@ public final class SnorlaxLOG extends Plugin {
     private static SnorlaxLOG instance;
     private static String version;
     public MySQL mySQL;
+    private static SQLManager sqlManager;
 
     @Override
     public void onLoad() {
@@ -101,5 +102,9 @@ public final class SnorlaxLOG extends Plugin {
 
     public static String getVersion() {
         return version;
+    }
+
+    public static SQLManager getSqlManager() {
+        return sqlManager;
     }
 }
