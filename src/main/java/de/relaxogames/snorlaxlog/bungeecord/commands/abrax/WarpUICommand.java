@@ -48,7 +48,7 @@ public class WarpUICommand {
     public static void handleGetServerRequest(String data) {
         final String playerName = data.split(":")[1];
         final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(playerName);
-        final Map<String, ServerInfo> servers = ProxyServer.getInstance().getServersCopy();
+        final Map<String, ServerInfo> servers = ProxyServer.getInstance().getServers();
         StringBuilder encodedResponse = new StringBuilder("getServerResponse" + ":" + playerName + ":");
 
         for (ServerInfo server : servers.values()) encodedResponse.append(server.getName()).append(";");
