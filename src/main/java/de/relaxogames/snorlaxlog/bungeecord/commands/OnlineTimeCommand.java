@@ -42,7 +42,7 @@ public class OnlineTimeCommand extends Command {
 
         long gainedOT = cachedPlayer.getOnlineTime();
         Date date = new Date(gainedOT);
-        if (args.length == 1 && logPlayer.hasPermission(PermissionShortCut.ONLINE_TIME_OTHER)){
+        if (args.length == 1 && logPlayer.hasPermission(PermissionShortCut.ONLINE_TIME_OTHER)) {
             player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
             return;
         }

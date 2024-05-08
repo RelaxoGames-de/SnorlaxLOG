@@ -2,6 +2,7 @@ package de.relaxogames.snorlaxlog.bukkit.util;
 
 import de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -30,7 +31,7 @@ public class FileManager {
                 try {
                         if (!enFile.exists()) {
                                 InputStream is = LOGLaxAPI.getInstance().getResource("en_US.yml");
-                            Files.copy(is, enFile.toPath());
+                                Files.copy(Objects.requireNonNull(is), enFile.toPath());
                         }
                 } catch (IOException e) {
                         e.printStackTrace();
@@ -41,7 +42,7 @@ public class FileManager {
                 try {
                         if (!deFile.exists()) {
                                 InputStream in = LOGLaxAPI.getInstance().getResource("de_DE.yml");
-                                Files.copy(in, deFile.toPath());
+                                Files.copy(Objects.requireNonNull(in), deFile.toPath());
                         }
                 } catch (IOException e) {
                         e.printStackTrace();
@@ -52,7 +53,7 @@ public class FileManager {
                 try {
                         if (!mySQLConfig.exists()) {
                                 InputStream in = LOGLaxAPI.getInstance().getResource("database.yml");
-                                Files.copy(in, mySQLConfig.toPath());
+                                Files.copy(Objects.requireNonNull(in), mySQLConfig.toPath());
                         }
                 } catch (IOException e) {
                         e.printStackTrace();
@@ -63,12 +64,11 @@ public class FileManager {
                 Map<String, String> localeMessages = new HashMap<>();
 
                 FileConfiguration lang = YamlConfiguration.loadConfiguration(file);
-                for (String key : lang.getKeys(false)) {
+                for (String key : lang.getKeys(false))
                     for (String messName : Objects.requireNonNull(lang.getConfigurationSection(key)).getKeys(false)) {
-                        String message = org.bukkit.ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(lang.getString(key + "." + messName)));
+                        String message = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(lang.getString(key + "." + messName)));
                         localeMessages.put(messName, message);
                     }
-                }
                 String fileName = file.getName().split(".yml")[0];
                 LanguageManager.loadBukkitMessage(fileName, localeMessages);
                 System.out.println(file.getName() + " loaded!");
@@ -86,7 +86,6 @@ public class FileManager {
                 fc = YamlConfiguration.loadConfiguration(configFile);
 
                 return fc.getString("MySQL.Host");
-
         }
 
         /**
@@ -100,7 +99,6 @@ public class FileManager {
                 fc = YamlConfiguration.loadConfiguration(configFile);
 
                 return fc.getInt("MySQL.Port", 3306);
-
         }
 
         /**
@@ -114,7 +112,6 @@ public class FileManager {
                 fc = YamlConfiguration.loadConfiguration(configFile);
 
                 return fc.getString("MySQL.Database");
-
         }
 
         /**
@@ -128,7 +125,6 @@ public class FileManager {
                 fc = YamlConfiguration.loadConfiguration(configFile);
 
                 return fc.getString("MySQL.User");
-
         }
 
         /**
@@ -142,7 +138,6 @@ public class FileManager {
                 fc = YamlConfiguration.loadConfiguration(configFile);
 
                 return fc.getString("MySQL.Password");
-
         }
         public static String getUsersProfileTable(){
                 File config = getMySQLConfig();

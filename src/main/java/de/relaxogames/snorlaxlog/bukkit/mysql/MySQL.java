@@ -33,11 +33,10 @@ public class MySQL {
      */
     public Connection openConnection(){
         String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
-        try {
-            con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        try { con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD); }
+        catch (SQLException e) { throw new RuntimeException(e); }
+
         return con;
     }
 

@@ -13,15 +13,13 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class LOGBukkitPlayer implements LOGPlayer{
-    ///////////////////////////////////////////////////
     private final SQLManager sqlManager = new SQLManager();
-    ///////////////////////////////////////////////////
+
     Player player;
     PlayerExecutor cloudNetPlayer;
     UUID uuid;
     String name;
     Language language;
-    ///////////////////////////////////////////////////
 
     public LOGBukkitPlayer(Player player){
         PlayerManager playerManager = ServiceRegistry.first(PlayerManager.class);
@@ -29,7 +27,7 @@ public class LOGBukkitPlayer implements LOGPlayer{
         this.player = player;
         this.cloudNetPlayer = playerManager.playerExecutor(player.getUniqueId());
     }
-    ///////////////////////////////////////////////////
+
     @Override
     public Player getPlayer() {
         return player;
@@ -43,10 +41,10 @@ public class LOGBukkitPlayer implements LOGPlayer{
 
     @Override
     public String getName () {
-        if (name == null) {
-            String lowercaseName = player.getName().toLowerCase();
-            name = sqlManager.getCorrectNameFromLOWERCASE(lowercaseName);
-        }
+        if (name != null) return name;
+
+        String lowercaseName = player.getName().toLowerCase();
+        name = sqlManager.getCorrectNameFromLOWERCASE(lowercaseName);
         return name;
     }
 

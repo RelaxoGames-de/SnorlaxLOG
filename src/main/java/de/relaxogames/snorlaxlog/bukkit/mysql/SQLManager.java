@@ -33,10 +33,8 @@ public class SQLManager {
 
         try {
             String createUserCacheTable = SQLQuery.CREATE_MYSQL_USER_CACHE.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
-            try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(createUserCacheTable)) {
-                statement.execute();
-            }
-        }catch (SQLException e){
+            try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(createUserCacheTable)) { statement.execute(); }
+        } catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
@@ -86,11 +84,10 @@ public class SQLManager {
         if (name == null) return null;
 
         UUID uuid = null;
-
         String sql = SQLQuery.SELECT_USER_UUID_WITH_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+
         try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)){
             statement.setString(1, name);
-
             ResultSet rs = statement.executeQuery();
             while (rs.next()) uuid = UUID.fromString(rs.getString(PlayerEntryData.USER_UUID.getTableColumnName()));
         } catch (SQLException e) {
@@ -105,7 +102,6 @@ public class SQLManager {
         String sql = SQLQuery.SELECT_USER_WITH_L_NAME.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = con.prepareStatement(sql)){
             statement.setString(1, index.toLowerCase());
-
             ResultSet rs = statement.executeQuery();
             if (rs.next()) return rs.getString("user_name");
         } catch (SQLException e) {
@@ -124,8 +120,7 @@ public class SQLManager {
             statement.setString(2, player.getName());
 
             ResultSet rs = statement.executeQuery();
-
-            if (!rs.next())return 0;
+            if (!rs.next()) return 0;
             return rs.getLong(PlayerEntryData.USER_ONLINE_TIME.getTableColumnName());
         }catch (SQLException e){
             //ERROR #502
@@ -138,7 +133,6 @@ public class SQLManager {
         this.checkCon();
         UUID uuid = getUUIDThroughName(getCorrectNameFromLOWERCASE(name.toLowerCase()));
         if (uuid == null) return null;
-
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = con.prepareStatement(sql)){
             statement.setString(1, uuid.toString());
@@ -159,7 +153,6 @@ public class SQLManager {
 
         String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
         try (PreparedStatement statement = con.prepareStatement(sql)){
-
             statement.setString(1, uuid.toString());
 
             ResultSet rs = statement.executeQuery();
@@ -330,7 +323,6 @@ public class SQLManager {
     private void checkCon(){
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = LOGLaxAPI.getInstance().mysql.openConnection();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -7,12 +7,11 @@ import net.md_5.bungee.api.plugin.Cancellable;
 import net.md_5.bungee.api.plugin.Event;
 
 public class AbraxConnectPlayerEvent extends Event implements Cancellable {
-
-    private ProxiedPlayer connectedPlayer;
-    private LOGPlayer connectedLogPlayer;
-    private String serverName;
-    private ServerInfo originServer;
-    private ServerInfo relocatedServer;
+    private final ProxiedPlayer connectedPlayer;
+    private final LOGPlayer connectedLogPlayer;
+    private final String serverName;
+    private final ServerInfo originServer;
+    private final ServerInfo relocatedServer;
     private String connectMessage;
     private String abortMessage;
     private boolean canceled = false;

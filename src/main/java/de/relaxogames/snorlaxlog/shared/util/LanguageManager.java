@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class LanguageManager {
-
-    /** This Class returns messages using the Message list from the FileManager.java
+    /**
+     * This Class returns messages using the Message list from the FileManager.java
      */
     private static final Map<String, Map<String, String>> messages = new HashMap<>();
 
@@ -47,7 +47,7 @@ public class LanguageManager {
      * This function get's all the keys and messages of the LanguageFiles and puts them into a HashMap
      */
     public static void loadBungeeMessage() {
-        for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles())) {
+        for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles()))
             try {
                 Configuration lang = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
                 Map<String, String> localeMessages = new HashMap<>();
@@ -60,6 +60,5 @@ public class LanguageManager {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
     }
 }

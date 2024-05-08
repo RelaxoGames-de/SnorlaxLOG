@@ -1,7 +1,6 @@
 package de.relaxogames.snorlaxlog.shared.util;
 
 public enum PlayerEntryData {
-
     USER_ID("user_id", 1, DatabaseData.INTEGER),
     USER_UUID("user_uuid", 2, DatabaseData.VARCHAR),
     USER_NAME("user_name", 3, DatabaseData.VARCHAR),

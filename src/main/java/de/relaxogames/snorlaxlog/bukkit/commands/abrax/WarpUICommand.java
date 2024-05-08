@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public class WarpUICommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player player)) {
             sender.sendMessage(CommandPrefix.getConsolePrefix() + LanguageManager.getMessage(Language.system_default, "OnlyPlayer"));
             return false;
@@ -36,7 +37,6 @@ public class WarpUICommand implements CommandExecutor {
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
         try {
-
             dataOutputStream.writeUTF("warpui");
             dataOutputStream.writeUTF("getServers" + ":" + player.getName());
 
