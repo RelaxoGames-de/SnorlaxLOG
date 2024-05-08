@@ -1,6 +1,6 @@
 name: "SnorlaxLOG"
 version: '${project.version}'
-main: de.snorlaxlog.bukkit.LOGLaxAPI
+main: de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI
 api-version: '1.20'
 authors: [ "vazyx" "jotrorox" ]
 website: https://www.relaxogames.de
