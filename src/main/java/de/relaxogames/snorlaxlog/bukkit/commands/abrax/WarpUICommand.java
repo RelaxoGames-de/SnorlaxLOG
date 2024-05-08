@@ -3,7 +3,7 @@ package de.relaxogames.snorlaxlog.bukkit.commands.abrax;
 import de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI;
 import de.relaxogames.snorlaxlog.bukkit.interfaces.LOGBukkitPlayer;
 import de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
@@ -27,7 +27,7 @@ public class WarpUICommand implements CommandExecutor {
 
         LOGPlayer logPlayer = new LOGBukkitPlayer(player);
 
-        if (!player.hasPermission(PermissionShotCut.ABRAX_JOIN_SERVER.getPermission())) {
+        if (!player.hasPermission(PermissionShortCut.ABRAX_JOIN_SERVER.getPermission())) {
             player.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(Language.system_default, "NoPermission1"));
             return false;
         }

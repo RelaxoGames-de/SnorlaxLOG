@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class InventoryPresets {
-
     private static final ItemBuilder emptySlot = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayname(" ").setLore(" ");
     private static final ItemBuilder yesSlot = new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setDisplayname("§aJa").setLore("§7Klicke hier, um §aJa §7zu wählen.");
     private static final ItemBuilder noSlot = new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayname("§cNein").setLore("§7Klicke hier, um §cNein §7zu wählen.");

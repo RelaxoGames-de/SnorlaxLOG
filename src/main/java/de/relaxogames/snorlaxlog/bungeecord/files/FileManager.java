@@ -13,19 +13,16 @@ import java.nio.file.Files;
 import java.util.logging.Level;
 
 public class FileManager {
-
-    /**
-     * Is the File where all the informations about the MySQL-Connection is stored.
-     */
-    private static File mySQLConfig;
+    private static File mySQLConfig; // Is the File where all the informations about the MySQL-Connection is stored
     private static File langFolder;
 
-    /** This Method is triggered at the start of the Minecraft Server.
+    /**
+     * This Method is triggered at the start of the Minecraft Server.
      * It creates the different Types of files that are used to operate.
      */
     public static void loadFiles() {
-
-        /* This part of the Code checks if the DataFolder exists.
+        /*
+        * This part of the Code checks if the DataFolder exists.
          * If it doesn't, it creates a new folder
          */
         File datafolder = SnorlaxLOG.getInstance().getDataFolder();
@@ -44,9 +41,7 @@ public class FileManager {
             }
         }
 
-        /* Creates the different Types of the messages.yml and a Folder called 'languages'. In these Files every message is defined.
-         */
-
+        // Creates the different Types of the messages.yml and a Folder called 'languages'. In these Files every message is defined.
         langFolder = new File(SnorlaxLOG.getInstance().getDataFolder().getPath() + "//languages");
         if (!langFolder.exists()) langFolder.mkdirs();
 
@@ -91,7 +86,6 @@ public class FileManager {
         }
 
         return fc.getString("MySQL.Host");
-
     }
 
     /**
@@ -107,7 +101,6 @@ public class FileManager {
             throw new RuntimeException(e);
         }
         return fc.getInt("MySQL.Port", 3306);
-
     }
     /**
      * Gets the Database Name of the MySQL Server out of the File
@@ -122,7 +115,6 @@ public class FileManager {
             throw new RuntimeException(e);
         }
         return fc.getString("MySQL.Database");
-
     }
     /**
      * Gets the Username of the MySQL User out of the File
@@ -138,7 +130,6 @@ public class FileManager {
         }
 
         return fc.getString("MySQL.User");
-
     }
     /**
      * Gets the Password of the MySQL Useraccount out of the File
@@ -154,7 +145,6 @@ public class FileManager {
         }
 
         return fc.getString("MySQL.Password");
-
     }
 
     /**
@@ -173,7 +163,6 @@ public class FileManager {
     }
 
     /**
-     *
      * @return The MySQL - Config File
      */
     public static File getMySQLConfig() {

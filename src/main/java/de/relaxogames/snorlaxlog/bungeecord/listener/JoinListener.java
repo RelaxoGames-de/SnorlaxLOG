@@ -17,7 +17,6 @@ public class JoinListener implements Listener {
         ProxiedPlayer player = e.getPlayer();
         if (player == null) return;
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
-        if (logPlayer == null) return;
 
         if (!logPlayer.isInDatabase()) logPlayer.addPlayerEntry();
 
@@ -31,5 +30,4 @@ public class JoinListener implements Listener {
 
         player.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "LanguageSelected"));
     }
-
 }

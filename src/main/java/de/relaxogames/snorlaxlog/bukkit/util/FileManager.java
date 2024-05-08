@@ -14,17 +14,14 @@ import java.util.Map;
 import java.util.Objects;
 
 public class FileManager {
-
         private static File datafolder;
         private static File mySQLConfig;
         private static File taskConfig;
         private static File langFolder;
 
-
         public static void createFiles() {
                 datafolder = LOGLaxAPI.getInstance().getDataFolder();
                 if (!datafolder.exists()) datafolder.mkdir();
-
 
                 langFolder = new File(datafolder.getPath() + "//languages");
                 if (!langFolder.exists()) langFolder.mkdir();
@@ -77,7 +74,6 @@ public class FileManager {
                 System.out.println(file.getName() + " loaded!");
             }
         }
-
 
         /**
          * Gets the IP of the MySQL Server out of the File

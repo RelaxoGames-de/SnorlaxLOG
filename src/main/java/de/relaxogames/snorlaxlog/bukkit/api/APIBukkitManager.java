@@ -5,8 +5,8 @@ import de.relaxogames.snorlaxlog.bukkit.mysql.SQLManager;
 import de.relaxogames.snorlaxlog.bukkit.util.FileManager;
 
 public class APIBukkitManager {
-    private static LOGLaxAPI logLaxAPI = LOGLaxAPI.getInstance();
-    private static FileManager fileManager = new FileManager();
+    private static final LOGLaxAPI logLaxAPI = LOGLaxAPI.getInstance();
+    private static final FileManager fileManager = new FileManager();
 
     public static SQLManager getSqlManager() {
         return new SQLManager();

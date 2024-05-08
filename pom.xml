@@ -6,7 +6,7 @@
 
     <groupId>de.relaxogames</groupId>
     <artifactId>SnorlaxLOG</artifactId>
-    <version>inDev-1.10.0</version>
+    <version>inDev-1.11.0</version>
     <packaging>jar</packaging>
 
     <name>SnorlaxLOG</name>
@@ -58,13 +58,15 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>papermc-repo</id>
-            <url>https://repo.papermc.io/repository/maven-public/</url>
-        </repository>
+
+        <!-- The paper and spigot server software-->
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>bungeecord-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
 
         <!-- CloudNet -->
@@ -77,10 +79,9 @@
     <dependencies>
         <!-- BungeeCord -->
         <dependency>
-            <groupId>io.github.waterfallmc</groupId>
-            <artifactId>waterfall-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>1.20-R0.2</version>
         </dependency>
 
         <!-- Spigot -->

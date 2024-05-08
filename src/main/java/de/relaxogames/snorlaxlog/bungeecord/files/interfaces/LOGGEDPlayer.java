@@ -1,8 +1,9 @@
 package de.relaxogames.snorlaxlog.bungeecord.files.interfaces;
 
+import com.google.errorprone.annotations.DoNotCall;
 import de.relaxogames.snorlaxlog.bungeecord.commands.SnorlaxLOGCommand;
 import de.relaxogames.snorlaxlog.bungeecord.mysql.SQLManager;
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.LanguageManager;
@@ -18,13 +19,15 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 public class LOGGEDPlayer implements LOGPlayer {
-    private SQLManager sqlManager = new SQLManager();
-    private ProxiedPlayer player;
+    private final SQLManager sqlManager = new SQLManager();
+    private final ProxiedPlayer player;
     public LOGGEDPlayer(ProxiedPlayer player) {
         this.player = player;
     }
 
-    /** Returns the actually ProxiedPlayer
+    /**
+     * Returns the actually ProxiedPlayer
+     * @return The Proxied Player
      */
     @Override
     public ProxiedPlayer getPlayer() {
@@ -78,21 +81,21 @@ public class LOGGEDPlayer implements LOGPlayer {
      * The hasPermission Method is used to check via LuckPerms if a Player has
      * a specified Permission. As result a boolean will be given back.
      * @param permission is the that will be checked
-     * @return
+     * @return true if the player has the given permission
      */
     @Override
-    public boolean hasPermission(PermissionShotCut permission) {
+    public boolean hasPermission(PermissionShortCut permission) {
         UserManager um = LuckPermsProvider.get().getUserManager();
         User user = um.getUser(getPlayer().getUniqueId());
 
-        return user.getCachedData().getPermissionData().checkPermission(permission.getPermission()).asBoolean();
+        return user != null && user.getCachedData().getPermissionData().checkPermission(permission.getPermission()).asBoolean();
     }
 
     /**
      * The hasPermission Method is used to check via LuckPerms if a Player has
      * a specified Permission. As result a boolean will be given back.
      * @param permission is the that will be checked
-     * @return
+     * @return true if the player has the given permission
      */
     @Override
     public boolean hasPermission(String permission) {
@@ -109,8 +112,7 @@ public class LOGGEDPlayer implements LOGPlayer {
      */
     @Override
     public void sendMessage(String fileKey) {
-        String msg = LanguageManager.getMessage(language(), fileKey);
-        getPlayer().sendMessage(new TextComponent(CommandPrefix.getLOGPrefix() + msg));
+        getPlayer().sendMessage(new TextComponent(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(language(), fileKey)));
     }
 
     /**
@@ -125,9 +127,11 @@ public class LOGGEDPlayer implements LOGPlayer {
     }
 
     @Override
+    @DoNotCall
     public void logEntry(Level level, String loggingMessage) {
 
     }
+
     @Override
     public Long getOnlineTime() {
         return sqlManager.getSavedOnlineTime(player);

@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 public class CachePlayer implements CachedPlayer{
-
     int id;
     String uuid;
     String name;

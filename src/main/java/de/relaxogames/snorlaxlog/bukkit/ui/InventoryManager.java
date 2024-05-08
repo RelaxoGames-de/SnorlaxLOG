@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public class InventoryManager {
-    private Inventory inventory;
-    private Player player;
-    private String title;
+    private final Inventory inventory;
+    private final Player player;
+    private final String title;
 
     public InventoryManager(Player player, int size, String title) {
         this.inventory = Bukkit.createInventory(player, size, title);

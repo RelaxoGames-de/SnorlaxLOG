@@ -1,6 +1,6 @@
 package de.relaxogames.snorlaxlog.bungeecord.files.interfaces;
 
-import de.relaxogames.snorlaxlog.shared.PermissionShotCut;
+import de.relaxogames.snorlaxlog.shared.PermissionShortCut;
 import de.relaxogames.snorlaxlog.shared.util.Language;
 import de.relaxogames.snorlaxlog.shared.util.PlayerEntryData;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -20,7 +20,7 @@ public interface LOGPlayer {
     void changePlayerEntry(PlayerEntryData setting, Integer newValue);
 
     String getPlayerEntry(PlayerEntryData setting);
-    boolean hasPermission(PermissionShotCut permission);
+    boolean hasPermission(PermissionShortCut permission);
     boolean hasPermission(String permission);
     Language language();
     void sendMessage(String fileKey);

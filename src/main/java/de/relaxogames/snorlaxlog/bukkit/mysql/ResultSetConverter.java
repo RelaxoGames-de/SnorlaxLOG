@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class ResultSetConverter {
-
     public static List<CachedPlayer> convertResultSetToList(ResultSet resultSet) throws SQLException {
         List<CachedPlayer> playerList = new ArrayList<>();
         while (resultSet.next()) {
@@ -32,5 +31,4 @@ public class ResultSetConverter {
         }
         return playerList;
     }
-
 }
