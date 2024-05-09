@@ -17,6 +17,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
+import java.util.UUID;
 import java.util.logging.Level;
 
 public final class SnorlaxLOG extends Plugin {
@@ -94,6 +95,10 @@ public final class SnorlaxLOG extends Plugin {
                 return;
             }
         }
+    }
+
+    public static void logChat(String senderName, UUID senderUUID, String message) {
+        ProxyServer.getInstance().getLogger().log(Level.CONFIG, message);
     }
 
     public static SnorlaxLOG getInstance() {
