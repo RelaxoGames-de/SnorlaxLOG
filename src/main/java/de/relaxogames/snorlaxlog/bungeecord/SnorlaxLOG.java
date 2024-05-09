@@ -14,6 +14,7 @@ import de.relaxogames.snorlaxlog.bungeecord.files.FileManager;
 import de.relaxogames.snorlaxlog.shared.mysql.MySQL;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
@@ -97,8 +98,8 @@ public final class SnorlaxLOG extends Plugin {
         }
     }
 
-    public static void logChat(String senderName, UUID senderUUID, String message) {
-        ProxyServer.getInstance().getLogger().log(Level.CONFIG, message);
+    public static void logChat(Plugin plugin, String senderName, UUID senderUUID, String targetName, UUID targetUUID, String message) {
+        ProxyServer.getInstance().getLogger().log(Level.FINEST, CommandPrefix.getConsolePrefix() + "[" + plugin.getDescription().getName() + "] Chat activity: " + senderName + " [" + senderUUID + "] TEXTED TO " + targetName + " [" + targetUUID + "] MESSAGE:'" + message + "'");
     }
 
     public static SnorlaxLOG getInstance() {
