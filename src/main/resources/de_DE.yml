@@ -8,10 +8,10 @@ Responses:
   "OnlineTimeResponse": "&7Du hast eine Onlinezeit von &b%TIME% &7Stunden!"
   "PluginVersion": "&7Dieses Plugin ist aktuell auf der Version &e%VERSION%"
   "LogToggleNotify": "&7LOG-Benachrichtigungen wurden %STATE% %CHANNEL%"
-  "credits": "&7Dieses Plugin wurden von &eDevTexx &7und &eJotrorox &7entwickelt!"
+  "credits": "&7Dieses Plugin wurde von &eDevTexx &7und &eJotrorox &7entwickelt!"
 
-  "PermissionGranted": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7hinzugefügt!"
-  "PermissionRevoked": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7entfernt!"
+  "PermissionGranted": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7gegeben!"
+  "PermissionRevoked": "&7Dem Spieler &b{PLAYER} &7wurde die Berechtigung &9{PERMISSION} &7genommen!"
 
 Error:
   "OnlyPlayer": "&7Dieser Befehl kann nur von Spielern ausgeführt werden!"
@@ -19,7 +19,7 @@ Error:
   "ErrorCMDCooldown": "&7Dieser befehl hat einen Cooldown von &e%COOLDOWN% Minuten&7!"
   "ErrorNoChannel": "&7Nutzung: /log toggle <info|warning|off|all|servere>"
   "NoPermForChannel": "&7Für diesen LOG-Channel hast du &cnicht &7die benötigten Rechte!"
-  "ErrorUnknownError": "&7Oh nein! Es ist ein unbekannter Fehler aufgetreten!"
+  "ErrorUnknownError": "&7Oh nein! Es ist ein unbekannter Fehler aufgetreten!\nWende dich bitte umgehend an den Support!"
 
   "ErrorPermissionNEArgs": "&7Nutzung: /permission <grant | revoke> <player> <permission>"
   "ErrorNotPSCAvailable": "&7Für diese Permission kannst du diesen Befehl nicht nutzen!"

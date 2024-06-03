@@ -105,6 +105,7 @@
             <version>4.0.0-RC1</version>
             <scope>provided</scope>
         </dependency>
+        
         <!-- CloudNet Core -->
         <dependency>
             <groupId>de.dytanic.cloudnet</groupId>
