@@ -2,7 +2,7 @@ name: "SnorlaxLOG"
 version: '${project.version}'
 main: de.relaxogames.snorlaxlog.bukkit.LOGLaxAPI
 api-version: '1.20'
-authors: [ "vazyx" "jotrorox" ]
+authors: [ "RelaxoGames Development Team" ]
 website: https://www.relaxogames.de
 commands:
   warpui:
