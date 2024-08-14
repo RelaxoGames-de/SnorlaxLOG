@@ -29,36 +29,45 @@ public class MySQL {
     /**
      * Opens the Connection to the Database and
      * returns the current Connection
+     * 
      * @return The opened Connection
      */
-    public Connection openConnection(){
+    public Connection openConnection() {
         String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 
-        try { con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD); }
-        catch (SQLException e) { throw new RuntimeException(e); }
+        try {
+            con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         return con;
     }
 
     public void connect() {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?autoReconnect=true", USER, PASSWORD);
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?autoReconnect=true", USER, PASSWORD);
             Bukkit.getConsoleSender().sendMessage(" ");
             Bukkit.getConsoleSender().sendMessage(" ");
             Bukkit.getConsoleSender().sendMessage(CommandPrefix.getAnnouncePrefix());
             Bukkit.getConsoleSender().sendMessage(" ");
             Bukkit.getConsoleSender().sendMessage("       MySQL - Datenbank wurde erfolgreich initialisiert!");
-            Bukkit.getConsoleSender().sendMessage("       Gib /admin debug mysql ein um alle wichtigen Informationen zu sehen!");
+            Bukkit.getConsoleSender()
+                    .sendMessage("       Gib /admin debug mysql ein um alle wichtigen Informationen zu sehen!");
             Bukkit.getConsoleSender().sendMessage(" ");
             Bukkit.getConsoleSender().sendMessage(CommandPrefix.getAnnouncePrefix());
             Bukkit.getConsoleSender().sendMessage(" ");
             Bukkit.getConsoleSender().sendMessage(" ");
-        } catch (SQLException e) { printErr(e); }
+        } catch (SQLException e) {
+            printErr(e);
+        }
     }
 
     public void close() {
         try {
-            if (con == null) return;
+            if (con == null)
+                return;
 
             con.close();
             Bukkit.getConsoleSender().sendMessage(" ");
@@ -71,7 +80,9 @@ public class MySQL {
             Bukkit.getConsoleSender().sendMessage(CommandPrefix.getAnnouncePrefix());
             Bukkit.getConsoleSender().sendMessage(" ");
             Bukkit.getConsoleSender().sendMessage(" ");
-        } catch (SQLException e) { printErr(e); }
+        } catch (SQLException e) {
+            printErr(e);
+        }
     }
 
     public boolean hasConnection() {

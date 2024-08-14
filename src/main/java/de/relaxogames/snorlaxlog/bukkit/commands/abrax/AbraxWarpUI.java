@@ -19,7 +19,8 @@ public class AbraxWarpUI {
 
         InventoryManager inventoryManager = new InventoryManager(player, 9 * 6, "Choose a Server!");
         for (String serverName : serverNames) {
-            inventoryManager.setItem(iter, new ItemBuilder(Material.ENDER_PEARL).setDisplayname(serverName).setLocalizedName("snorlaxlog.ui.inventorymanager.warpui." + serverName));
+            inventoryManager.setItem(iter, new ItemBuilder(Material.ENDER_PEARL).setDisplayname(serverName)
+                    .setLocalizedName("snorlaxlog.ui.inventorymanager.warpui." + serverName));
             iter++;
         }
 

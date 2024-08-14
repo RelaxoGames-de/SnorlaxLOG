@@ -11,8 +11,9 @@ import java.util.logging.Level;
 public class KickEvent implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
-    public void onKick(ServerKickEvent e){
+    public void onKick(ServerKickEvent e) {
         ProxiedPlayer p = e.getPlayer();
-        SnorlaxLOG.logMessage(Level.INFO, p.getName() + " got kicked from " + e.getKickedFrom() + " with the reason: " + e.getKickReason());
+        SnorlaxLOG.logMessage(Level.INFO,
+                p.getName() + " got kicked from " + e.getKickedFrom() + " with the reason: " + e.getKickReason());
     }
 }

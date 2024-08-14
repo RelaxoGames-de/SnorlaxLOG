@@ -44,7 +44,8 @@ public class LOGLaxAPI extends JavaPlugin {
 
     public void ListenerRegistration() {
         getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
-        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginChannelMessageListener());
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord",
+                new PluginChannelMessageListener());
     }
 
     public void startEssentials() {
@@ -79,7 +80,6 @@ public class LOGLaxAPI extends JavaPlugin {
     public HashMap<String, CachedPlayer> getAllCachedPlayersByName() {
         return allCachedPlayersByName;
     }
-
 
     public static LOGLaxAPI getInstance() {
         return instance;

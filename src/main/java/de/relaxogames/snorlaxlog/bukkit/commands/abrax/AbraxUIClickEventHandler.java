@@ -20,7 +20,8 @@ public class AbraxUIClickEventHandler {
         try {
             Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
 
-            String serverName = Objects.requireNonNull(Objects.requireNonNull(event.getCurrentItem()).getItemMeta()).getLocalizedName().replace("snorlaxlog.ui.inventorymanager.warpui.", "");
+            String serverName = Objects.requireNonNull(Objects.requireNonNull(event.getCurrentItem()).getItemMeta())
+                    .getLocalizedName().replace("snorlaxlog.ui.inventorymanager.warpui.", "");
 
             dataOutputStream.writeUTF("warpui");
             dataOutputStream.writeUTF((player != null ? player.getName() : null) + ":" + serverName);

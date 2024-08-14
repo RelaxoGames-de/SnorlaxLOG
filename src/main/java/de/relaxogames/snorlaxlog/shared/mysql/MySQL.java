@@ -30,12 +30,16 @@ public class MySQL {
     /**
      * Opens the Connection to the Database and
      * returns the current Connection
+     * 
      * @return The opened Connection
      */
-    public Connection openConnection(){
+    public Connection openConnection() {
         String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_PATH;
-        try { con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD); }
-        catch (SQLException e) { throw new RuntimeException(e); }
+        try {
+            con = DriverManager.getConnection(url + "?autoReconnect=true", USER, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return con;
     }
 
@@ -43,29 +47,39 @@ public class MySQL {
     @SuppressWarnings("deprecation")
     public void connect() {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_PATH + "?autoReconnect=true", USER, PASSWORD);
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_PATH + "?autoReconnect=true", USER, PASSWORD);
             ProxyServer.getInstance().getConsole().sendMessage(" ");
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\tMySQL - Datenbank wurde erfolgreich initialisiert!"));
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\tDas System ist jetzt einsatzbereit!\n"));
+            ProxyServer.getInstance().getConsole()
+                    .sendMessage(new TextComponent("\n\tMySQL - Datenbank wurde erfolgreich initialisiert!"));
+            ProxyServer.getInstance().getConsole()
+                    .sendMessage(new TextComponent("\tDas System ist jetzt einsatzbereit!\n"));
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
             ProxyServer.getInstance().getConsole().sendMessage(" ");
-        } catch (SQLException e) { printDBErr(e); }
+        } catch (SQLException e) {
+            printDBErr(e);
+        }
     }
 
     /** This Method closes the MySQL-Database connection */
     @SuppressWarnings("deprecation")
     public void close() {
         try {
-            if (con == null) return;
+            if (con == null)
+                return;
             con.close();
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\tVerbindung zur MySQL - Datenbank abgebrochen!"));
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\tSollte dies ein Fehler sein, starte bitte das System neu!!\n"));
+            ProxyServer.getInstance().getConsole()
+                    .sendMessage(new TextComponent("\n\tVerbindung zur MySQL - Datenbank abgebrochen!"));
+            ProxyServer.getInstance().getConsole()
+                    .sendMessage(new TextComponent("\tSollte dies ein Fehler sein, starte bitte das System neu!!\n"));
             ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
             ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
-        } catch (SQLException e) { printDBErr(e); }
+        } catch (SQLException e) {
+            printDBErr(e);
+        }
     }
 
     /**
@@ -79,6 +93,7 @@ public class MySQL {
 
     /**
      * Gets the Connection
+     * 
      * @return the connection itself.
      */
     public Connection getConnection() {
@@ -103,9 +118,12 @@ public class MySQL {
     private void printDBErr(SQLException e) {
         ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
         ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
-        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\tKonnte keine Verbindung mit MySQL - Datenbank herstellen"));
-        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\tSollte dies ein Fehler sein, starte bitte das System neu!"));
-        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\t" + ChatColor.RED + "Fehler: " + e.getMessage() + "\n"));
+        ProxyServer.getInstance().getConsole()
+                .sendMessage(new TextComponent("\n\tKonnte keine Verbindung mit MySQL - Datenbank herstellen"));
+        ProxyServer.getInstance().getConsole()
+                .sendMessage(new TextComponent("\tSollte dies ein Fehler sein, starte bitte das System neu!"));
+        ProxyServer.getInstance().getConsole()
+                .sendMessage(new TextComponent("\t" + ChatColor.RED + "Fehler: " + e.getMessage() + "\n"));
         ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());
         ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
     }

@@ -3,7 +3,7 @@ package de.relaxogames.snorlaxlog.bukkit.interfaces;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class CachePlayer implements CachedPlayer{
+public class CachePlayer implements CachedPlayer {
     String name;
     UUID uuid;
     Timestamp firstJoin;
@@ -14,7 +14,8 @@ public class CachePlayer implements CachedPlayer{
     String language;
     String ip;
 
-    public CachePlayer(String name, UUID uuid, Timestamp firstJoin, Timestamp lastJoin, String discordID, String forumID, long onlineTime, String language, String ip) {
+    public CachePlayer(String name, UUID uuid, Timestamp firstJoin, Timestamp lastJoin, String discordID,
+            String forumID, long onlineTime, String language, String ip) {
         this.name = name;
         this.uuid = uuid;
         this.firstJoin = firstJoin;

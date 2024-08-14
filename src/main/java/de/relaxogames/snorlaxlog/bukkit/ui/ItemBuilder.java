@@ -16,43 +16,45 @@ public class ItemBuilder {
      *
      * @param mat the material of the item
      */
-    public ItemBuilder(Material mat){
+    public ItemBuilder(Material mat) {
         itemStack = new ItemStack(mat);
         itemMeta = itemStack.getItemMeta();
     }
 
     /**
-     * Sets the Displayname of an Item, the Display Name is the name shown to the user
+     * Sets the Displayname of an Item, the Display Name is the name shown to the
+     * user
      *
      * @param s is the String that becomes the new Displayname
      */
-    public ItemBuilder setDisplayname(String s){
+    public ItemBuilder setDisplayname(String s) {
         itemMeta.setDisplayName(s);
         return this;
     }
 
-    /** 
-     * Sets the Localized of an Item, the Localized Name is the name that isn't shown to the user and can only be seen by the Code
+    /**
+     * Sets the Localized of an Item, the Localized Name is the name that isn't
+     * shown to the user and can only be seen by the Code
      * That's useful for tracking where the item or inventory was created
      *
      * @param s is the String that becomes the new Displayname
      */
-    public ItemBuilder setLocalizedName(String s){
+    public ItemBuilder setLocalizedName(String s) {
         itemMeta.setLocalizedName(s);
         return this;
     }
 
-    public ItemBuilder setLore(String... s){
+    public ItemBuilder setLore(String... s) {
         itemMeta.setLore(Arrays.asList(s));
         return this;
     }
 
-    public ItemBuilder setUnbreakable(boolean s){
+    public ItemBuilder setUnbreakable(boolean s) {
         itemMeta.setUnbreakable(s);
         return this;
     }
 
-    public ItemBuilder addItemFlags(ItemFlag... s){
+    public ItemBuilder addItemFlags(ItemFlag... s) {
         itemMeta.addItemFlags(s);
         return this;
     }
@@ -64,8 +66,8 @@ public class ItemBuilder {
                 ", itemStack=" + itemStack +
                 '}';
     }
-    
-    public ItemStack build(){
+
+    public ItemStack build() {
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

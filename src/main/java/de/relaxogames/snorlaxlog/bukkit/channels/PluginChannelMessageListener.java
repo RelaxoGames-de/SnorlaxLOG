@@ -10,7 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class PluginChannelMessageListener implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, @NotNull byte[] message) {
-        if (!channel.equals("BungeeCord")) return;
+        if (!channel.equals("BungeeCord"))
+            return;
 
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();

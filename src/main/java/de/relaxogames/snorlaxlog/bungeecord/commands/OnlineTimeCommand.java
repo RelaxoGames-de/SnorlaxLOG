@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class OnlineTimeCommand extends Command {
 
-    public OnlineTimeCommand(){
+    public OnlineTimeCommand() {
         super("onlinetime", "", "ot", "ontime");
     }
 
@@ -30,27 +30,34 @@ public class OnlineTimeCommand extends Command {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
 
-        if (!(commandSender instanceof ProxiedPlayer player)){
+        if (!(commandSender instanceof ProxiedPlayer player)) {
             return;
         }
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
         CachedPlayer cachedPlayer = logPlayer.getCachedPlayer();
 
-        if (cooldown.contains(player.getUniqueId()) && !logPlayer.hasPermission(PermissionShortCut.ONLINE_TIME_BYPASS)){
-            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorCMDCooldown").replace("%COOLDOWN%", String.valueOf(cooldownTime)));
+        if (cooldown.contains(player.getUniqueId())
+                && !logPlayer.hasPermission(PermissionShortCut.ONLINE_TIME_BYPASS)) {
+            player.sendMessage(
+                    CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "ErrorCMDCooldown")
+                            .replace("%COOLDOWN%", String.valueOf(cooldownTime)));
             return;
         }
 
         long gainedOT = cachedPlayer.getOnlineTime();
         Date date = new Date(gainedOT);
         if (args.length == 1 && logPlayer.hasPermission(PermissionShortCut.ONLINE_TIME_OTHER)) {
-            player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
+            player.sendMessage(
+                    CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "NoPermission1"));
             return;
         }
 
-        if (args.length != 0) return;
+        if (args.length != 0)
+            return;
 
-        player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getTime())));
+        player.sendMessage(
+                CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse")
+                        .replace("%TIME%", String.valueOf(date.getTime())));
         cooldown.add(player.getUniqueId());
 
         @SuppressWarnings("unused")

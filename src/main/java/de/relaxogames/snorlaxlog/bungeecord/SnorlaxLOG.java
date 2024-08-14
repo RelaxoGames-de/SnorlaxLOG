@@ -36,7 +36,8 @@ public final class SnorlaxLOG extends Plugin {
     @Override
     public void onEnable() {
         if (version == null) {
-            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Plugin version is null! Disabling SnorlaxLOG");
+            logMessage(Level.WARNING,
+                    CommandPrefix.getConsolePrefix() + "Plugin version is null! Disabling SnorlaxLOG");
             this.onDisable();
         }
 
@@ -62,7 +63,8 @@ public final class SnorlaxLOG extends Plugin {
         String database = FileManager.getDatabase();
 
         if (host == null || user == null || password == null || database == null) {
-            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not open Connection to the MySQL Database! Disabling SnorlaxLOG!");
+            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix()
+                    + "Could not open Connection to the MySQL Database! Disabling SnorlaxLOG!");
             onDisable();
             return;
         }
@@ -92,14 +94,19 @@ public final class SnorlaxLOG extends Plugin {
         for (LOGPlayer logPlayer : SnorlaxLOGCommand.getLogPlayers().keySet()) {
             Level logLVL = logPlayer.getNotifyLevel();
             if (logLVL.equals(level)) {
-                logPlayer.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + "§b§l[" + logLVL.getName() + "]§r " + message);
+                logPlayer.getPlayer()
+                        .sendMessage(CommandPrefix.getLOGPrefix() + "§b§l[" + logLVL.getName() + "]§r " + message);
                 return;
             }
         }
     }
 
-    public static void logChat(Plugin plugin, String senderName, UUID senderUUID, String targetName, UUID targetUUID, String message) {
-        ProxyServer.getInstance().getLogger().log(Level.FINEST, CommandPrefix.getConsolePrefix() + "[" + plugin.getDescription().getName() + "] Chat activity: " + senderName + " [" + senderUUID + "] TEXTED TO " + targetName + " [" + targetUUID + "] MESSAGE:'" + message + "'");
+    public static void logChat(Plugin plugin, String senderName, UUID senderUUID, String targetName, UUID targetUUID,
+            String message) {
+        ProxyServer.getInstance().getLogger().log(Level.FINEST,
+                CommandPrefix.getConsolePrefix() + "[" + plugin.getDescription().getName() + "] Chat activity: "
+                        + senderName + " [" + senderUUID + "] TEXTED TO " + targetName + " [" + targetUUID
+                        + "] MESSAGE:'" + message + "'");
     }
 
     public static SnorlaxLOG getInstance() {

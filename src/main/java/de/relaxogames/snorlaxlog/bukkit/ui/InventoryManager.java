@@ -24,12 +24,13 @@ public class InventoryManager {
     public void setItem(int slot, ItemBuilder itemBuilder) {
         inventory.setItem(slot, itemBuilder.build());
     }
-    
+
     public void spawnToPlayer() {
         this.player.openInventory(this.inventory);
     }
-    
-    public static InventoryManager getInventoryManagerFromLoggedPlayer(LOGGEDPlayer loggedPlayer, String title, int size) {
+
+    public static InventoryManager getInventoryManagerFromLoggedPlayer(LOGGEDPlayer loggedPlayer, String title,
+            int size) {
         return new InventoryManager(Bukkit.getPlayer(loggedPlayer.getUUIDFromDatabase()), size, title);
     }
 }

@@ -22,10 +22,12 @@ public class FileManager {
 
         public static void createFiles() {
                 datafolder = LOGLaxAPI.getInstance().getDataFolder();
-                if (!datafolder.exists()) datafolder.mkdir();
+                if (!datafolder.exists())
+                        datafolder.mkdir();
 
                 langFolder = new File(datafolder.getPath() + "//languages");
-                if (!langFolder.exists()) langFolder.mkdir();
+                if (!langFolder.exists())
+                        langFolder.mkdir();
 
                 File enFile = new File(langFolder, "en_US.yml");
                 try {
@@ -59,20 +61,22 @@ public class FileManager {
                         e.printStackTrace();
                 }
 
-            Objects.requireNonNull(FileManager.getLangFolder().listFiles());
-            for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles())) {
-                Map<String, String> localeMessages = new HashMap<>();
+                Objects.requireNonNull(FileManager.getLangFolder().listFiles());
+                for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles())) {
+                        Map<String, String> localeMessages = new HashMap<>();
 
-                FileConfiguration lang = YamlConfiguration.loadConfiguration(file);
-                for (String key : lang.getKeys(false))
-                    for (String messName : Objects.requireNonNull(lang.getConfigurationSection(key)).getKeys(false)) {
-                        String message = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(lang.getString(key + "." + messName)));
-                        localeMessages.put(messName, message);
-                    }
-                String fileName = file.getName().split(".yml")[0];
-                LanguageManager.loadBukkitMessage(fileName, localeMessages);
-                System.out.println(file.getName() + " loaded!");
-            }
+                        FileConfiguration lang = YamlConfiguration.loadConfiguration(file);
+                        for (String key : lang.getKeys(false))
+                                for (String messName : Objects.requireNonNull(lang.getConfigurationSection(key))
+                                                .getKeys(false)) {
+                                        String message = ChatColor.translateAlternateColorCodes('&',
+                                                        Objects.requireNonNull(lang.getString(key + "." + messName)));
+                                        localeMessages.put(messName, message);
+                                }
+                        String fileName = file.getName().split(".yml")[0];
+                        LanguageManager.loadBukkitMessage(fileName, localeMessages);
+                        System.out.println(file.getName() + " loaded!");
+                }
         }
 
         /**
@@ -139,7 +143,8 @@ public class FileManager {
 
                 return fc.getString("MySQL.Password");
         }
-        public static String getUsersProfileTable(){
+
+        public static String getUsersProfileTable() {
                 File config = getMySQLConfig();
                 FileConfiguration fc;
                 fc = YamlConfiguration.loadConfiguration(config);
@@ -160,7 +165,8 @@ public class FileManager {
         }
 
         public static void deleteFiles() {
-                if (datafolder != null || datafolder.exists()) datafolder.delete();
+                if (datafolder != null || datafolder.exists())
+                        datafolder.delete();
         }
 
         public static File getLangFolder() {

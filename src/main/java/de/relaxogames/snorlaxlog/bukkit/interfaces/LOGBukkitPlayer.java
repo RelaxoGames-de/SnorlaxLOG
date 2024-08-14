@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class LOGBukkitPlayer implements LOGPlayer{
+public class LOGBukkitPlayer implements LOGPlayer {
     private final SQLManager sqlManager = new SQLManager();
 
     Player player;
@@ -21,7 +21,7 @@ public class LOGBukkitPlayer implements LOGPlayer{
     String name;
     Language language;
 
-    public LOGBukkitPlayer(Player player){
+    public LOGBukkitPlayer(Player player) {
         PlayerManager playerManager = ServiceRegistry.first(PlayerManager.class);
         this.uuid = player.getUniqueId();
         this.player = player;
@@ -35,13 +35,15 @@ public class LOGBukkitPlayer implements LOGPlayer{
 
     @Override
     public UUID getUUIDFromDatabase() {
-        if (uuid == null) uuid = sqlManager.getUUIDThroughName(player.getName());
+        if (uuid == null)
+            uuid = sqlManager.getUUIDThroughName(player.getName());
         return uuid;
     }
 
     @Override
-    public String getName () {
-        if (name != null) return name;
+    public String getName() {
+        if (name != null)
+            return name;
 
         String lowercaseName = player.getName().toLowerCase();
         name = sqlManager.getCorrectNameFromLOWERCASE(lowercaseName);
@@ -54,7 +56,7 @@ public class LOGBukkitPlayer implements LOGPlayer{
     }
 
     @Override
-    @DoNotCall    
+    @DoNotCall
     public void changePlayerEntry(PlayerEntryData setting, String newValue) {
         return;
     }
@@ -73,7 +75,8 @@ public class LOGBukkitPlayer implements LOGPlayer{
 
     @Override
     public Language language() {
-        if (language == null) language = Language.convertLanguage(sqlManager.getPlayerInfos(this).getLanguage());
+        if (language == null)
+            language = Language.convertLanguage(sqlManager.getPlayerInfos(this).getLanguage());
         return language;
     }
 

@@ -16,7 +16,8 @@ public class AbraxConnectPlayerEvent extends Event implements Cancellable {
     private String abortMessage;
     private boolean canceled = false;
 
-    public AbraxConnectPlayerEvent(ProxiedPlayer connectedPlayer, LOGPlayer connectedLogPlayer, String serverName, ServerInfo originServer, ServerInfo relocatedServer, String connectMessage, String abortMessage) {
+    public AbraxConnectPlayerEvent(ProxiedPlayer connectedPlayer, LOGPlayer connectedLogPlayer, String serverName,
+            ServerInfo originServer, ServerInfo relocatedServer, String connectMessage, String abortMessage) {
         this.connectedPlayer = connectedPlayer;
         this.connectedLogPlayer = connectedLogPlayer;
         this.serverName = serverName;
