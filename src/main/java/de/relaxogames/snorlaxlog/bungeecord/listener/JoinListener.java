@@ -12,6 +12,7 @@ import net.md_5.bungee.event.EventHandler;
 import java.util.Date;
 
 public class JoinListener implements Listener {
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onJoin(PostLoginEvent e){
         ProxiedPlayer player = e.getPlayer();

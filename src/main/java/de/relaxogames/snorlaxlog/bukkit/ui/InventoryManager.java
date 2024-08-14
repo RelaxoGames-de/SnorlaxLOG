@@ -8,6 +8,7 @@ import org.bukkit.inventory.Inventory;
 public class InventoryManager {
     private final Inventory inventory;
     private final Player player;
+    @SuppressWarnings("unused")
     private final String title;
 
     public InventoryManager(Player player, int size, String title) {

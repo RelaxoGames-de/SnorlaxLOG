@@ -9,6 +9,7 @@ import net.md_5.bungee.event.EventHandler;
 import java.util.logging.Level;
 
 public class KickEvent implements Listener {
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onKick(ServerKickEvent e){
         ProxiedPlayer p = e.getPlayer();

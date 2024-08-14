@@ -26,6 +26,7 @@ public class WarpUICommand implements CommandExecutor {
             return false;
         }
 
+        @SuppressWarnings("unused")
         LOGPlayer logPlayer = new LOGBukkitPlayer(player);
 
         if (!player.hasPermission(PermissionShortCut.ABRAX_JOIN_SERVER.getPermission())) {
