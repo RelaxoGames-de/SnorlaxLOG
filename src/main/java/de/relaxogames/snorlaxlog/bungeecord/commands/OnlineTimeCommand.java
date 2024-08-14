@@ -26,6 +26,7 @@ public class OnlineTimeCommand extends Command {
     private final int cooldownTime = 5;
     public ArrayList<UUID> cooldown = new ArrayList<>();
 
+    @SuppressWarnings("deprecation")
     @Override
     public void execute(CommandSender commandSender, String[] args) {
 
@@ -52,6 +53,7 @@ public class OnlineTimeCommand extends Command {
         player.sendMessage(CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(logPlayer.language(), "OnlineTimeResponse").replace("%TIME%", String.valueOf(date.getTime())));
         cooldown.add(player.getUniqueId());
 
+        @SuppressWarnings("unused")
         ScheduledTask task;
         task = SnorlaxLOG.getInstance().getProxy().getScheduler().schedule(SnorlaxLOG.getInstance(), (Runnable) () -> {
             cooldown.remove(player.getUniqueId());

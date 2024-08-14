@@ -28,6 +28,7 @@ public class PermissionCommand extends Command implements TabExecutor {
         super("permission", "", "perm");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!(sender instanceof ProxiedPlayer)){

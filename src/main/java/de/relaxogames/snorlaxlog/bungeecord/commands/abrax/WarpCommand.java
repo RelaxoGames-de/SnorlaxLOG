@@ -18,6 +18,7 @@ public class WarpCommand extends Command {
         super("warp", "", "switch", "connect");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!(sender instanceof ProxiedPlayer)){

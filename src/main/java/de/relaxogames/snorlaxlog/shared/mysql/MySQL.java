@@ -40,6 +40,7 @@ public class MySQL {
     }
 
     /** Using the connect() method the Server conncets to a defined MySQL server. */
+    @SuppressWarnings("deprecation")
     public void connect() {
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_PATH + "?autoReconnect=true", USER, PASSWORD);
@@ -53,6 +54,7 @@ public class MySQL {
     }
 
     /** This Method closes the MySQL-Database connection */
+    @SuppressWarnings("deprecation")
     public void close() {
         try {
             if (con == null) return;
@@ -97,6 +99,7 @@ public class MySQL {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void printDBErr(SQLException e) {
         ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
         ProxyServer.getInstance().getConsole().sendMessage(CommandPrefix.getAnnouncePrefix());

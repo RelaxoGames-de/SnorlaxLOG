@@ -29,6 +29,7 @@ public class SQLManager {
      * Will be triggered by the Server startup logic.
      * It initializes the MySQL Database.
      */
+    @SuppressWarnings("deprecation")
     public static void initializeDatabase(){
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = SnorlaxLOG.getInstance().mySQL.openConnection();
@@ -61,6 +62,7 @@ public class SQLManager {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public void addEntry(ProxiedPlayer player){
         this.checkCon();
 
@@ -316,6 +318,7 @@ public class SQLManager {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void checkCon(){
         try {
             if (!ConnectionUtil.isConnectionValid(con) || con == null || con.isClosed()) con = SnorlaxLOG.getInstance().mySQL.openConnection();
