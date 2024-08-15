@@ -18,22 +18,47 @@ public class CommandPrefix {
             + " ";
     private static final String LOGPrefix = ChatColor.BLUE + "LOG " + ChatColor.DARK_GRAY + "┃" + ChatColor.GRAY + " ";
 
+    /**
+     * Returns the network prefix used in the application.
+     * 
+     * @return the predefined Network Prefix
+     */
     public static String getNetworkPrefix() {
         return NetworkPrefix;
     }
 
+    /**
+     * Returns the console prefix used in the application.
+     * 
+     * @return the predefined console prefix "LOG ┃ "
+     */
     public static String getConsolePrefix() {
         return "LOG ┃ ";
     }
 
+    /**
+     * Returns the announce prefix used in the application.
+     * 
+     * @return the predefined announce prefix
+     */
     public static String getAnnouncePrefix() {
         return announcePrefix;
     }
 
+    /**
+     * Returns the LOGPrefix used in the application
+     * 
+     * @return the LOGPrefix that was predefined
+     */
     public static String getLOGPrefix() {
         return LOGPrefix;
     }
 
+    /**
+     * Returns the Abrax prefix used in the application.
+     * 
+     * @return the predefined Abrax Prefix
+     */
     public static String getAbraxPrefix() {
         return AbraxPrefix;
     }

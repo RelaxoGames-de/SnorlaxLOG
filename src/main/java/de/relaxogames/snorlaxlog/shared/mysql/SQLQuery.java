@@ -1,7 +1,6 @@
 package de.relaxogames.snorlaxlog.shared.mysql;
 
 public enum SQLQuery {
-
     CREATE_MYSQL_USER_CACHE("CREATE TABLE IF NOT EXISTS `%DATABASE_PATH%`.`%TABLE_NAME_STANDARD%` (\n" +
             "    `user_id` INT AUTO_INCREMENT,\n" +
             "    `user_uuid` VARCHAR(40) NOT NULL,\n" +

@@ -114,6 +114,12 @@ public class MySQL {
         }
     }
 
+    /**
+     * Prints an error message related to the failure of establishing a connection
+     * with the MySQL database.
+     *
+     * @param e the SQLException that occurred
+     */
     @SuppressWarnings("deprecation")
     private void printDBErr(SQLException e) {
         ProxyServer.getInstance().getConsole().sendMessage(new TextComponent("\n\n"));
