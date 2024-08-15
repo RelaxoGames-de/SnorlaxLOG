@@ -19,32 +19,41 @@ public class LanguageManager {
     private static final Map<String, Map<String, String>> messages = new HashMap<>();
 
     /**
-     * Gets a Message using a specified local to return the specified message in a language
-     * @param locale locale that specifies in which language the message will be returned
+     * Gets a Message using a specified local to return the specified message in a
+     * language
+     * 
+     * @param locale  locale that specifies in which language the message will be
+     *                returned
      * @param fileKey The File key, how the Message is called in the language Files
      * @return returns the converted message as a String
      */
     @Deprecated
-    public static String getMessage(String locale, String fileKey){
-        return messages.getOrDefault(locale, messages.get(Language.system_default.getInitials())).getOrDefault(fileKey, "KEY NOT SET!");
+    public static String getMessage(String locale, String fileKey) {
+        return messages.getOrDefault(locale, messages.get(Language.system_default.getInitials())).getOrDefault(fileKey,
+                "KEY NOT SET!");
     }
 
     /**
-     * Gets a Message using a specified local to return the specified message in a language
-     * @param language locale that specifies in which language the message will be returned
-     * @param fileKey The File key, how the Message is called in the language Files
+     * Gets a Message using a specified local to return the specified message in a
+     * language
+     * 
+     * @param language locale that specifies in which language the message will be
+     *                 returned
+     * @param fileKey  The File key, how the Message is called in the language Files
      * @return returns the converted message as a String
      */
     public static String getMessage(Language language, String fileKey) {
-        return messages.getOrDefault(language.getInitials(), messages.get(Language.system_default.getInitials())).getOrDefault(fileKey, "KEY NOT SET!");
+        return messages.getOrDefault(language.getInitials(), messages.get(Language.system_default.getInitials()))
+                .getOrDefault(fileKey, "KEY NOT SET!");
     }
 
-    public static void loadBukkitMessage(String fileName, Map<String, String> localeMessages){
+    public static void loadBukkitMessage(String fileName, Map<String, String> localeMessages) {
         messages.put(fileName, localeMessages);
     }
 
     /**
-     * This function get's all the keys and messages of the LanguageFiles and puts them into a HashMap
+     * This function get's all the keys and messages of the LanguageFiles and puts
+     * them into a HashMap
      */
     public static void loadBungeeMessage() {
         for (File file : Objects.requireNonNull(FileManager.getLangFolder().listFiles()))
@@ -53,7 +62,8 @@ public class LanguageManager {
                 Map<String, String> localeMessages = new HashMap<>();
                 for (String key : lang.getKeys())
                     lang.getSection(key).getKeys().forEach(messName -> {
-                        String message = ChatColor.translateAlternateColorCodes('&', lang.getString(key + "." + messName));
+                        String message = ChatColor.translateAlternateColorCodes('&',
+                                lang.getString(key + "." + messName));
                         localeMessages.put(messName, message);
                     });
                 messages.put(file.getName().split(".yml")[0], localeMessages);

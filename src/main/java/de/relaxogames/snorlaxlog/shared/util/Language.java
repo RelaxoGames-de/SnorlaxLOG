@@ -15,9 +15,11 @@ public enum Language {
         return initials;
     }
 
-    public static Language convertLanguage(String initials){
-        if (initials.equals(de_DE.initials)) return de_DE;
-        if (initials.equals(en_US.initials)) return en_US;
+    public static Language convertLanguage(String initials) {
+        if (initials.equals(de_DE.initials))
+            return de_DE;
+        if (initials.equals(en_US.initials))
+            return en_US;
         return system_default;
     }
 }

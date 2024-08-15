@@ -14,7 +14,6 @@ import de.relaxogames.snorlaxlog.bungeecord.files.FileManager;
 import de.relaxogames.snorlaxlog.shared.mysql.MySQL;
 import de.relaxogames.snorlaxlog.shared.util.CommandPrefix;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
@@ -37,7 +36,8 @@ public final class SnorlaxLOG extends Plugin {
     @Override
     public void onEnable() {
         if (version == null) {
-            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Plugin version is null! Disabling SnorlaxLOG");
+            logMessage(Level.WARNING,
+                    CommandPrefix.getConsolePrefix() + "Plugin version is null! Disabling SnorlaxLOG");
             this.onDisable();
         }
 
@@ -63,7 +63,8 @@ public final class SnorlaxLOG extends Plugin {
         String database = FileManager.getDatabase();
 
         if (host == null || user == null || password == null || database == null) {
-            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix() + "Could not open Connection to the MySQL Database! Disabling SnorlaxLOG!");
+            logMessage(Level.WARNING, CommandPrefix.getConsolePrefix()
+                    + "Could not open Connection to the MySQL Database! Disabling SnorlaxLOG!");
             onDisable();
             return;
         }
@@ -87,29 +88,68 @@ public final class SnorlaxLOG extends Plugin {
         pm.registerCommand(this, new PermissionCommand());
     }
 
+    /**
+     * Logs a message with the specified level and sends it to the appropriate
+     * players based on their notification level.
+     *
+     * @param level   the logging level of the message
+     * @param message the message to log and send
+     */
+    @SuppressWarnings("deprecation")
     public static void logMessage(Level level, String message) {
         ProxyServer.getInstance().getLogger().log(level, message);
         for (LOGPlayer logPlayer : SnorlaxLOGCommand.getLogPlayers().keySet()) {
             Level logLVL = logPlayer.getNotifyLevel();
             if (logLVL.equals(level)) {
-                logPlayer.getPlayer().sendMessage(CommandPrefix.getLOGPrefix() + "§b§l[" + logLVL.getName() + "]§r " + message);
+                logPlayer.getPlayer()
+                        .sendMessage(CommandPrefix.getLOGPrefix() + "§b§l[" + logLVL.getName() + "]§r " + message);
                 return;
             }
         }
     }
 
-    public static void logChat(Plugin plugin, String senderName, UUID senderUUID, String targetName, UUID targetUUID, String message) {
-        ProxyServer.getInstance().getLogger().log(Level.FINEST, CommandPrefix.getConsolePrefix() + "[" + plugin.getDescription().getName() + "] Chat activity: " + senderName + " [" + senderUUID + "] TEXTED TO " + targetName + " [" + targetUUID + "] MESSAGE:'" + message + "'");
+    /**
+     * Logs chat activity with detailed information including sender name, sender
+     * UUID, target name, target UUID, and message.
+     *
+     * @param plugin     the plugin instance responsible for the chat activity
+     * @param senderName the name of the sender
+     * @param senderUUID the UUID of the sender
+     * @param targetName the name of the target
+     * @param targetUUID the UUID of the target
+     * @param message    the chat message sent
+     */
+    public static void logChat(Plugin plugin, String senderName, UUID senderUUID, String targetName, UUID targetUUID,
+            String message) {
+        ProxyServer.getInstance().getLogger().log(Level.FINEST,
+                CommandPrefix.getConsolePrefix() + "[" + plugin.getDescription().getName() + "] Chat activity: "
+                        + senderName + " [" + senderUUID + "] TEXTED TO " + targetName + " [" + targetUUID
+                        + "] MESSAGE:'" + message + "'");
     }
 
+    /**
+     * Returns the instance of the SnorlaxLOG class.
+     *
+     * @return the instance of the SnorlaxLOG class
+     */
     public static SnorlaxLOG getInstance() {
         return instance;
     }
 
+    /**
+     * Returns the version of the SnorlaxLOG plugin.
+     *
+     * @return the version of the SnorlaxLOG plugin
+     */
     public static String getVersion() {
         return version;
     }
 
+    /**
+     * Returns the SQLManager instance used by the SnorlaxLOG plugin.
+     *
+     * @return the SQLManager instance
+     */
     public static SQLManager getSqlManager() {
         return sqlManager;
     }

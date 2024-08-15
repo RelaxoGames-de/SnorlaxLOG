@@ -12,22 +12,28 @@ import net.md_5.bungee.event.EventHandler;
 import java.util.Date;
 
 public class JoinListener implements Listener {
+    @SuppressWarnings("deprecation")
     @EventHandler
-    public void onJoin(PostLoginEvent e){
+    public void onJoin(PostLoginEvent e) {
         ProxiedPlayer player = e.getPlayer();
-        if (player == null) return;
+        if (player == null)
+            return;
         LOGPlayer logPlayer = new LOGGEDPlayer(player);
 
-        if (!logPlayer.isInDatabase()) logPlayer.addPlayerEntry();
+        if (!logPlayer.isInDatabase())
+            logPlayer.addPlayerEntry();
 
         logPlayer.updatePlayerProfile();
 
-        if (logPlayer.getLastJoinTime() == System.currentTimeMillis() || logPlayer.getLastJoinTime() == new Date().getTime()){
-            //ERROR #607
-            player.disconnect(LanguageManager.getMessage(logPlayer.language(), "kickScreen").replace("%REASON%", "Caching Onlintime! Error #607"));
+        if (logPlayer.getLastJoinTime() == System.currentTimeMillis()
+                || logPlayer.getLastJoinTime() == new Date().getTime()) {
+            // ERROR #607
+            player.disconnect(LanguageManager.getMessage(logPlayer.language(), "kickScreen").replace("%REASON%",
+                    "Caching Onlintime! Error #607"));
             return;
         }
 
-        player.sendMessage(CommandPrefix.getNetworkPrefix() + LanguageManager.getMessage(logPlayer.language(), "LanguageSelected"));
+        player.sendMessage(CommandPrefix.getNetworkPrefix()
+                + LanguageManager.getMessage(logPlayer.language(), "LanguageSelected"));
     }
 }

@@ -12,6 +12,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class ResultSetConverter {
+    /**
+     * Converts a ResultSet into a list of CachedPlayer objects.
+     * 
+     * @param resultSet the ResultSet to be converted
+     * @return a list of CachedPlayer objects
+     * @throws SQLException if an error occurs while accessing the ResultSet
+     */
     public static List<CachedPlayer> convertResultSetToList(ResultSet resultSet) throws SQLException {
         List<CachedPlayer> playerList = new ArrayList<>();
         while (resultSet.next()) {
@@ -25,7 +32,8 @@ public class ResultSetConverter {
             String language = resultSet.getString(PlayerEntryData.USER_LANGUAGE.getTableColumnName());
             String ip = resultSet.getString(PlayerEntryData.USER_CACHED_IP.getTableColumnName());
 
-            CachedPlayer cached = new de.relaxogames.snorlaxlog.bukkit.interfaces.CachePlayer(name1, uuid1, firstJoin, lastJoin, discordID, forumID, onlineTime, language, ip);
+            CachedPlayer cached = new de.relaxogames.snorlaxlog.bukkit.interfaces.CachePlayer(name1, uuid1, firstJoin,
+                    lastJoin, discordID, forumID, onlineTime, language, ip);
             playerList.add(cached);
             LOGLaxAPI.getInstance().getAllCachedPlayersByName().put(name1, cached);
         }

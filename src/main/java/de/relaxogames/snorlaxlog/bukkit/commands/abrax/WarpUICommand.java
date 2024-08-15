@@ -20,16 +20,20 @@ import java.io.IOException;
 public class WarpUICommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
+            String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(CommandPrefix.getConsolePrefix() + LanguageManager.getMessage(Language.system_default, "OnlyPlayer"));
+            sender.sendMessage(CommandPrefix.getConsolePrefix()
+                    + LanguageManager.getMessage(Language.system_default, "OnlyPlayer"));
             return false;
         }
 
+        @SuppressWarnings("unused")
         LOGPlayer logPlayer = new LOGBukkitPlayer(player);
 
         if (!player.hasPermission(PermissionShortCut.ABRAX_JOIN_SERVER.getPermission())) {
-            player.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(Language.system_default, "NoPermission1"));
+            player.sendMessage(CommandPrefix.getAbraxPrefix()
+                    + LanguageManager.getMessage(Language.system_default, "NoPermission1"));
             return false;
         }
 

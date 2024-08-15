@@ -57,6 +57,7 @@ public class LOGGEDPlayer implements LOGPlayer {
         return sqlManager.isInDatabase(player);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public String getUserIP() {
         return player.getAddress().getHostString();
@@ -200,6 +201,7 @@ public class LOGGEDPlayer implements LOGPlayer {
                 .replace("%CHANNEL%", ""));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void toggleNotify(Level level) {
         if (notifyIsActive()){

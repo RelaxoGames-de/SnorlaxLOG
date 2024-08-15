@@ -10,9 +10,10 @@ import net.md_5.bungee.event.EventHandler;
 public class QuitListener implements Listener {
 
     @EventHandler
-    public void onQuit(PlayerDisconnectEvent e){
+    public void onQuit(PlayerDisconnectEvent e) {
         ProxiedPlayer p = e.getPlayer();
-        if (p == null) return;
+        if (p == null)
+            return;
         LOGPlayer lp = new LOGGEDPlayer(p);
 
         lp.updatePlayerProfile();
