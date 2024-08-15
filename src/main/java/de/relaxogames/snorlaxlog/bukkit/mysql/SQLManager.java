@@ -46,6 +46,14 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Checks if the given player is present in the database.
+     * 
+     * @param player The player to check in the database.
+     * @return true if the player is found in the database, false otherwise.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public boolean isInDatabase(Player player) {
         this.checkCon();
 
@@ -62,6 +70,13 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Adds a new entry for the specified player to the database.
+     * 
+     * @param player The player for whom the entry is being added.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public void addEntry(Player player) {
         this.checkCon();
         String sql = SQLQuery.ADD_ENTRY_TO_DATABASE.getSql().replace("%DATABASE_PATH%", database_path)
@@ -89,6 +104,14 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves the UUID of a player based on their name from the database.
+     * 
+     * @param name The name of the player to retrieve the UUID for.
+     * @return The UUID of the player if found, otherwise null.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public UUID getUUIDThroughName(String name) {
         this.checkCon();
 
@@ -113,6 +136,15 @@ public class SQLManager {
         return uuid;
     }
 
+    /**
+     * Retrieves the correct user name from the database based on the provided index
+     * in lowercase.
+     * 
+     * @param index The index to search for in lowercase.
+     * @return The correct user name if found, otherwise null.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public String getCorrectNameFromLOWERCASE(String index) {
         checkCon();
         String sql = SQLQuery.SELECT_USER_WITH_L_NAME.getSql().replace("%DATABASE_PATH%", database_path)
@@ -130,6 +162,15 @@ public class SQLManager {
         return null;
     }
 
+    /**
+     * Retrieves the saved online time for a specific player from the database.
+     * 
+     * @param player The player for whom the online time is being retrieved.
+     * @return The total online time in milliseconds for the player, or 0 if no
+     *         record is found.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public long getSavedOnlineTime(Player player) {
         this.checkCon();
 
@@ -151,6 +192,16 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves the timestamp of the last time a player was seen based on their
+     * name.
+     * 
+     * @param name The name of the player to retrieve the last seen timestamp for.
+     * @return The timestamp of the last seen time for the player, or null if the
+     *         player is not found.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public Timestamp getLastSeen(String name) {
         this.checkCon();
         UUID uuid = getUUIDThroughName(getCorrectNameFromLOWERCASE(name.toLowerCase()));
@@ -170,6 +221,15 @@ public class SQLManager {
         return null;
     }
 
+    /**
+     * Retrieves player information from the database based on the player's name.
+     * 
+     * @param name The name of the player to retrieve information for.
+     * @return A CachedPlayer object containing the player's details if found,
+     *         otherwise null.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(String name) {
         this.checkCon();
 
@@ -207,6 +267,17 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves player information from the database based on the provided
+     * LOGPlayer object.
+     * 
+     * @param logPlayer The LOGPlayer object for which information is being
+     *                  retrieved.
+     * @return A CachedPlayer object containing the player's details if found,
+     *         otherwise null.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer getPlayerInfos(
             de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer) {
         this.checkCon();
@@ -241,6 +312,15 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the profile name of a player in the database.
+     * 
+     * @param logPlayer The LOGPlayer object representing the player whose profile
+     *                  name is being updated.
+     * @param newName   The new name to set for the player's profile.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public void updatePlayerProfileName(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer,
             String newName) {
         de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
@@ -265,6 +345,15 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the last seen timestamp of a player's profile in the database.
+     * Retrieves the player information using the provided LOGPlayer object,
+     * compares the last online timestamp with the current timestamp,
+     * and updates the database if they are different.
+     * 
+     * @param logPlayer The LOGPlayer object representing the player whose last seen
+     *                  timestamp is being updated.
+     */
     public void updatePlayerProfileLastSeen(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer) {
         de.relaxogames.snorlaxlog.bukkit.interfaces.CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
@@ -290,6 +379,16 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates a specific player setting in the database.
+     * 
+     * @param logPlayer The LOGPlayer object representing the player whose setting
+     *                  is being updated.
+     * @param index     The type of setting to update.
+     * @param newValue  The new value to set for the player's setting.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public void updatePlayerSetting(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer,
             PlayerEntryData index, String newValue) {
         if (index.equals(PlayerEntryData.USER_UUID))
@@ -307,6 +406,16 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates a specific player setting in the database.
+     * 
+     * @param logPlayer The LOGPlayer object representing the player whose setting
+     *                  is being updated.
+     * @param index     The type of setting to update.
+     * @param newValue  The new value to set for the player's setting.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public void updatePlayerSetting(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer,
             PlayerEntryData index, Integer newValue) {
         if (index.equals(PlayerEntryData.USER_UUID))
@@ -324,6 +433,16 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates a specific player setting in the database.
+     * 
+     * @param logPlayer The LOGPlayer object representing the player whose setting
+     *                  is being updated.
+     * @param index     The type of setting to update.
+     * @param newValue  The new value to set for the player's setting.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public void updatePlayerSetting(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer,
             PlayerEntryData index, Timestamp newValue) {
         if (index.equals(PlayerEntryData.USER_UUID))
@@ -341,6 +460,17 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the player's profile IP in the database.
+     * Retrieves the cached player information based on the provided LOGPlayer
+     * object,
+     * compares the UUIDs, and updates the IP if they are different.
+     * 
+     * @param logPlayer The LOGPlayer object representing the player whose profile
+     *                  IP is being updated.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     public void updatePlayerProfileIP(de.relaxogames.snorlaxlog.bukkit.interfaces.LOGPlayer logPlayer) {
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
@@ -363,6 +493,13 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves all cached players from the database.
+     * 
+     * @return A list of CachedPlayer objects representing all cached players.
+     * @throws RuntimeException if an SQL exception occurs during the database
+     *                          query.
+     */
     @SuppressWarnings("deprecation")
     public static List<CachedPlayer> getAllCachedPlayers() {
         try {
@@ -383,6 +520,14 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Checks the validity of the current database connection.
+     * If the connection is not valid, closed, or null, it reopens the connection
+     * using LOGLaxAPI.
+     * 
+     * @throws RuntimeException if an SQL exception occurs during the connection
+     *                          check or reopening.
+     */
     @SuppressWarnings("deprecation")
     private void checkCon() {
         try {

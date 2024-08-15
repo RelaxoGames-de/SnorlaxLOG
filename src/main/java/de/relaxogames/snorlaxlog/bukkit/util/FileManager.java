@@ -144,6 +144,14 @@ public class FileManager {
                 return fc.getString("MySQL.Password");
         }
 
+        /**
+         * Retrieves the name of the table storing user profiles from the MySQL
+         * configuration file.
+         * If the specified table is not found, the default table name
+         * 'snorlax_users_profile' is returned.
+         *
+         * @return The name of the user profiles table as a String
+         */
         public static String getUsersProfileTable() {
                 File config = getMySQLConfig();
                 FileConfiguration fc;
@@ -152,23 +160,46 @@ public class FileManager {
                 return fc.getString("DatabaseTables.SnorlaxUserProfile", "snorlax_users_profile");
         }
 
+        /**
+         * Retrieves the data folder where configuration and language files are stored.
+         *
+         * @return The data folder as a File object
+         */
         public static File getDatafolder() {
                 return datafolder;
         }
 
+        /**
+         * Retrieves the MySQL configuration file.
+         *
+         * @return The MySQL configuration file as a File object
+         */
         public static File getMySQLConfig() {
                 return mySQLConfig;
         }
 
+        /**
+         * Retrieves the task configuration file.
+         *
+         * @return The task configuration file as a File object
+         */
         public static File getTaskConfig() {
                 return taskConfig;
         }
 
+        /**
+         * Deletes the data folder if it exists.
+         */
         public static void deleteFiles() {
                 if (datafolder != null || datafolder.exists())
                         datafolder.delete();
         }
 
+        /**
+         * Retrieves the folder where language files are stored.
+         *
+         * @return The language folder as a File object
+         */
         public static File getLangFolder() {
                 return langFolder;
         }
