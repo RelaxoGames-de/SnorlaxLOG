@@ -44,6 +44,12 @@ public class MySQL {
         return con;
     }
 
+    /**
+     * Establishes a connection to the MySQL database using the provided
+     * credentials.
+     * Displays success messages on the console upon successful initialization.
+     * Displays error messages if connection fails.
+     */
     public void connect() {
         try {
             con = DriverManager.getConnection(
@@ -64,6 +70,11 @@ public class MySQL {
         }
     }
 
+    /**
+     * Closes the connection to the MySQL database.
+     * Sends notification messages to the console upon disconnection.
+     * If an error occurs during disconnection, the error is printed to the console.
+     */
     public void close() {
         try {
             if (con == null)
@@ -85,14 +96,30 @@ public class MySQL {
         }
     }
 
+    /**
+     * Checks if a connection to the MySQL database exists.
+     *
+     * @return true if a connection exists, false otherwise
+     */
     public boolean hasConnection() {
         return this.con != null;
     }
 
+    /**
+     * Returns the current Connection object.
+     *
+     * @return The current Connection object
+     */
     public Connection getConnection() {
         return con;
     }
 
+    /**
+     * Prints error messages to the console when a connection to the MySQL database
+     * cannot be established.
+     *
+     * @param e The SQLException that occurred
+     */
     private void printErr(SQLException e) {
         Bukkit.getConsoleSender().sendMessage(" ");
         Bukkit.getConsoleSender().sendMessage(" ");

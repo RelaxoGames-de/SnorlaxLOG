@@ -12,6 +12,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class ResultSetConverter {
+    /**
+     * Converts a ResultSet into a list of CachedPlayer objects.
+     * 
+     * @param resultSet the ResultSet to be converted
+     * @return a list of CachedPlayer objects
+     * @throws SQLException if an error occurs while accessing the ResultSet
+     */
     public static List<CachedPlayer> convertResultSetToList(ResultSet resultSet) throws SQLException {
         List<CachedPlayer> playerList = new ArrayList<>();
         while (resultSet.next()) {
