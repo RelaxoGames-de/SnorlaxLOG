@@ -137,6 +137,10 @@ public class SnorlaxLOGCommand extends Command implements TabExecutor {
                 CommandPrefix.getLOGPrefix() + LanguageManager.getMessage(player.language(), "NoPermForChannel"));
     }
 
+    /**
+     * Returns a HashMap containing LOGPlayers mapped to their corresponding logging
+     * Levels.
+     */
     public static HashMap<LOGPlayer, Level> getLogPlayers() {
         return logPlayers;
     }

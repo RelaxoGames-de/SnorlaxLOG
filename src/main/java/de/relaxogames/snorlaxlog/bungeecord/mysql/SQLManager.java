@@ -51,6 +51,13 @@ public class SQLManager {
 
     }
 
+    /**
+     * Checks if the specified ProxiedPlayer is present in the database.
+     *
+     * @param player the ProxiedPlayer to check in the database
+     * @return true if the player is found in the database, false otherwise
+     * @throws RuntimeException if an SQL exception occurs during the process
+     */
     public boolean isInDatabase(ProxiedPlayer player) {
         this.checkCon();
 
@@ -67,6 +74,12 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Adds a new entry for the specified ProxiedPlayer to the database.
+     *
+     * @param player the ProxiedPlayer for which the entry is added
+     * @throws RuntimeException if an SQL exception occurs during the process
+     */
     @SuppressWarnings("deprecation")
     public void addEntry(ProxiedPlayer player) {
         this.checkCon();
@@ -96,6 +109,13 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves the UUID of a player based on the player's name from the database.
+     *
+     * @param name the name of the player
+     * @return the UUID of the player if found, otherwise null
+     * @throws RuntimeException if an SQL exception occurs during the process
+     */
     public UUID getUUIDThroughName(String name) {
         this.checkCon();
 
@@ -117,6 +137,15 @@ public class SQLManager {
         return uuid;
     }
 
+    /**
+     * Retrieves the correct username from the database based on the provided index
+     * in lowercase.
+     *
+     * @param index the index to search for in the database
+     * @return the correct username corresponding to the index in lowercase, or null
+     *         if not found
+     * @throws RuntimeException if an SQL exception occurs during the process
+     */
     public String getCorrectNameFromLOWERCASE(String index) {
         this.checkCon();
         String sql = SQLQuery.SELECT_USER_WITH_L_NAME.getSql().replace("%DATABASE_PATH%", database_path)
@@ -135,6 +164,13 @@ public class SQLManager {
         return null;
     }
 
+    /**
+     * Retrieves the saved online time of a player from the database.
+     *
+     * @param player the ProxiedPlayer object for which the online time is retrieved
+     * @return the saved online time of the player, or 0 if not found
+     * @throws RuntimeException if an SQL exception occurs during the process
+     */
     public long getSavedOnlineTime(ProxiedPlayer player) {
         this.checkCon();
 
@@ -155,6 +191,15 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves player information from the database based on the provided
+     * LOGPlayer object.
+     *
+     * @param logPlayer the LOGPlayer object representing the player
+     * @return a CachedPlayer object containing the player's information if found,
+     *         otherwise null
+     * @throws RuntimeException if an SQL exception occurs during the process
+     */
     public CachedPlayer getPlayerInfos(LOGPlayer logPlayer) {
         this.checkCon();
 
@@ -184,6 +229,14 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Retrieves player information from the database based on the provided index.
+     *
+     * @param index the index to search for in the database
+     * @return a CachedPlayer object containing the player's information if found,
+     *         otherwise null
+     * @throws RuntimeException if an SQL exception occurs during the process
+     */
     public CachedPlayer getPlayerInfos(String index) {
         this.checkCon();
 
@@ -213,6 +266,12 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the saved online time of a player in the database.
+     *
+     * @param logPlayer     the LOGPlayer object representing the player
+     * @param newOnlineTime the new online time to be set for the player
+     */
     public void setSavedOnlineTime(LOGPlayer logPlayer, long newOnlineTime) {
         this.checkCon();
 
@@ -241,6 +300,13 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the player's profile name in the database if the new name is valid
+     * and different from the current name.
+     *
+     * @param logPlayer the LOGPlayer object representing the player
+     * @param newName   the new name to be set for the player's profile
+     */
     public void updatePlayerProfileName(LOGPlayer logPlayer, String newName) {
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
@@ -264,6 +330,11 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the last seen timestamp of a player's profile in the database.
+     *
+     * @param logPlayer the LOGPlayer object representing the player
+     */
     public void updatePlayerProfileLastSeen(LOGPlayer logPlayer) {
         CachedPlayer cachedPlayer = getPlayerInfos(logPlayer);
 
@@ -289,6 +360,13 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the User setting of the player in the database with a String value.
+     *
+     * @param logPlayer the LOGPlayer object representing the player
+     * @param index     the PlayerEntryData representing the setting to be updated
+     * @param newValue  the new String value to be set for the setting
+     */
     public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, String newValue) {
         if (index.equals(PlayerEntryData.USER_UUID))
             return;
@@ -305,6 +383,13 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Updates the User setting of the player in the database with an Integer value.
+     *
+     * @param logPlayer the LOGPlayer object representing the player
+     * @param index     the PlayerEntryData representing the setting to be updated
+     * @param newValue  the new Integer value to be set for the setting
+     */
     public void updatePlayerSetting(LOGPlayer logPlayer, PlayerEntryData index, Integer newValue) {
         if (index.equals(PlayerEntryData.USER_UUID))
             return;
@@ -371,6 +456,12 @@ public class SQLManager {
         }
     }
 
+    /**
+     * Checks the validity of the current database connection.
+     * If the connection is not valid, closed, or null, opens a new connection using
+     * SnorlaxLOG instance.
+     * Throws a RuntimeException if a SQLException occurs during the process.
+     */
     @SuppressWarnings("deprecation")
     private void checkCon() {
         try {

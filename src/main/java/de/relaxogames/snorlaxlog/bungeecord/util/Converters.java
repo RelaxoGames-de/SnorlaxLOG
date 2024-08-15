@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Converters {
+    /**
+     * Retrieves a list of user names from the provided ResultSet.
+     *
+     * @param resultSet the ResultSet containing user data
+     * @return a list of user names extracted from the ResultSet
+     */
     public static List<String> getNamesFromResultSet(ResultSet resultSet) {
         List<String> names = new ArrayList<>();
         try {

@@ -88,6 +88,13 @@ public final class SnorlaxLOG extends Plugin {
         pm.registerCommand(this, new PermissionCommand());
     }
 
+    /**
+     * Logs a message with the specified level and sends it to the appropriate
+     * players based on their notification level.
+     *
+     * @param level   the logging level of the message
+     * @param message the message to log and send
+     */
     @SuppressWarnings("deprecation")
     public static void logMessage(Level level, String message) {
         ProxyServer.getInstance().getLogger().log(level, message);
@@ -101,6 +108,17 @@ public final class SnorlaxLOG extends Plugin {
         }
     }
 
+    /**
+     * Logs chat activity with detailed information including sender name, sender
+     * UUID, target name, target UUID, and message.
+     *
+     * @param plugin     the plugin instance responsible for the chat activity
+     * @param senderName the name of the sender
+     * @param senderUUID the UUID of the sender
+     * @param targetName the name of the target
+     * @param targetUUID the UUID of the target
+     * @param message    the chat message sent
+     */
     public static void logChat(Plugin plugin, String senderName, UUID senderUUID, String targetName, UUID targetUUID,
             String message) {
         ProxyServer.getInstance().getLogger().log(Level.FINEST,
@@ -109,14 +127,29 @@ public final class SnorlaxLOG extends Plugin {
                         + "] MESSAGE:'" + message + "'");
     }
 
+    /**
+     * Returns the instance of the SnorlaxLOG class.
+     *
+     * @return the instance of the SnorlaxLOG class
+     */
     public static SnorlaxLOG getInstance() {
         return instance;
     }
 
+    /**
+     * Returns the version of the SnorlaxLOG plugin.
+     *
+     * @return the version of the SnorlaxLOG plugin
+     */
     public static String getVersion() {
         return version;
     }
 
+    /**
+     * Returns the SQLManager instance used by the SnorlaxLOG plugin.
+     *
+     * @return the SQLManager instance
+     */
     public static SQLManager getSqlManager() {
         return sqlManager;
     }

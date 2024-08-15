@@ -181,6 +181,11 @@ public class FileManager {
         return mySQLConfig;
     }
 
+    /**
+     * Returns the folder where language files are stored.
+     *
+     * @return The folder containing language files.
+     */
     public static File getLangFolder() {
         return langFolder;
     }
