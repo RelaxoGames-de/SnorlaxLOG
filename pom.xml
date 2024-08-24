@@ -6,7 +6,7 @@
 
     <groupId>de.relaxogames</groupId>
     <artifactId>SnorlaxLOG</artifactId>
-    <version>inDev-1.11.1</version>
+    <version>inDev-1.11.2</version>
     <packaging>jar</packaging>
 
     <name>SnorlaxLOG</name>

@@ -101,4 +101,8 @@ public class LOGLaxAPI extends JavaPlugin {
     public static LOGLaxAPI getInstance() {
         return instance;
     }
+
+    public static SQLManager getBukkitLogSQL(){
+        return new SQLManager();
+    }
 }
