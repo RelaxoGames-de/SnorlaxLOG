@@ -110,6 +110,25 @@ public class SQLManager {
         }
         return null;
     }
+    public String getNameThroughUUID(UUID uuid){
+        checkCon();
+
+        if (uuid == null)return null;
+        String sql = SQLQuery.SELECT_EVERYTHING_WHERE_UUID_A_N.getSql().replace("%DATABASE_PATH%", database_path).replace("%TABLE_NAME_STANDARD%", userDataTable);
+        try (PreparedStatement statement = LOGLaxAPI.getInstance().mysql.getConnection().prepareStatement(sql)){
+
+            statement.setString(1, uuid.toString());
+            try (ResultSet set = statement.executeQuery()){
+                if (set.next()){
+                    return getCorrectNameFromLOWERCASE(set.getString("user_name"));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 
     public long getSavedOnlineTime(Player player){
         this.checkCon();
