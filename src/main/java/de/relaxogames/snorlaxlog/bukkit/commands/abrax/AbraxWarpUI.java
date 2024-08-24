@@ -11,6 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AbraxWarpUI {
+
+    /**
+     * Handles the response data to display server options to the player.
+     *
+     * @param data the response data containing player information and server names
+     */
     public static void handleResponse(String data) {
         final Player player = Bukkit.getPlayer(data.split(":")[1]);
         List<String> serverNames = new ArrayList<>(Arrays.asList((data.split(":")[2].split(";"))));
@@ -19,7 +25,8 @@ public class AbraxWarpUI {
 
         InventoryManager inventoryManager = new InventoryManager(player, 9 * 6, "Choose a Server!");
         for (String serverName : serverNames) {
-            inventoryManager.setItem(iter, new ItemBuilder(Material.ENDER_PEARL).setDisplayname(serverName).setLocalizedName("snorlaxlog.ui.inventorymanager.warpui." + serverName));
+            inventoryManager.setItem(iter, new ItemBuilder(Material.ENDER_PEARL).setDisplayname(serverName)
+                    .setLocalizedName("snorlaxlog.ui.inventorymanager.warpui." + serverName));
             iter++;
         }
 

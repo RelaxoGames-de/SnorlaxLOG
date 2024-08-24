@@ -4,13 +4,13 @@ This plugin is the backbone of the RelaxoGames.de Minigame Network. SnorlaxLOG i
 
 # Documentation
 
-Before you continue please consider that you are logged in into the [PixelMedia DevEnd](http://relaxogames.de/development)
+Before you continue please ensure that you are logged in into the [PixelMedia DevEnd](http://relaxogames.de/development)
 
 ## Used By
 
 This libary is mainly used by the following plugins:
 
-- SnorlaxBan (Ban System)
+- RelaxoBan (Ban System)
 - FraxureAPI (Friend System)
 - NexusAPI (Minigames)
 

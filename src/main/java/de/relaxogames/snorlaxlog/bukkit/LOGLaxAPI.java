@@ -44,7 +44,8 @@ public class LOGLaxAPI extends JavaPlugin {
 
     public void ListenerRegistration() {
         getServer().getPluginManager().registerEvents(new InventoryManagerClickListener(), this);
-        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginChannelMessageListener());
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord",
+                new PluginChannelMessageListener());
     }
 
     public void startEssentials() {
@@ -57,6 +58,12 @@ public class LOGLaxAPI extends JavaPlugin {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
+    /**
+     * Logs a message with the specified log level.
+     * 
+     * @param level   the log level of the message
+     * @param message the message to be logged
+     */
     public static void logMessage(Level level, String message) {
         Bukkit.getLogger().log(level, message);
     }
@@ -76,11 +83,21 @@ public class LOGLaxAPI extends JavaPlugin {
         }
     }
 
+    /**
+     * Returns a HashMap containing all CachedPlayer objects stored by their names.
+     * 
+     * @return HashMap<String, CachedPlayer> - a mapping of player names to
+     *         CachedPlayer objects
+     */
     public HashMap<String, CachedPlayer> getAllCachedPlayersByName() {
         return allCachedPlayersByName;
     }
 
-
+    /**
+     * Returns the instance of the LOGLaxAPI class.
+     * 
+     * @return LOGLaxAPI - the instance of the LOGLaxAPI class
+     */
     public static LOGLaxAPI getInstance() {
         return instance;
     }

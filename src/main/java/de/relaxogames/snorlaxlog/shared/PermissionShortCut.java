@@ -33,9 +33,9 @@ public enum PermissionShortCut {
 
     public static PermissionShortCut getPermissionSC(String pmsc) {
         return Arrays.stream(PermissionShortCut.values())
-            .filter(permissionShotCut -> permissionShotCut.getPermission().equalsIgnoreCase(pmsc))
-            .findFirst()
-            .orElse(null);
+                .filter(permissionShotCut -> permissionShotCut.getPermission().equalsIgnoreCase(pmsc))
+                .findFirst()
+                .orElse(null);
     }
 
     public static boolean isPermission(String pmsc) {

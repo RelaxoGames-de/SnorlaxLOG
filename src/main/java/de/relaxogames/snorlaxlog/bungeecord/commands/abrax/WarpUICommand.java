@@ -22,19 +22,24 @@ public class WarpUICommand {
         String serverName = data.split(":")[1].replace("-", ".");
 
         if (!loggedPlayer.hasPermission(PermissionShortCut.ABRAX_JOIN_SERVER_PRE.getPermission() + serverName)) {
-            loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(loggedPlayer.language(), "NoPermForDir").replace("{SERVER}", relocatedServer.getName()));
+            loggedPlayer.sendMessage(
+                    CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(loggedPlayer.language(), "NoPermForDir")
+                            .replace("{SERVER}", relocatedServer.getName()));
             return;
         }
 
         if (relocatedServer.equals(loggedPlayer.getPlayer().getServer().getInfo())) {
-            loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix() + LanguageManager.getMessage(loggedPlayer.language(), "ErrorDirEqualsOrigin"));
+            loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix()
+                    + LanguageManager.getMessage(loggedPlayer.language(), "ErrorDirEqualsOrigin"));
             return;
         }
 
-        String msg = LanguageManager.getMessage(loggedPlayer.language(), "ConnectionSuccess").replace("{SERVER}", relocatedServer.getName());
+        String msg = LanguageManager.getMessage(loggedPlayer.language(), "ConnectionSuccess").replace("{SERVER}",
+                relocatedServer.getName());
         String abort = LanguageManager.getMessage(loggedPlayer.language(), "ErrorUnknownError");
 
-        AbraxConnectPlayerEvent connectPlayerEvent = new AbraxConnectPlayerEvent(loggedPlayer.getPlayer(), loggedPlayer, data.split(":")[1], loggedPlayer.getPlayer().getServer().getInfo(), relocatedServer, msg, abort);
+        AbraxConnectPlayerEvent connectPlayerEvent = new AbraxConnectPlayerEvent(loggedPlayer.getPlayer(), loggedPlayer,
+                data.split(":")[1], loggedPlayer.getPlayer().getServer().getInfo(), relocatedServer, msg, abort);
         if (!connectPlayerEvent.isCancelled()) {
             loggedPlayer.getPlayer().connect(ProxyServer.getInstance().getServerInfo(data.split(":")[1]));
             loggedPlayer.sendMessage(CommandPrefix.getAbraxPrefix() + connectPlayerEvent.getConnectMessage());
@@ -51,7 +56,8 @@ public class WarpUICommand {
         final Map<String, ServerInfo> servers = ProxyServer.getInstance().getServers();
         StringBuilder encodedResponse = new StringBuilder("getServerResponse" + ":" + playerName + ":");
 
-        for (ServerInfo server : servers.values()) encodedResponse.append(server.getName()).append(";");
+        for (ServerInfo server : servers.values())
+            encodedResponse.append(server.getName()).append(";");
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);

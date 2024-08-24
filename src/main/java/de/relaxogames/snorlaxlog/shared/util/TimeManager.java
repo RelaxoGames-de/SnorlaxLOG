@@ -6,7 +6,17 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class TimeManager {
-    public static String getFormattedTime(Timestamp time){
+
+    /**
+     * Returns a formatted string representation of the provided Timestamp 'time' in
+     * the "dd.MM.yyyy HH:mm" format,
+     * adjusted to the "Germany/Berlin" timezone.
+     *
+     * @param time the Timestamp to be formatted
+     * @return the formatted string representation of the Timestamp
+     */
+    public static String getFormattedTime(Timestamp time) {
+        @SuppressWarnings("unused")
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
         TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
@@ -16,7 +26,16 @@ public class TimeManager {
         return formatter.format(date);
     }
 
-    public static String getFormattedHours(Timestamp time){
+    /**
+     * Returns a formatted string representation of the provided Timestamp 'time' in
+     * the "dd.MM.yyyy HH:mm" format,
+     * adjusted to the "Germany/Berlin" timezone.
+     *
+     * @param time the Timestamp to be formatted
+     * @return the formatted string representation of the Timestamp
+     */
+    public static String getFormattedHours(Timestamp time) {
+        @SuppressWarnings("unused")
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
         TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
@@ -26,7 +45,16 @@ public class TimeManager {
         return formatter.format(date);
     }
 
-    public static String getFormattedYears(Timestamp time){
+    /**
+     * Returns a formatted string representation of the provided Timestamp 'time' in
+     * the "dd.MM.yyyy" format,
+     * adjusted to the "Germany/Berlin" timezone.
+     *
+     * @param time the Timestamp to be formatted
+     * @return the formatted string representation of the Timestamp
+     */
+    public static String getFormattedYears(Timestamp time) {
+        @SuppressWarnings("unused")
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
         TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
@@ -36,7 +64,16 @@ public class TimeManager {
         return formatter.format(date);
     }
 
-    public static String getFormattedTimeLore(Timestamp time){
+    /**
+     * Returns a formatted string representation of the provided Timestamp 'time' in
+     * the "dd.MM HH:mm" format,
+     * adjusted to the "Germany/Berlin" timezone.
+     *
+     * @param time the Timestamp to be formatted
+     * @return the formatted string representation of the Timestamp
+     */
+    public static String getFormattedTimeLore(Timestamp time) {
+        @SuppressWarnings("unused")
         long current = System.currentTimeMillis();
         long until = time.getTime() + 3600000L;
         TimeZone timezone = TimeZone.getTimeZone("Germany/Berlin");
