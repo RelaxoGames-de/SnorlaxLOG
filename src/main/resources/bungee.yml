@@ -1,4 +1,0 @@
-name: "SnorlaxLOG"
-version: '${project.version}'
-main: de.relaxogames.snorlaxlog.bungeecord.SnorlaxLOG
-author: ["RelaxoGames Development Team"]
