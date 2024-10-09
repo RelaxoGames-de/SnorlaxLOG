@@ -68,7 +68,14 @@ public enum PlayerEntry {
      * 
      * @since 2.0
      */
-    USER_CACHED_IP("user_cached_ip", 8, DatabaseType.TEXT);
+    USER_CACHED_IP("user_cached_ip", 8, DatabaseType.TEXT),
+
+    /**
+     * The roles of the player.
+     * 
+     * @since 2.0
+     */
+    USER_ROLES("user_roles", 9, DatabaseType.TEXT);
 
     /**
      * The name of the column in the database.
