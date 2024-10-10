@@ -9,14 +9,27 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages user-related database operations.
+ */
 public class UserManager {
 
     private final DBConnector dbConnector;
 
+    /**
+     * Constructs a UserManager with the specified DBConnector.
+     *
+     * @param dbConnector the database connector
+     */
     public UserManager(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
+    /**
+     * Creates the users table if it does not already exist.
+     *
+     * @throws SQLException if a database access error occurs
+     */
     public void createTable() throws SQLException {
         StringBuilder query = new StringBuilder("CREATE TABLE IF NOT EXISTS users (");
         for (PlayerEntry entry : PlayerEntry.values()) {
@@ -33,6 +46,12 @@ public class UserManager {
         }
     }
 
+    /**
+     * Adds a new user to the database.
+     *
+     * @param user the user to add
+     * @throws SQLException if a database access error occurs
+     */
     public void addUser(User user) throws SQLException {
         String query = "INSERT INTO users (user_id, user_uuid, user_name, user_first_join, user_last_join, user_discord_id, user_online_time, user_cached_ip, user_roles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = dbConnector.getConnection().prepareStatement(query)) {
@@ -49,6 +68,13 @@ public class UserManager {
         }
     }
 
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param userId the ID of the user to retrieve
+     * @return the user with the specified ID, or null if no such user exists
+     * @throws SQLException if a database access error occurs
+     */
     public User getUserById(int userId) throws SQLException {
         String query = "SELECT * FROM users WHERE user_id = ?";
         try (PreparedStatement stmt = dbConnector.getConnection().prepareStatement(query)) {
@@ -71,6 +97,12 @@ public class UserManager {
         return null;
     }
 
+    /**
+     * Retrieves all users from the database.
+     *
+     * @return a list of all users
+     * @throws SQLException if a database access error occurs
+     */
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
@@ -93,6 +125,12 @@ public class UserManager {
         return users;
     }
 
+    /**
+     * Updates an existing user in the database.
+     *
+     * @param user the user to update
+     * @throws SQLException if a database access error occurs
+     */
     public void updateUser(User user) throws SQLException {
         String query = "UPDATE users SET user_uuid = ?, user_name = ?, user_first_join = ?, user_last_join = ?, user_discord_id = ?, user_online_time = ?, user_cached_ip = ?, user_roles = ? WHERE user_id = ?";
         try (PreparedStatement stmt = dbConnector.getConnection().prepareStatement(query)) {
@@ -109,6 +147,12 @@ public class UserManager {
         }
     }
 
+    /**
+     * Deletes a user from the database.
+     *
+     * @param userId the ID of the user to delete
+     * @throws SQLException if a database access error occurs
+     */
     public void deleteUser(int userId) throws SQLException {
         String query = "DELETE FROM users WHERE user_id = ?";
         try (PreparedStatement stmt = dbConnector.getConnection().prepareStatement(query)) {
