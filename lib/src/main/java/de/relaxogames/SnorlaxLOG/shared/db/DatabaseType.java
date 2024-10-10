@@ -72,6 +72,21 @@ public enum DatabaseType {
     }
 
     /**
+     * Returns the SQL string representation of the DatabaseType.
+     * 
+     * @return The SQL string representation of the DatabaseType.
+     * @since 2.0
+     * @see DatabaseType
+     */
+    public String asSQLString() {
+        return switch (this) {
+            case INT -> "INT";
+            case TEXT -> "TEXT";
+            case TIMESTAMP -> "TIMESTAMP";
+        };
+    }
+
+    /**
      * Returns whether the given string is a valid DatabaseType.
      * 
      * @param type The string to check.

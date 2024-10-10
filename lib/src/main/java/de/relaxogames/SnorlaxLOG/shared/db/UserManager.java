@@ -5,6 +5,7 @@ import de.relaxogames.SnorlaxLOG.shared.model.Role;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,22 @@ public class UserManager {
 
     public UserManager(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
+    }
+
+    public void createTable() throws SQLException {
+        StringBuilder query = new StringBuilder("CREATE TABLE IF NOT EXISTS users (");
+        for (PlayerEntry entry : PlayerEntry.values()) {
+            query.append(entry.getTableColumnName())
+                 .append(" ")
+                 .append(entry.getColumnType().asSQLString())
+                 .append(", ");
+        }
+        query.setLength(query.length() - 2);
+        query.append(")");
+
+        try (Statement stmt = dbConnector.getConnection().createStatement()) {
+            stmt.execute(query.toString());
+        }
     }
 
     public void addUser(User user) throws SQLException {
@@ -69,7 +86,7 @@ public class UserManager {
                     rs.getString(PlayerEntry.USER_DISCORD_ID.getColumnPosition()),
                     rs.getInt(PlayerEntry.USER_ONLINE_TIME.getColumnPosition()),
                     rs.getString(PlayerEntry.USER_CACHED_IP.getColumnPosition()),
-                    Role.fromString(rs.getString(PlayerEntry.USER_ROLES.getColumnPosition())) // Deserialize roles from string
+                    Role.fromString(rs.getString(PlayerEntry.USER_ROLES.getColumnPosition()))
                 ));
             }
         }
