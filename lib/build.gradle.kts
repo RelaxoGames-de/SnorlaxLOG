@@ -1,15 +1,16 @@
 plugins {
+    // Apply the java-library plugin for API and implementation separation.
     `java-library`
 }
 
 repositories {
+    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
-dependencies {
-    implementation("net.md-5:bungeecord-api:1.20-R0.2")
-}
+dependencies {}
 
+// Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
