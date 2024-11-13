@@ -3,11 +3,15 @@ package de.relaxogames.snorlaxlog
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import java.util.logging.Logger
 import kotlinx.coroutines.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
 
 @Serializable data class PingResponse(val status: String, val message: String)
 
@@ -23,7 +27,14 @@ class SnorlaxLOG {
     private val interval = 1000 * 60 * 5 // 5 minutes
     private var refreshing = true
     private val logger = Logger.getLogger(SnorlaxLOG::class.java.name)
-    private val client = HttpClient(CIO)
+    private val client = HttpClient(CIO) {
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+                prettyPrint = true
+            })
+        }
+    }
 
     constructor(username: String, password: String, url: String) {
         this.username = username
@@ -62,8 +73,15 @@ class SnorlaxLOG {
         return response.status == "ok"
     }
 
-    private fun token(): String {
-        return ""
+    private suspend fun token(): String {
+        val response = client.post("$url/token") {
+            contentType(ContentType.Application.FormUrlEncoded)
+            setBody(FormDataContent(Parameters.build {
+                append("username", username)
+                append("password", password)
+            }))
+        }
+        return Json.decodeFromString<TokenResponse>(response.bodyAsText()).access_token
     }
 
     fun getToken(): String? {
