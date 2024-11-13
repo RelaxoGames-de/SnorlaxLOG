@@ -38,6 +38,19 @@ publishing {
             artifactId = "snorlaxlog"
             from(components["java"])
             
+            // Add sources JAR
+            artifact(tasks.register("sourcesJar", Jar::class) {
+                archiveClassifier.set("sources")
+                from(sourceSets.main.get().allSource)
+            })
+
+            // Add documentation JAR
+            artifact(tasks.register("javadocJar", Jar::class) {
+                archiveClassifier.set("javadoc")
+                from(tasks.dokkaHtml)
+                dependsOn(tasks.dokkaHtml)
+            })
+            
             pom {
                 name.set("SnorlaxLOG")
                 description.set("SnorlaxLOG is a Kotlin library for interacting with the Relaxogames DB API.")
