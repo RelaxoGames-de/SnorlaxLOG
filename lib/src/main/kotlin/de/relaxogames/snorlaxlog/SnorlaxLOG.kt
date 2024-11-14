@@ -13,9 +13,11 @@ import kotlinx.serialization.json.Json
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 
-@Serializable data class PingResponse(val status: String, val message: String)
+@Serializable
+data class PingResponse(val status: String, val message: String)
 
-@Serializable data class TokenResponse(val access_token: String, val token_type: String)
+@Serializable
+data class TokenResponse(val access_token: String, val token_type: String)
 
 class SnorlaxLOG {
     private val username: String
@@ -54,13 +56,13 @@ class SnorlaxLOG {
 
     private fun startUpdating() {
         job =
-                scope.launch {
-                    while (refreshing) {
-                        token = token()
-                        logger.info("Token refreshed")
-                        delay(interval.toLong())
-                    }
+            scope.launch {
+                while (refreshing) {
+                    token = token()
+                    logger.info("Token refreshed")
+                    delay(interval.toLong())
                 }
+            }
     }
 
     fun stopUpdating() {
