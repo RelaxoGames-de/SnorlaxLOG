@@ -2,6 +2,8 @@ package de.relaxogames.snorlaxlog
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.auth.*
+import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.statement.*
@@ -18,6 +20,9 @@ data class PingResponse(val status: String, val message: String)
 
 @Serializable
 data class TokenResponse(val access_token: String, val token_type: String)
+
+@Serializable
+data class GetUserResponse(val id: Int, val username: String, val role: String)
 
 class SnorlaxLOG {
     private val username: String
@@ -73,6 +78,12 @@ class SnorlaxLOG {
     suspend fun ping(): Boolean {
         val response = Json.decodeFromString<PingResponse>(client.get("$url/ping").bodyAsText())
         return response.status == "ok"
+    }
+
+    suspend fun getUsers(): List<GetUserResponse> {
+        return Json.decodeFromString<List<GetUserResponse>>(client.get("$url/users"){
+            header("Authorization", "Bearer $token")
+        }.bodyAsText())
     }
 
     private suspend fun token(): String {

@@ -26,8 +26,9 @@ dependencies {
     implementation("io.ktor:ktor-client-core:3.0.1")
     implementation("io.ktor:ktor-client-cio:3.0.1")
     implementation("io.ktor:ktor-client-logging:3.0.1")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.7")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
+    implementation("io.ktor:ktor-client-content-negotiation:3.0.1")
+    implementation("io.ktor:ktor-client-auth:3.0.1")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.1")
     implementation("ch.qos.logback:logback-classic:1.5.12")
 }
 
