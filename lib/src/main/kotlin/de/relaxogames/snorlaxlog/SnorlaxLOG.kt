@@ -81,9 +81,28 @@ class SnorlaxLOG {
     }
 
     suspend fun getUsers(): List<GetUserResponse> {
-        return Json.decodeFromString<List<GetUserResponse>>(client.get("$url/users"){
+        return Json.decodeFromString<List<GetUserResponse>>(client.get("$url/users") {
             header("Authorization", "Bearer $token")
         }.bodyAsText())
+    }
+
+    suspend fun getUser(id: Int): GetUserResponse? {
+        val users = getUsers()
+        for (user in users)
+            if (user.id == id) return user
+        return null
+    }
+
+    suspend fun getUser(username: String): GetUserResponse? {
+        val users = getUsers()
+        for (user in users)
+            if (user.username == username) return user
+        return null
+    }
+
+    suspend fun getUserId(username: String): Int? {
+        val user = getUser(username)
+        return user?.id
     }
 
     private suspend fun token(): String {
