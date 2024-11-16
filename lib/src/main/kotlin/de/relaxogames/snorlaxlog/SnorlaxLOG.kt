@@ -24,6 +24,10 @@ data class TokenResponse(val access_token: String, val token_type: String)
 @Serializable
 data class GetUserResponse(val id: Int, val username: String, val role: String)
 
+enum class APIRole(val name: String) {
+    ADMIN("admin");
+}
+
 class SnorlaxLOG {
     private val username: String
     private val password: String
@@ -104,6 +108,8 @@ class SnorlaxLOG {
         val user = getUser(username)
         return user?.id
     }
+
+    suspend fun addUser(username: String, password: String, role)
 
     private suspend fun token(): String {
         val response = client.post("$url/token") {
