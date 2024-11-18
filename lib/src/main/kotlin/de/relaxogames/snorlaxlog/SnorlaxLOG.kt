@@ -24,8 +24,30 @@ data class TokenResponse(val access_token: String, val token_type: String)
 @Serializable
 data class GetUserResponse(val id: Int, val username: String, val role: String)
 
-enum class APIRole(val name: String) {
-    ADMIN("admin");
+enum class APIRole() {
+    ADMIN,
+    CREATOR,
+    USER,
+    GUEST;
+
+    fun getName(role: APIRole): String {
+        return when (role) {
+            ADMIN -> "admin"
+            CREATOR -> "creator"
+            USER -> "user"
+            GUEST -> "guest"
+        }
+    }
+
+    fun getRole(roleName: String): APIRole? {
+        return when (roleName) {
+            "admin" -> return ADMIN
+            "creator" -> return CREATOR
+            "user" -> return USER
+            "guest" -> return GUEST
+            else -> return null
+        }
+    }
 }
 
 class SnorlaxLOG {
