@@ -131,7 +131,9 @@ class SnorlaxLOG {
         return user?.id
     }
 
-    suspend fun addUser(username: String, password: String, role)
+    suspend fun addUser(username: String, password: String, role: APIRole) {
+        
+    }
 
     private suspend fun token(): String {
         val response = client.post("$url/token") {
