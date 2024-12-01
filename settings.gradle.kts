@@ -5,10 +5,3 @@ plugins {
 
 rootProject.name = "SnorlaxLOG"
 include("lib")
-
-dependencyResolutionManagement {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-}
