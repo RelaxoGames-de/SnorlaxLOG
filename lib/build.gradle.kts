@@ -4,6 +4,9 @@ plugins {
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+
+    // Apply the maven-publish plugin for publishing artifacts
+    `maven-publish`
 }
 
 val ktor_version: String by project
@@ -20,7 +23,7 @@ dependencies {
 
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
-    
+
     implementation("io.ktor:ktor-client-auth:$ktor_version")
 
     implementation("io.ktor:ktor-client-logging:$ktor_version")
@@ -30,6 +33,34 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "de.relaxogames.snorlax-log"
+            artifactId = "snorlax-log"
+            version = "1.0.0"
+
+            from(components["java"])
+
+            pom {
+                name.set("SnorlaxLOG")
+                description.set("The central library for interacting with the RGDB Backend")
+                url.set("https://github.com/RelaxoGames-de/SnorlaxLOG")
+
+                developers {
+                    developer {
+                        id.set("jotrorox")
+                        name.set("Johannes (Jotrorox) Müller")
+                        email.set("mail@jotrorox.com")
+                    }
+                }
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.post
 import io.ktor.client.request.delete
 import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.*
 
 data class SnorlaxLOGConfig(val url: String, val username: String, val password: String)
