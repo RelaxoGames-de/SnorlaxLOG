@@ -153,13 +153,11 @@ class SnorlaxLOG(
      * @see SnorlaxLOGConfig
      */
     private val config: SnorlaxLOGConfig,
-    
+
     /**
-     * The log level for the client
-     * 
-     * @see LogLevel
+     * Whether logging is enabled
      */
-    private val logLevel: LogLevel = LogLevel.NONE
+    private val loggingEnabled: Boolean = false
 ) {
     /**
      * The HTTP client for the SnorlaxLOG client
@@ -175,7 +173,7 @@ class SnorlaxLOG(
                 install(ContentNegotiation) { json() }
                 install(Logging) {
                     logger = Logger.DEFAULT
-                    level = logLevel
+                    level = if (loggingEnabled) LogLevel.INFO else LogLevel.NONE
                     sanitizeHeader { header -> header == HttpHeaders.Authorization }
                 }
                 install(Auth) {
