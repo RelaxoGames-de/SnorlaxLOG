@@ -38,13 +38,16 @@ data class RGDBStorageObject(val key: String, val value: String, val isPrivate: 
 
 class UnauthorizedError(message: String = "Unauthorized") : Exception(message)
 
-class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
+class SnorlaxLOG(
+    private val config: SnorlaxLOGConfig,
+    private val logLevel: LogLevel = LogLevel.NONE
+) {
     private val client =
             HttpClient(CIO) {
                 install(ContentNegotiation) { json() }
                 install(Logging) {
                     logger = Logger.DEFAULT
-                    level = LogLevel.ALL
+                    level = logLevel
                     sanitizeHeader { header -> header == HttpHeaders.Authorization }
                 }
                 install(Auth) {
