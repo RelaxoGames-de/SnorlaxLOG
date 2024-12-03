@@ -13,18 +13,28 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.post
 import io.ktor.client.request.delete
 import io.ktor.http.*
-import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SnorlaxLOGConfig(val url: String, val username: String, val password: String)
+
+@Serializable
 data class RGDBUser(val name: String, val password: String, val role: RGDBRole)
+
+@Serializable
 enum class RGDBRole(val value: String) {
     ADMIN("admin"),
     CREATOR("creator"),
     USER("user")
 }
+
+@Serializable
 data class RGDBStorage(val name: String)
+
+@Serializable
 data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
+
 class UnauthorizedError(message: String = "Unauthorized") : Exception(message)
 
 class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
@@ -33,13 +43,15 @@ class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
                 install(ContentNegotiation) { json() }
                 install(Logging) {
                     logger = Logger.DEFAULT
-                    level = LogLevel.NONE
+                    level = LogLevel.ALL
                     sanitizeHeader { header -> header == HttpHeaders.Authorization }
                 }
                 install(Auth) {
                     basic {
-                        credentials { BasicAuthCredentials(config.username, config.password) }
-                        realm = "RGDB Realm"
+                        credentials {
+                            BasicAuthCredentials(config.username, config.password)
+                        }
+                        sendWithoutRequest { true }
                     }
                 }
             }
@@ -50,7 +62,7 @@ class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
         return response == "pong"
     }
 
-    private suspend fun getSelf(): RGDBUser {
+    suspend fun getSelf(): RGDBUser {
         val url = config.url + "/user/self"
         val response = client.get(url)
         if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
@@ -147,28 +159,5 @@ class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
         val response = client.post(url) { setBody(value) }
         if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
         if (response.status != HttpStatusCode.Created) throw Exception("Failed to set shared entry")
-    }
-
-    suspend fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
-        val url = config.url + "/storage/private/$dbName"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private table")
-        return response.body<List<RGDBStorageObject>>()
-    }
-
-    suspend fun getPrivateEntry(dbName: String, key: String): String {
-        val url = config.url + "/storage/private/$dbName/$key"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private entry")
-        return response.body<String>()
-    }
-
-    suspend fun setPrivateEntry(dbName: String, key: String, value: String) {
-        val url = config.url + "/storage/private/$dbName/$key"
-        val response = client.post(url) { setBody(value) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.Created) throw Exception("Failed to set private entry")
     }
 }

@@ -7,6 +7,9 @@ plugins {
 
     // Apply the maven-publish plugin for publishing artifacts
     `maven-publish`
+
+    // Apply the kotlinx-serialization plugin for serialization
+    kotlin("plugin.serialization").version("2.0.0")
 }
 
 val ktor_version: String by project
