@@ -10,6 +10,9 @@ plugins {
 
     // Apply the kotlinx-serialization plugin for serialization
     kotlin("plugin.serialization").version("2.0.0")
+
+    // Dokka for automatic documentation
+    id("org.jetbrains.dokka").version("1.9.20")
 }
 
 val ktor_version: String by project
