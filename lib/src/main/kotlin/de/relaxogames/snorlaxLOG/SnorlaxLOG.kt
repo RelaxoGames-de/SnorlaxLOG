@@ -63,8 +63,32 @@ data class RGDBUser(val name: String, val password: String, val role: RGDBRole)
  */
 @Serializable
 enum class RGDBRole(val value: String) {
+    /**
+     * Admin role (Has full access to the RGDB Backend)
+     * 
+     * @since 1.0
+     * 
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author [RelaxoGames](https://relaxogames.de) - Infrastructure Team
+     */
     ADMIN("admin"),
+    /**
+     * Creator role (Has access to the RGDB Backend but can only create and delete storages)
+     * 
+     * @since 1.0
+     * 
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author [RelaxoGames](https://relaxogames.de) - Infrastructure Team
+     */
     CREATOR("creator"),
+    /**
+     * User role (Has access to the RGDB Backend but can only read and write to their own and shareds storages)
+     * 
+     * @since 1.0
+     * 
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author [RelaxoGames](https://relaxogames.de) - Infrastructure Team
+     */
     USER("user")
 }
 
