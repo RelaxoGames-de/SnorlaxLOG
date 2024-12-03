@@ -10,6 +10,9 @@ plugins {
 
     // Apply the kotlinx-serialization plugin for serialization
     kotlin("plugin.serialization").version("2.0.0")
+
+    // Dokka for automatic documentation
+    id("org.jetbrains.dokka").version("1.9.20")
 }
 
 val ktor_version: String by project
@@ -66,4 +69,33 @@ publishing {
             }
         }
     }
+}
+
+tasks.dokkaHtml.configure {
+    notCompatibleWithConfigurationCache("Dokka is not compatible with configuration cache")
+    
+    moduleName.set("SnorlaxLOG Documentation")
+    
+    dokkaSourceSets {
+        named("main") {
+            sourceRoots.from(file("src/main/kotlin"))
+        }
+    }
+
+    val dokkaBaseConfiguration = """
+        {
+            "dokkaSourceSets": {
+                "main": {
+                    "sourceRoots": { "from": ["src/main/kotlin"] }
+                }
+            },
+            "footerMessage": "Copyright © 2024 RelaxoGames. All rights reserved."
+        }
+    """
+
+    pluginsMapConfiguration.set(
+        mapOf(
+            "org.jetbrains.dokka.base.DokkaBase" to dokkaBaseConfiguration
+        )
+    )
 }
