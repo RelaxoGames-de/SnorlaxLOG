@@ -289,4 +289,12 @@ class SnorlaxLOG(
             setPrivateEntry(dbName, key, value)
         }
     }
+
+    fun functionToJavaAsync(function: suspend () -> Unit): () -> Unit {
+        return {
+            runBlocking {
+                function()
+            }
+        }
+    }
 }
