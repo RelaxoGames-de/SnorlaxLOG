@@ -160,4 +160,27 @@ class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
         if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
         if (response.status != HttpStatusCode.Created) throw Exception("Failed to set shared entry")
     }
+
+    suspend fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
+        val url = config.url + "/storage/private/$dbName"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private table")
+        return response.body<List<RGDBStorageObject>>()
+    }
+
+    suspend fun getPrivateEntry(dbName: String, key: String): String {
+        val url = config.url + "/storage/private/$dbName/$key"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private entry")
+        return response.body<String>()
+    }
+
+    suspend fun setPrivateEntry(dbName: String, key: String, value: String) {
+        val url = config.url + "/storage/private/$dbName/$key"
+        val response = client.post(url) { setBody(value) }
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.Created) throw Exception("Failed to set private entry")
+    }
 }
