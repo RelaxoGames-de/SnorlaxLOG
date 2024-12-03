@@ -22,6 +22,8 @@ enum class RGDBRole(val value: String) {
     CREATOR("creator"),
     USER("user")
 }
+data class RGDBStorage(val name: String)
+data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
 class UnauthorizedError(message: String = "Unauthorized") : Exception(message)
 
 class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
@@ -68,6 +70,7 @@ class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
         return response.body<List<RGDBUser>>()
     }
 
+    // Admin only
     suspend fun createUser(user: RGDBUser) {
         val url = config.url + "/admin/users"
         val response = client.post(url) { setBody(user) }
@@ -102,5 +105,69 @@ class SnorlaxLOG(private val config: SnorlaxLOGConfig) {
         if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
         if (response.status != HttpStatusCode.OK) throw Exception("Failed to get user")
         return response.body<RGDBUser>()
+    }
+
+    // Creator only
+    suspend fun createStorage(name: String) {
+        val url = config.url + "/creator/storages"
+        val storage = RGDBStorage(name)
+        val response = client.post(url) { setBody(storage) }
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.Created) throw Exception("Failed to create storage")
+    }
+
+    // General Storage Paths
+    suspend fun getStorage(name: String): RGDBStorage {
+        val url = config.url + "/storage/$name"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get storage")
+        return response.body<RGDBStorage>()
+    }
+
+    suspend fun getSharedTable(dbName: String): List<RGDBStorageObject> {
+        val url = config.url + "/storage/shared/$dbName"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get shared table")
+        return response.body<List<RGDBStorageObject>>()
+    }
+
+    suspend fun getSharedEntry(dbName: String, key: String): String {
+        val url = config.url + "/storage/shared/$dbName/$key"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get shared entry")
+        return response.body<String>()
+    }
+
+    suspend fun setSharedEntry(dbName: String, key: String, value: String) {
+        val url = config.url + "/storage/shared/$dbName/$key"
+        val response = client.post(url) { setBody(value) }
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.Created) throw Exception("Failed to set shared entry")
+    }
+
+    suspend fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
+        val url = config.url + "/storage/private/$dbName"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private table")
+        return response.body<List<RGDBStorageObject>>()
+    }
+
+    suspend fun getPrivateEntry(dbName: String, key: String): String {
+        val url = config.url + "/storage/private/$dbName/$key"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private entry")
+        return response.body<String>()
+    }
+
+    suspend fun setPrivateEntry(dbName: String, key: String, value: String) {
+        val url = config.url + "/storage/private/$dbName/$key"
+        val response = client.post(url) { setBody(value) }
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.Created) throw Exception("Failed to set private entry")
     }
 }
