@@ -1,3 +1,7 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     alias(libs.plugins.kotlin.jvm)
@@ -13,6 +17,12 @@ plugins {
 
     // Dokka for automatic documentation
     id("org.jetbrains.dokka").version("1.9.20")
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+    }
 }
 
 val ktor_version: String by project
@@ -71,31 +81,18 @@ publishing {
     }
 }
 
-tasks.dokkaHtml.configure {
-    notCompatibleWithConfigurationCache("Dokka is not compatible with configuration cache")
-    
+tasks.dokkaHtml {
     moduleName.set("SnorlaxLOG Documentation")
-    
+
     dokkaSourceSets {
         named("main") {
             sourceRoots.from(file("src/main/kotlin"))
         }
     }
 
-    val dokkaBaseConfiguration = """
-        {
-            "dokkaSourceSets": {
-                "main": {
-                    "sourceRoots": { "from": ["src/main/kotlin"] }
-                }
-            },
-            "footerMessage": "Copyright © 2024 RelaxoGames. All rights reserved."
-        }
-    """
-
-    pluginsMapConfiguration.set(
-        mapOf(
-            "org.jetbrains.dokka.base.DokkaBase" to dokkaBaseConfiguration
-        )
-    )
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        customStyleSheets = listOf(file("docs_src/logo-styles.css"))
+        customAssets = listOf(file("docs_src/relaxogames_icon.png"))
+        footerMessage = "Copyright © 2024 RelaxoGames. All rights reserved."
+    }
 }
