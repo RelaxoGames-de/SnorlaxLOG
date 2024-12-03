@@ -538,7 +538,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a storage (Creator only)
+     * Gets a storage (User only)
      * 
      * @param name The name of the storage to get
      * @return The storage
@@ -559,7 +559,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a storage synchronously (Creator only)
+     * Gets a storage synchronously (User only)
      * 
      * @param name The name of the storage to get
      * @return The storage
@@ -578,7 +578,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a shared table (Creator only)
+     * Gets a shared table (User only)
      * 
      * @param dbName The name of the storage to get
      * @return The shared table
@@ -599,7 +599,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a shared table synchronously (Creator only)
+     * Gets a shared table synchronously (User only)
      * 
      * @param dbName The name of the storage to get
      * @return The shared table
@@ -618,7 +618,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a shared entry (Creator only)
+     * Gets a shared entry (User only)
      * 
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
@@ -640,7 +640,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a shared entry synchronously (Creator only)
+     * Gets a shared entry synchronously (User only)
      * 
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
@@ -660,7 +660,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Sets a shared entry (Creator only)
+     * Sets a shared entry (User only)
      * 
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
@@ -681,7 +681,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Sets a shared entry synchronously (Creator only)
+     * Sets a shared entry synchronously (User only)
      * 
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
@@ -701,7 +701,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a private table (Creator only)
+     * Gets a private table (User only)
      * 
      * @param dbName The name of the storage to get
      * @return The private table
@@ -722,7 +722,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a private table synchronously (Creator only)
+     * Gets a private table synchronously (User only)
      * 
      * @param dbName The name of the storage to get
      * @return The private table
@@ -741,7 +741,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a private entry (Creator only)
+     * Gets a private entry (User only)
      * 
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
@@ -763,7 +763,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a private entry synchronously (Creator only)
+     * Gets a private entry synchronously (User only)
      * 
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
@@ -783,7 +783,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Sets a private entry (Creator only)
+     * Sets a private entry (User only)
      * 
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
@@ -804,7 +804,7 @@ class SnorlaxLOG(
     }
 
     /**
-     * Sets a private entry synchronously (Creator only)
+     * Sets a private entry synchronously (User only)
      * 
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
