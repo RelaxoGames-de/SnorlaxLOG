@@ -16,6 +16,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
+import java.util.concurrent.CompletableFuture
 
 @Serializable
 data class SnorlaxLOGConfig(val url: String, val username: String, val password: String)
@@ -290,11 +291,18 @@ class SnorlaxLOG(
         }
     }
 
-    fun functionToJavaAsync(function: suspend () -> Unit): () -> Unit {
+    // Utility functions
+    fun asyncFunctionToSync(function: suspend () -> Unit): () -> Unit {
         return {
             runBlocking {
                 function()
             }
+        }
+    }
+
+    fun <T> kotlinFunctionToJavaFuture(action: () -> T): CompletableFuture<T> {
+        return CompletableFuture.supplyAsync {
+            action()
         }
     }
 }
