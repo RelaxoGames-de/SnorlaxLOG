@@ -199,6 +199,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun testConnection(): Boolean {
         val url = config.url + "/ping"
         val response = client.get(url).body<String>()
@@ -235,6 +236,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getSelf(): RGDBUser {
         val url = config.url + "/user/self"
         val response = client.get(url)
@@ -272,6 +274,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun changePassword(newPassword: String) {
         val url = config.url + "/user/self/password"
         val response = client.put(url) { setBody(newPassword) }
@@ -309,6 +312,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getUsers(): List<RGDBUser> {
         val url = config.url + "/admin/users"
         val response = client.get(url)
@@ -347,6 +351,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun createUser(user: RGDBUser) {
         val url = config.url + "/admin/users"
         val response = client.post(url) { setBody(user) }
@@ -384,6 +389,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun deleteUser(name: String) {
         val url = config.url + "/admin/users/$name"
         val response = client.delete(url)
@@ -423,7 +429,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
-    @Suppress("UNUSED")
+    @Suppress("MemberVisibilityCanBePrivate", "UNUSED")
     suspend fun updateUserRole(name: String, role: RGDBRole) {
         val url = config.url + "/admin/users/$name/role"
         val response = client.put(url) { setBody(role) }
@@ -464,6 +470,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun updateUserPassword(name: String, newPassword: String) {
         val url = config.url + "/admin/users/$name/password"
         val response = client.put(url) { setBody(newPassword) }
@@ -504,6 +511,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getUser(name: String): RGDBUser {
         val url = config.url + "/admin/users/$name"
         val response = client.get(url)
@@ -545,6 +553,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun createStorage(name: String) {
         val url = config.url + "/creator/storages"
         val storage = RGDBStorage(name)
@@ -585,6 +594,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getStorage(name: String): RGDBStorage {
         val url = config.url + "/storage/$name"
         val response = client.get(url)
@@ -626,6 +636,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getSharedTable(dbName: String): List<RGDBStorageObject> {
         val url = config.url + "/storage/shared/$dbName"
         val response = client.get(url)
@@ -668,6 +679,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getSharedEntry(dbName: String, key: String): String {
         val url = config.url + "/storage/shared/$dbName/$key"
         val response = client.get(url)
@@ -711,6 +723,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun setSharedEntry(dbName: String, key: String, value: String) {
         val url = config.url + "/storage/shared/$dbName/$key"
         val response = client.post(url) { setBody(value) }
@@ -752,6 +765,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
         val url = config.url + "/storage/private/$dbName"
         val response = client.get(url)
@@ -794,6 +808,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getPrivateEntry(dbName: String, key: String): String {
         val url = config.url + "/storage/private/$dbName/$key"
         val response = client.get(url)
@@ -837,6 +852,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun setPrivateEntry(dbName: String, key: String, value: String) {
         val url = config.url + "/storage/private/$dbName/$key"
         val response = client.post(url) { setBody(value) }
