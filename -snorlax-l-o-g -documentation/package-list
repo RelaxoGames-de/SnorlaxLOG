@@ -6,7 +6,6 @@ $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole.CREATOR///PointingToDeclarati
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole.USER///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/-u-s-e-r/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole/entries/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/entries.html
-$dokka.location:de.relaxogames.snorlaxLOG/RGDBRole/value/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/value.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole/valueOf/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/value-of.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole/values/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/values.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBStorage///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-storage/index.html
@@ -23,7 +22,7 @@ $dokka.location:de.relaxogames.snorlaxLOG/RGDBUser/name/#/PointingToDeclaration/
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBUser/password/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-user/password.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBUser/role/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-user/role.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/index.html
-$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/SnorlaxLOG/#de.relaxogames.snorlaxLOG.SnorlaxLOGConfig#io.ktor.client.plugins.logging.LogLevel/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/-snorlax-l-o-g.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/SnorlaxLOG/#de.relaxogames.snorlaxLOG.SnorlaxLOGConfig#kotlin.Boolean/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/-snorlax-l-o-g.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/asyncFunctionToSync/#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/async-function-to-sync.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/changePassword/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/change-password.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/createStorage/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/create-storage.html
