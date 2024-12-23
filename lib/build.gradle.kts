@@ -1,4 +1,3 @@
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
 
@@ -25,8 +24,8 @@ buildscript {
     }
 }
 
-val ktor_version: String by project
-val logback_version: String by project
+val ktorVersion: String by project
+val logbackVersion: String by project
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -34,16 +33,16 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
-    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
-    implementation("io.ktor:ktor-client-auth:$ktor_version")
+    implementation("io.ktor:ktor-client-auth:$ktorVersion")
 
-    implementation("io.ktor:ktor-client-logging:$ktor_version")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -58,9 +57,9 @@ java {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "de.relaxogames.snorlax-log"
+            groupId = "de.relaxogames"
             artifactId = "snorlax-log"
-            version = "1.4"
+            version = "1.5"
 
             from(components["java"])
 
