@@ -12,7 +12,6 @@ import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.request.post
 import io.ktor.client.request.delete
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
@@ -29,7 +28,7 @@ import nl.adaptivity.xmlutil.serialization.XML
 import java.util.concurrent.CompletableFuture
 
 /**
- * Configuration for the [SnorlaxLOG] clienta
+ * Configuration for the [SnorlaxLOG] client
  * 
  * @param url The URL of the RGDB Backend
  * @param username The username of the user
@@ -953,24 +952,81 @@ class SnorlaxLOG(
         }
     }
 
+    // Statistic Endpoints
+    /**
+     * Gets the statistics of the current RGDB Instance
+     * regarding Storage, such as Filesystem-size etc. (User only)
+     *
+     * @return The Storage Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see StorageStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
     suspend fun getStorageStatistics(): StorageStatistic {
         val url = config.url + "/statistic/storages"
         val response = client.get(url)
+        if (response.status != HttpStatusCode.OK) throw Exception("There was an error receiving the Statistics!")
         return response.body<StorageStatistic>()
     }
 
+    /**
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
+     * way regarding Storage, such as Filesystem-size etc. (User only)
+     *
+     * @return The Storage Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see StorageStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
     fun syncGetStorageStatistics(): StorageStatistic {
         return runBlocking {
             getStorageStatistics()
         }
     }
 
+    /**
+     * Gets the statistics of the current RGDB Instance the info
+     * regarding Users, such as currently existing etc. (User only)
+     *
+     * @return The User Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see UserStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
     suspend fun getUserStatistics(): UserStatistic {
         val url = config.url + "/statistic/users"
         val response = client.get(url)
+        if (response.status != HttpStatusCode.OK) throw Exception("There was an error receiving the Statistics!")
         return response.body<UserStatistic>()
     }
 
+    /**
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
+     * way, the statistics are regarding Users, such as currently existing etc. (User only)
+     *
+     * @return The User Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see UserStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
     fun syncGetUserStatistics(): UserStatistic {
         return runBlocking {
             getUserStatistics()
