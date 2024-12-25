@@ -12,6 +12,7 @@ import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.request.post
 import io.ktor.client.request.delete
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
@@ -28,7 +29,7 @@ import nl.adaptivity.xmlutil.serialization.XML
 import java.util.concurrent.CompletableFuture
 
 /**
- * Configuration for the [SnorlaxLOG] client
+ * Configuration for the [SnorlaxLOG] clienta
  * 
  * @param url The URL of the RGDB Backend
  * @param username The username of the user
@@ -134,6 +135,12 @@ data class RGDBStorage(val name: String)
  */
 @Serializable
 data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
+
+@Serializable
+data class StorageStatistic(var count: Int, var size: Long)
+
+@Serializable
+data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: Int, var userCount: Int)
 
 /**
  * Unauthorized error for the RGDB Backend (401)
@@ -943,6 +950,30 @@ class SnorlaxLOG(
     fun syncSetPrivateEntry(dbName: String, key: String, value: String) {
         return runBlocking {
             setPrivateEntry(dbName, key, value)
+        }
+    }
+
+    suspend fun getStorageStatistics(): StorageStatistic {
+        val url = config.url + "/statistic/storages"
+        val response = client.get(url)
+        return response.body<StorageStatistic>()
+    }
+
+    fun syncGetStorageStatistics(): StorageStatistic {
+        return runBlocking {
+            getStorageStatistics()
+        }
+    }
+
+    suspend fun getUserStatistics(): UserStatistic {
+        val url = config.url + "/statistic/users"
+        val response = client.get(url)
+        return response.body<UserStatistic>()
+    }
+
+    fun syncGetUserStatistics(): UserStatistic {
+        return runBlocking {
+            getUserStatistics()
         }
     }
 
