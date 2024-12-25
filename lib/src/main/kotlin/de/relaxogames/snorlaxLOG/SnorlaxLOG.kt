@@ -71,6 +71,7 @@ data class RGDBUser(val name: String, val password: String, val role: RGDBRole)
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 @Serializable
+@Suppress("UNUSED")
 enum class RGDBRole(private val value: String) {
     /**
      * Admin role (Has full access to the RGDB Backend)
