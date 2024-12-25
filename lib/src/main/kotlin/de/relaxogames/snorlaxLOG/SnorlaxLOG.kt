@@ -135,9 +135,35 @@ data class RGDBStorage(val name: String)
 @Serializable
 data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
 
+/**
+ * Statistics returned by the Server, that are meant to give the user
+ * an overview on different important factors such as the Filesystem-Size.
+ *
+ * @param count The amount of user Storages currently in use
+ * @param size The Filesystem-Size in Bytes
+ *
+ * @since 1.6
+ *
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
 @Serializable
 data class StorageStatistic(var count: Int, var size: Long)
 
+/**
+ * Statistics returned by the Server, that are meant to give the user
+ * an overview on different important factors such as the amount of Users.
+ *
+ * @param count The amount of Users currently in the System
+ * @param adminCount The amount of Admins in the System
+ * @param creatorCount The amount of Creators in the System
+ * @param userCount The amount of Users (non Creator/Admins) in the System
+ *
+ * @since 1.6
+ *
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
 @Serializable
 data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: Int, var userCount: Int)
 
