@@ -13,9 +13,18 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.post
 import io.ktor.client.request.delete
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.protobuf.*
+import io.ktor.serialization.kotlinx.xml.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.cbor.Cbor
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.protobuf.ProtoBuf
+import nl.adaptivity.xmlutil.XmlDeclMode
+import nl.adaptivity.xmlutil.serialization.XML
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -170,9 +179,24 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @OptIn(ExperimentalSerializationApi::class)
     private val client =
             HttpClient(CIO) {
-                install(ContentNegotiation) { json() }
+                install(ContentNegotiation) {
+                    json(Json {
+                        prettyPrint = true
+                        isLenient = true
+                    })
+                    xml(format = XML {
+                        xmlDeclMode = XmlDeclMode.Auto
+                    })
+                    cbor(Cbor {
+                        ignoreUnknownKeys = true
+                    })
+                    protobuf(ProtoBuf {
+                        encodeDefaults = true
+                    })
+                }
                 install(Logging) {
                     logger = Logger.DEFAULT
                     level = if (loggingEnabled) LogLevel.INFO else LogLevel.NONE
@@ -578,6 +602,22 @@ class SnorlaxLOG(
     fun syncCreateStorage(name: String) {
         return runBlocking {
             createStorage(name)
+        }
+    }
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    suspend fun getStorages(): List<RGDBStorage> {
+        val url = config.url + "/storage"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get storages")
+        return response.body<List<RGDBStorage>>()
+    }
+
+    @Suppress("UNUSED")
+    suspend fun syncGetStorages(): List<RGDBStorage> {
+        return runBlocking {
+            getStorages()
         }
     }
 
