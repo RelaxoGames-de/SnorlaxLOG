@@ -605,6 +605,20 @@ class SnorlaxLOG(
         }
     }
 
+    // USER ONLY
+    /**
+     * Gets all storage names (User only)
+     *
+     * @return A list of all the names (in form of RGDB Storages)
+     * @throws UnauthorizedError If the user was not found
+     * @throws Exception If there was another unidentified Error
+     *
+     * @see RGDBStorage
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getStorages(): List<RGDBStorage> {
         val url = config.url + "/storage"
@@ -614,8 +628,18 @@ class SnorlaxLOG(
         return response.body<List<RGDBStorage>>()
     }
 
+    /**
+     * Gets all storage names synchronously (User only)
+     *
+     * @return A list of all the names (in form of RGDB Storages)
+     * @throws UnauthorizedError If the user was not found
+     * @throws Exception If there was another unidentified Error
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
     @Suppress("UNUSED")
-    suspend fun syncGetStorages(): List<RGDBStorage> {
+    fun syncGetStorages(): List<RGDBStorage> {
         return runBlocking {
             getStorages()
         }
