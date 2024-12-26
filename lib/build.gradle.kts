@@ -38,6 +38,11 @@ dependencies {
 
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-cbor:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-protobuf:$ktorVersion")
+
+
 
     implementation("io.ktor:ktor-client-auth:$ktorVersion")
 
@@ -59,7 +64,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "de.relaxogames"
             artifactId = "snorlax-log"
-            version = "1.5"
+            version = "1.6"
 
             from(components["java"])
 

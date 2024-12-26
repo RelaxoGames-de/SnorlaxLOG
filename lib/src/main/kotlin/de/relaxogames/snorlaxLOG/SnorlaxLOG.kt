@@ -13,9 +13,18 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.post
 import io.ktor.client.request.delete
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.protobuf.*
+import io.ktor.serialization.kotlinx.xml.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.cbor.Cbor
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.protobuf.ProtoBuf
+import nl.adaptivity.xmlutil.XmlDeclMode
+import nl.adaptivity.xmlutil.serialization.XML
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -62,6 +71,7 @@ data class RGDBUser(val name: String, val password: String, val role: RGDBRole)
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 @Serializable
+@Suppress("UNUSED")
 enum class RGDBRole(private val value: String) {
     /**
      * Admin role (Has full access to the RGDB Backend)
@@ -126,6 +136,38 @@ data class RGDBStorage(val name: String)
 data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
 
 /**
+ * Statistics returned by the Server, that are meant to give the user
+ * an overview on different important factors such as the Filesystem-Size.
+ *
+ * @param count The amount of user Storages currently in use
+ * @param size The Filesystem-Size in Bytes
+ *
+ * @since 1.6
+ *
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
+@Serializable
+data class StorageStatistic(var count: Int, var size: Long)
+
+/**
+ * Statistics returned by the Server, that are meant to give the user
+ * an overview on different important factors such as the amount of Users.
+ *
+ * @param count The amount of Users currently in the System
+ * @param adminCount The amount of Admins in the System
+ * @param creatorCount The amount of Creators in the System
+ * @param userCount The amount of Users (non Creator/Admins) in the System
+ *
+ * @since 1.6
+ *
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
+@Serializable
+data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: Int, var userCount: Int)
+
+/**
  * Unauthorized error for the RGDB Backend (401)
  * 
  * @param message The message of the error
@@ -170,9 +212,24 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @OptIn(ExperimentalSerializationApi::class)
     private val client =
             HttpClient(CIO) {
-                install(ContentNegotiation) { json() }
+                install(ContentNegotiation) {
+                    json(Json {
+                        prettyPrint = true
+                        isLenient = true
+                    })
+                    xml(format = XML {
+                        xmlDeclMode = XmlDeclMode.Auto
+                    })
+                    cbor(Cbor {
+                        ignoreUnknownKeys = true
+                    })
+                    protobuf(ProtoBuf {
+                        encodeDefaults = true
+                    })
+                }
                 install(Logging) {
                     logger = Logger.DEFAULT
                     level = if (loggingEnabled) LogLevel.INFO else LogLevel.NONE
@@ -581,6 +638,46 @@ class SnorlaxLOG(
         }
     }
 
+    // USER ONLY
+    /**
+     * Gets all storage names (User only)
+     *
+     * @return A list of all the names (in form of RGDB Storages)
+     * @throws UnauthorizedError If the user was not found
+     * @throws Exception If there was another unidentified Error
+     *
+     * @see RGDBStorage
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    suspend fun getStorages(): List<RGDBStorage> {
+        val url = config.url + "/storage"
+        val response = client.get(url)
+        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
+        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get storages")
+        return response.body<List<RGDBStorage>>()
+    }
+
+    /**
+     * Gets all storage names synchronously (User only)
+     *
+     * @return A list of all the names (in form of RGDB Storages)
+     * @throws UnauthorizedError If the user was not found
+     * @throws Exception If there was another unidentified Error
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
+    fun syncGetStorages(): List<RGDBStorage> {
+        return runBlocking {
+            getStorages()
+        }
+    }
+
     /**
      * Gets a storage (User only)
      * 
@@ -878,6 +975,87 @@ class SnorlaxLOG(
     fun syncSetPrivateEntry(dbName: String, key: String, value: String) {
         return runBlocking {
             setPrivateEntry(dbName, key, value)
+        }
+    }
+
+    // Statistic Endpoints
+    /**
+     * Gets the statistics of the current RGDB Instance
+     * regarding Storage, such as Filesystem-size etc. (User only)
+     *
+     * @return The Storage Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see StorageStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    suspend fun getStorageStatistics(): StorageStatistic {
+        val url = config.url + "/statistic/storages"
+        val response = client.get(url)
+        if (response.status != HttpStatusCode.OK) throw Exception("There was an error receiving the Statistics!")
+        return response.body<StorageStatistic>()
+    }
+
+    /**
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
+     * way regarding Storage, such as Filesystem-size etc. (User only)
+     *
+     * @return The Storage Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see StorageStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
+    fun syncGetStorageStatistics(): StorageStatistic {
+        return runBlocking {
+            getStorageStatistics()
+        }
+    }
+
+    /**
+     * Gets the statistics of the current RGDB Instance the info
+     * regarding Users, such as currently existing etc. (User only)
+     *
+     * @return The User Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see UserStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    suspend fun getUserStatistics(): UserStatistic {
+        val url = config.url + "/statistic/users"
+        val response = client.get(url)
+        if (response.status != HttpStatusCode.OK) throw Exception("There was an error receiving the Statistics!")
+        return response.body<UserStatistic>()
+    }
+
+    /**
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
+     * way, the statistics are regarding Users, such as currently existing etc. (User only)
+     *
+     * @return The User Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see UserStatistic
+     * @since 1.6
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
+    fun syncGetUserStatistics(): UserStatistic {
+        return runBlocking {
+            getUserStatistics()
         }
     }
 
