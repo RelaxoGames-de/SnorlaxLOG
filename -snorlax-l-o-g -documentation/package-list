@@ -34,7 +34,10 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getSelf/#/PointingToDeclara
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getSharedEntry/#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-shared-entry.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getSharedTable/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-shared-table.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getStorage/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-storage.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getStorageStatistics/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-storage-statistics.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getStorages/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-storages.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getUser/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-user.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getUserStatistics/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-user-statistics.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getUsers/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-users.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/kotlinFunctionToJavaFuture/#kotlin.Function0[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/kotlin-function-to-java-future.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/setPrivateEntry/#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/set-private-entry.html
@@ -49,7 +52,10 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetSelf/#/PointingToDec
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetSharedEntry/#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-shared-entry.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetSharedTable/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-shared-table.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetStorage/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-storage.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetStorageStatistics/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-storage-statistics.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetStorages/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-storages.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetUser/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-user.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetUserStatistics/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-user-statistics.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetUsers/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-users.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncSetPrivateEntry/#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-set-private-entry.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncSetSharedEntry/#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-set-shared-entry.html
@@ -64,7 +70,17 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/SnorlaxLOGConfig/#kot
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/password/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/password.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/url/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/url.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/username/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/username.html
+$dokka.location:de.relaxogames.snorlaxLOG/StorageStatistic///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-storage-statistic/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/StorageStatistic/StorageStatistic/#kotlin.Int#kotlin.Long/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-storage-statistic/-storage-statistic.html
+$dokka.location:de.relaxogames.snorlaxLOG/StorageStatistic/count/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-storage-statistic/count.html
+$dokka.location:de.relaxogames.snorlaxLOG/StorageStatistic/size/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-storage-statistic/size.html
 $dokka.location:de.relaxogames.snorlaxLOG/UnauthorizedError///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-unauthorized-error/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/UnauthorizedError/UnauthorizedError/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-unauthorized-error/-unauthorized-error.html
+$dokka.location:de.relaxogames.snorlaxLOG/UserStatistic///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/UserStatistic/#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/-user-statistic.html
+$dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/adminCount/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/admin-count.html
+$dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/count/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/count.html
+$dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/creatorCount/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/creator-count.html
+$dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/userCount/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/user-count.html
 de.relaxogames.snorlaxLOG
 
