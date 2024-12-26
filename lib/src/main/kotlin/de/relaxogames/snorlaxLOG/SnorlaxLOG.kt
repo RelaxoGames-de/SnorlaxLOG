@@ -526,7 +526,10 @@ class SnorlaxLOG(
 
         val url = config.url + "/admin/users"
         try {
-            val response = client.post(url) { setBody(user) }
+            val response = client.post(url) {
+                contentType(ContentType.Application.Json)
+                setBody(user)
+            }
             handleResponse(response, "creating user '${user.name}'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while creating user", e)
