@@ -12,6 +12,7 @@ import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.request.post
 import io.ktor.client.request.delete
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
@@ -26,6 +27,7 @@ import kotlinx.serialization.protobuf.ProtoBuf
 import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.serialization.XML
 import java.util.concurrent.CompletableFuture
+import java.io.IOException
 
 /**
  * Configuration for the [SnorlaxLOG] client
@@ -168,21 +170,89 @@ data class StorageStatistic(var count: Int, var size: Long)
 data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: Int, var userCount: Int)
 
 /**
- * Unauthorized error for the RGDB Backend (401)
+ * Base exception class for SnorlaxLOG errors
+ *
+ * @param message The error message
+ * @param cause The cause of the error
  * 
- * @param message The message of the error
- * 
- * @since 1.0
+ * @since 1.7
  * 
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-class UnauthorizedError(message: String = "Unauthorized") : Exception(message)
+open class SnorlaxLOGException(message: String, cause: Throwable? = null) : Exception(message, cause)
+
+/**
+ * Thrown when authentication fails (401)
+ * 
+ * @param message The error message
+ * 
+ * @see SnorlaxLOGException
+ * @since 1.7
+ * 
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
+class UnauthorizedError(message: String = "Unauthorized") : SnorlaxLOGException(message)
+
+/**
+ * Thrown when a resource is not found (404)
+ * 
+ * @param message The error message
+ * 
+ * @see SnorlaxLOGException
+ * @since 1.7
+ * 
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
+class NotFoundException(message: String) : SnorlaxLOGException(message)
+
+/**
+ * Thrown when the server returns an error (500)
+ * 
+ * @param message The error message
+ * 
+ * @see SnorlaxLOGException
+ * @since 1.7
+ * 
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
+class ServerError(message: String) : SnorlaxLOGException(message)
+
+/**
+ * Thrown when a request fails due to network issues
+ * 
+ * @param message The error message
+ * @param cause The cause of the error
+ * 
+ * @see SnorlaxLOGException
+ * @since 1.7
+ * 
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
+class NetworkError(message: String, cause: Throwable? = null) : SnorlaxLOGException(message, cause)
+
+/**
+ * Thrown when a request fails due to invalid input
+ * 
+ * @param message The error message
+ * 
+ * @see SnorlaxLOGException
+ * @since 1.7
+ * 
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
+class InvalidInputError(message: String) : SnorlaxLOGException(message)
 
 /**
  * Main client for interacting with the RGDB Backend. Uses [SnorlaxLOGConfig] for configuration.
  * 
  * @param config The [SnorlaxLOGConfig] for the client
+ * @param loggingEnabled Whether logging is enabled
  *
  * @see SnorlaxLOGConfig
  * @since 1.0
@@ -259,8 +329,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun testConnection(): Boolean {
         val url = config.url + "/ping"
-        val response = client.get(url).body<String>()
-        return response == "pong"
+        try {
+            val response = client.get(url)
+            handleResponse(response, "testing connection")
+            return response.body<String>() == "pong"
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while testing connection", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while testing connection", e)
+            }
+        }
     }
 
     /**
@@ -296,9 +376,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getSelf(): RGDBUser {
         val url = config.url + "/user/self"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        return response.body<RGDBUser>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting self user")
+            return response.body<RGDBUser>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting self user", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting self user", e)
+            }
+        }
     }
 
     /**
@@ -333,10 +422,22 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun changePassword(newPassword: String) {
+        if (newPassword.isBlank()) {
+            throw InvalidInputError("New password cannot be blank")
+        }
+
         val url = config.url + "/user/self/password"
-        val response = client.put(url) { setBody(newPassword) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.NoContent) throw Exception("Failed to change password")
+        try {
+            val response = client.put(url) { setBody(newPassword) }
+            handleResponse(response, "changing password")
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while changing password", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while changing password", e)
+            }
+        }
     }
 
     /**
@@ -372,9 +473,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getUsers(): List<RGDBUser> {
         val url = config.url + "/admin/users"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        return response.body<List<RGDBUser>>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting users list")
+            return response.body<List<RGDBUser>>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting users", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting users", e)
+            }
+        }
     }
 
     /**
@@ -410,10 +520,22 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun createUser(user: RGDBUser) {
+        if (user.name.isBlank() || user.password.isBlank()) {
+            throw InvalidInputError("User name and password cannot be blank")
+        }
+
         val url = config.url + "/admin/users"
-        val response = client.post(url) { setBody(user) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.Created) throw Exception("Failed to create user")
+        try {
+            val response = client.post(url) { setBody(user) }
+            handleResponse(response, "creating user '${user.name}'")
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while creating user", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while creating user", e)
+            }
+        }
     }
 
     /**
@@ -448,10 +570,22 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun deleteUser(name: String) {
+        if (name.isBlank()) {
+            throw InvalidInputError("User name cannot be blank")
+        }
+
         val url = config.url + "/admin/users/$name"
-        val response = client.delete(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.NoContent) throw Exception("Failed to delete user")
+        try {
+            val response = client.delete(url)
+            handleResponse(response, "deleting user '$name'")
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while deleting user", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while deleting user", e)
+            }
+        }
     }
 
     /**
@@ -488,10 +622,22 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate", "UNUSED")
     suspend fun updateUserRole(name: String, role: RGDBRole) {
+        if (name.isBlank()) {
+            throw InvalidInputError("User name cannot be blank")
+        }
+
         val url = config.url + "/admin/users/$name/role"
-        val response = client.put(url) { setBody(role) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to update user role")
+        try {
+            val response = client.put(url) { setBody(role) }
+            handleResponse(response, "updating role for user '$name'")
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while updating user role", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while updating user role", e)
+            }
+        }
     }
 
     /**
@@ -530,9 +676,17 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun updateUserPassword(name: String, newPassword: String) {
         val url = config.url + "/admin/users/$name/password"
-        val response = client.put(url) { setBody(newPassword) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to update user password")
+        try {
+            val response = client.put(url) { setBody(newPassword) }
+            handleResponse(response, "updating password for user '$name'")
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while updating user password", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while updating user password", e)
+            }
+        }
     }
 
     /**
@@ -571,10 +725,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getUser(name: String): RGDBUser {
         val url = config.url + "/admin/users/$name"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get user")
-        return response.body<RGDBUser>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting user '$name'")
+            return response.body<RGDBUser>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting user", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting user", e)
+            }
+        }
     }
 
     /**
@@ -612,11 +774,23 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun createStorage(name: String) {
+        if (name.isBlank()) {
+            throw InvalidInputError("Storage name cannot be blank")
+        }
+        
         val url = config.url + "/creator/storages"
         val storage = RGDBStorage(name)
-        val response = client.post(url) { setBody(storage) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.Created) throw Exception("Failed to create storage")
+        try {
+            val response = client.post(url) { setBody(storage) }
+            handleResponse(response, "creating storage '$name'")
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while creating storage", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while creating storage", e)
+            }
+        }
     }
 
     /**
@@ -655,10 +829,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getStorages(): List<RGDBStorage> {
         val url = config.url + "/storage"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get storages")
-        return response.body<List<RGDBStorage>>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting storage list")
+            return response.body<List<RGDBStorage>>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting storages", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting storages", e)
+            }
+        }
     }
 
     /**
@@ -694,10 +876,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getStorage(name: String): RGDBStorage {
         val url = config.url + "/storage/$name"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get storage")
-        return response.body<RGDBStorage>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting storage '$name'")
+            return response.body<RGDBStorage>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting storage", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting storage", e)
+            }
+        }
     }
 
     /**
@@ -735,11 +925,23 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getSharedTable(dbName: String): List<RGDBStorageObject> {
+        if (dbName.isBlank()) {
+            throw InvalidInputError("Database name cannot be blank")
+        }
+
         val url = config.url + "/storage/shared/$dbName"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get shared table")
-        return response.body<List<RGDBStorageObject>>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting shared table for '$dbName'")
+            return response.body<List<RGDBStorageObject>>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting shared table", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting shared table", e)
+            }
+        }
     }
 
     /**
@@ -778,11 +980,23 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getSharedEntry(dbName: String, key: String): String {
+        if (dbName.isBlank() || key.isBlank()) {
+            throw InvalidInputError("Database name and key cannot be blank")
+        }
+
         val url = config.url + "/storage/shared/$dbName/$key"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get shared entry")
-        return response.body<String>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting shared entry '$key' from '$dbName'")
+            return response.body<String>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting shared entry", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting shared entry", e)
+            }
+        }
     }
 
     /**
@@ -824,8 +1038,7 @@ class SnorlaxLOG(
     suspend fun setSharedEntry(dbName: String, key: String, value: String) {
         val url = config.url + "/storage/shared/$dbName/$key"
         val response = client.post(url) { setBody(value) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.Created) throw Exception("Failed to set shared entry")
+        handleResponse(response, "setting shared entry '$key' in '$dbName'")
     }
 
     /**
@@ -865,10 +1078,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
         val url = config.url + "/storage/private/$dbName"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private table")
-        return response.body<List<RGDBStorageObject>>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting private table for '$dbName'")
+            return response.body<List<RGDBStorageObject>>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting private table", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting private table", e)
+            }
+        }
     }
 
     /**
@@ -908,10 +1129,18 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getPrivateEntry(dbName: String, key: String): String {
         val url = config.url + "/storage/private/$dbName/$key"
-        val response = client.get(url)
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.OK) throw Exception("Failed to get private entry")
-        return response.body<String>()
+        try {
+            val response = client.get(url)
+            handleResponse(response, "getting private entry '$key' from '$dbName'")
+            return response.body<String>()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while getting private entry", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while getting private entry", e)
+            }
+        }
     }
 
     /**
@@ -953,8 +1182,7 @@ class SnorlaxLOG(
     suspend fun setPrivateEntry(dbName: String, key: String, value: String) {
         val url = config.url + "/storage/private/$dbName/$key"
         val response = client.post(url) { setBody(value) }
-        if (response.status == HttpStatusCode.Unauthorized) throw UnauthorizedError()
-        if (response.status != HttpStatusCode.Created) throw Exception("Failed to set private entry")
+        handleResponse(response, "setting private entry '$key' in '$dbName'")
     }
 
     /**
@@ -995,7 +1223,7 @@ class SnorlaxLOG(
     suspend fun getStorageStatistics(): StorageStatistic {
         val url = config.url + "/statistic/storages"
         val response = client.get(url)
-        if (response.status != HttpStatusCode.OK) throw Exception("There was an error receiving the Statistics!")
+        handleResponse(response, "getting storage statistics")
         return response.body<StorageStatistic>()
     }
 
@@ -1035,7 +1263,7 @@ class SnorlaxLOG(
     suspend fun getUserStatistics(): UserStatistic {
         val url = config.url + "/statistic/users"
         val response = client.get(url)
-        if (response.status != HttpStatusCode.OK) throw Exception("There was an error receiving the Statistics!")
+        handleResponse(response, "getting user statistics")
         return response.body<UserStatistic>()
     }
 
@@ -1096,6 +1324,29 @@ class SnorlaxLOG(
     fun <T> kotlinFunctionToJavaFuture(action: () -> T): CompletableFuture<T> {
         return CompletableFuture.supplyAsync {
             action()
+        }
+    }
+
+    /**
+     * Handles HTTP response status codes and throws appropriate exceptions
+     *
+     * @param response The HTTP response to handle
+     * @param context Additional context for error messages
+     * @throws SnorlaxLOGException if the response indicates an error
+     *
+     * @since 1.7
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    private fun handleResponse(response: HttpResponse, context: String) {
+        when (response.status.value) {
+            in 200..299 -> return // Success
+            401 -> throw UnauthorizedError("Unauthorized access: $context")
+            404 -> throw NotFoundException("Resource not found: $context")
+            400 -> throw InvalidInputError("Invalid input for: $context")
+            in 500..599 -> throw ServerError("Server error while $context")
+            else -> throw SnorlaxLOGException("Unexpected error (${response.status.value}) while $context")
         }
     }
 }
