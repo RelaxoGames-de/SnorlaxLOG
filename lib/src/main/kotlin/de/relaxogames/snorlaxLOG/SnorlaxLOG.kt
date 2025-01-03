@@ -169,6 +169,17 @@ data class StorageStatistic(var count: Int, var size: Long)
 @Serializable
 data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: Int, var userCount: Int)
 
+/**
+ * Statistics returned by the Server, that are meant to give the user
+ * an overview on different important factors such as the uptime of the server.
+ *
+ * @param upTime The uptime of the server in milliseconds
+ *
+ * @since 1.7
+ *
+ * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+ * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+ */
 @Serializable
 data class ServerStatistics(var upTime: Long)
 
