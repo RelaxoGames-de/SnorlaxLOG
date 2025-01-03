@@ -1,6 +1,12 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:de.relaxogames.snorlaxLOG////PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/InvalidInputError///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-invalid-input-error/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/InvalidInputError/InvalidInputError/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-invalid-input-error/-invalid-input-error.html
+$dokka.location:de.relaxogames.snorlaxLOG/NetworkError///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-network-error/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/NetworkError/NetworkError/#kotlin.String#kotlin.Throwable?/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-network-error/-network-error.html
+$dokka.location:de.relaxogames.snorlaxLOG/NotFoundException///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-not-found-exception/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/NotFoundException/NotFoundException/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-not-found-exception/-not-found-exception.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole.ADMIN///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/-a-d-m-i-n/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole.CREATOR///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/-c-r-e-a-t-o-r/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBRole.USER///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-role/-u-s-e-r/index.html
@@ -21,6 +27,11 @@ $dokka.location:de.relaxogames.snorlaxLOG/RGDBUser/RGDBUser/#kotlin.String#kotli
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBUser/name/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-user/name.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBUser/password/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-user/password.html
 $dokka.location:de.relaxogames.snorlaxLOG/RGDBUser/role/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-r-g-d-b-user/role.html
+$dokka.location:de.relaxogames.snorlaxLOG/ServerError///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-server-error/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/ServerError/ServerError/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-server-error/-server-error.html
+$dokka.location:de.relaxogames.snorlaxLOG/ServerStatistics///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-server-statistics/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/ServerStatistics/ServerStatistics/#kotlin.Long/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-server-statistics/-server-statistics.html
+$dokka.location:de.relaxogames.snorlaxLOG/ServerStatistics/upTime/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-server-statistics/up-time.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/SnorlaxLOG/#de.relaxogames.snorlaxLOG.SnorlaxLOGConfig#kotlin.Boolean/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/-snorlax-l-o-g.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/asyncFunctionToSync/#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/async-function-to-sync.html
@@ -31,6 +42,7 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/deleteUser/#kotlin.String/P
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getPrivateEntry/#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-private-entry.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getPrivateTable/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-private-table.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getSelf/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-self.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getServerStatistics/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-server-statistics.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getSharedEntry/#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-shared-entry.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getSharedTable/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-shared-table.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/getStorage/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/get-storage.html
@@ -49,6 +61,7 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncDeleteUser/#kotlin.Stri
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetPrivateEntry/#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-private-entry.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetPrivateTable/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-private-table.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetSelf/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-self.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetServerStatistics/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-server-statistics.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetSharedEntry/#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-shared-entry.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetSharedTable/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-shared-table.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/syncGetStorage/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/sync-get-storage.html
@@ -70,6 +83,8 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/SnorlaxLOGConfig/#kot
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/password/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/password.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/url/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/url.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/username/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/username.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGException///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-exception/index.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGException/SnorlaxLOGException/#kotlin.String#kotlin.Throwable?/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-exception/-snorlax-l-o-g-exception.html
 $dokka.location:de.relaxogames.snorlaxLOG/StorageStatistic///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-storage-statistic/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/StorageStatistic/StorageStatistic/#kotlin.Int#kotlin.Long/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-storage-statistic/-storage-statistic.html
 $dokka.location:de.relaxogames.snorlaxLOG/StorageStatistic/count/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-storage-statistic/count.html
