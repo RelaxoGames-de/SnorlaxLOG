@@ -169,6 +169,9 @@ data class StorageStatistic(var count: Int, var size: Long)
 @Serializable
 data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: Int, var userCount: Int)
 
+@Serializable
+data class ServerStatistics(var upTime: Long)
+
 /**
  * Base exception class for SnorlaxLOG errors
  *
@@ -1223,6 +1226,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getStorageStatistics(): StorageStatistic {
         val url = config.url + "/statistic/storages"
         val response = client.get(url)
@@ -1263,6 +1267,7 @@ class SnorlaxLOG(
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getUserStatistics(): UserStatistic {
         val url = config.url + "/statistic/users"
         val response = client.get(url)
@@ -1287,6 +1292,47 @@ class SnorlaxLOG(
     fun syncGetUserStatistics(): UserStatistic {
         return runBlocking {
             getUserStatistics()
+        }
+    }
+
+    /**
+     * Gets the statistics of the current RGDB Instance the info
+     * regarding the Server itself, such as the UpTime (User only)
+     *
+     * @return The User Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see ServerStatistics
+     * @since 1.7
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    suspend fun getServerStatistics(): ServerStatistics {
+        val url = config.url + "/statistic/server"
+        val response = client.get(url)
+        handleResponse(response, "getting user statistics")
+        return response.body<ServerStatistics>()
+    }
+
+    /**
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
+     * way, the statistics are regarding the Server itself, such as the UpTime (User only)
+     *
+     * @return The User Statistics of the current RGDB Server
+     * @throws Exception If the instance can't retrieve the info from the Server
+     *
+     * @see ServerStatistics
+     * @since 1.7
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
+    fun syncGetServerStatistics(): ServerStatistics {
+        return runBlocking {
+            getServerStatistics()
         }
     }
 
