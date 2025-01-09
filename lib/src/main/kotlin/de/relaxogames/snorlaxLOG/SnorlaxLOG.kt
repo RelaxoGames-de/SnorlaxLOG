@@ -645,7 +645,10 @@ class SnorlaxLOG(
 
         val url = config.url + "/admin/users/$name/role"
         try {
-            val response = client.put(url) { setBody(role) }
+            val response = client.put(url) {
+                contentType(ContentType.Application.Json)
+                setBody(role)
+            }
             handleResponse(response, "updating role for user '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while updating user role", e)
