@@ -26,6 +26,7 @@ buildscript {
 
 val ktorVersion: String by project
 val logbackVersion: String by project
+val kotlinxIOVersion: String by project
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -42,7 +43,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-cbor:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-protobuf:$ktorVersion")
 
-
+    implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.6.0")
 
     implementation("io.ktor:ktor-client-auth:$ktorVersion")
 
