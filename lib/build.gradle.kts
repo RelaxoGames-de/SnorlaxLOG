@@ -8,50 +8,45 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 
-    // Apply the maven-publish plugin for publishing artifacts
+    // Apply the maven-publish plugin for publishing artifacts.
     `maven-publish`
 
-    // Apply the kotlinx-serialization plugin for serialization
-    kotlin("plugin.serialization").version("2.0.0")
+    // Apply the kotlinx-serialization plugin for serialization.
+    alias(libs.plugins.kotlinx.serialization)
 
-    // Dokka for automatic documentation
-    id("org.jetbrains.dokka").version("1.9.20")
+    // Dokka for automatic documentation.
+    alias(libs.plugins.dokka)
 }
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+        classpath("org.jetbrains.dokka:dokka-base:${libs.versions.dokka.get()}")
     }
 }
 
-val ktorVersion: String by project
-val logbackVersion: String by project
-val kotlinxIOVersion: String by project
-
 repositories {
-    // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
 
 dependencies {
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
 
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-cbor:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-protobuf:$ktorVersion")
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.serialization.kotlinx.xml)
+    implementation(libs.ktor.serialization.kotlinx.cbor)
+    implementation(libs.ktor.serialization.kotlinx.protobuf)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.6.0")
+    implementation(libs.kotlinx.io.core)
 
-    implementation("io.ktor:ktor-client-auth:$ktorVersion")
+    implementation(libs.ktor.client.auth)
 
-    implementation("io.ktor:ktor-client-logging:$ktorVersion")
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation(libs.ktor.client.logging)
+    implementation(libs.logback.classic)
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
