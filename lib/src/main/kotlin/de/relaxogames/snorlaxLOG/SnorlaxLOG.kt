@@ -801,7 +801,10 @@ class SnorlaxLOG(
         val url = config.url + "/creator/storages"
         val storage = RGDBStorage(name)
         try {
-            val response = client.post(url) { setBody(storage) }
+            val response = client.post(url) {
+                contentType(ContentType.Application.Json)
+                setBody(storage)
+            }
             handleResponse(response, "creating storage '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while creating storage", e)
