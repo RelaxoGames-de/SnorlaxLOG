@@ -884,56 +884,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a storage (User only)
-     * 
-     * @param name The name of the storage to get
-     * @return The storage
-     * @throws UnauthorizedError If the user was not found
-     * 
-     * @see RGDBStorage
-     * @since 1.0
-     * 
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getStorage(name: String): RGDBStorage {
-        val url = config.url + "/storage/$name"
-        try {
-            val response = client.get(url)
-            handleResponse(response, "getting storage '$name'")
-            return response.body<RGDBStorage>()
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting storage", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting storage", e)
-            }
-        }
-    }
-
-    /**
-     * Gets a storage synchronously (User only)
-     * 
-     * @param name The name of the storage to get
-     * @return The storage
-     * @throws UnauthorizedError If the user was not found
-     * 
-     * @see RGDBStorage
-     * @since 1.2
-     * 
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    fun syncGetStorage(name: String): RGDBStorage {
-        return runBlocking {
-            getStorage(name)
-        }
-    }
-
-    /**
      * Gets a shared table (User only)
      * 
      * @param dbName The name of the storage to get
