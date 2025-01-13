@@ -7,18 +7,17 @@ import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
-import io.ktor.client.request.get
-import io.ktor.client.request.put
-import io.ktor.client.request.setBody
-import io.ktor.client.request.post
-import io.ktor.client.request.delete
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.serialization.kotlinx.xml.*
+import io.ktor.utils.io.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.cbor.Cbor
@@ -26,8 +25,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.protobuf.ProtoBuf
 import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.serialization.XML
-import java.util.concurrent.CompletableFuture
+import java.io.File
 import java.io.IOException
+import java.util.concurrent.CompletableFuture
 
 /**
  * Configuration for the [SnorlaxLOG] client
@@ -832,6 +832,51 @@ class SnorlaxLOG(
     fun syncCreateStorage(name: String) {
         return runBlocking {
             createStorage(name)
+        }
+    }
+
+
+    /**
+     * Gets a backup of all storages (Creator only)
+     *
+     * @return A temporary file containing the backup
+     * @throws NetworkError If there was a network issue while getting the backup
+     *
+     * @since 1.8
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    suspend fun getBackup(): File {
+        val url = config.url + "/creator/storages/backup"
+        val tempFile = withContext(Dispatchers.IO) {
+            File.createTempFile("backup", ".zip")
+        }
+        runBlocking {
+            val response = client.get(url)
+            handleResponse(response, "getting backup")
+            tempFile.writeBytes(response.readRawBytes())
+        }
+        tempFile.deleteOnExit()
+        return tempFile
+    }
+
+    /**
+     * Gets a backup of all storages synchronously (Creator only)
+     *
+     * @return A temporary file containing the backup
+     * @throws NetworkError If there was a network issue while getting the backup
+     *
+     * @since 1.8
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
+    fun syncGetBackup(): File {
+        return runBlocking {
+            getBackup()
         }
     }
 
