@@ -80,18 +80,20 @@ publishing {
     }
 }
 
-tasks.dokkaHtml {
+dokka {
     moduleName.set("SnorlaxLOG Documentation")
 
-    dokkaSourceSets {
-        named("main") {
-            sourceRoots.from(file("src/main/kotlin"))
+    dokkaSourceSets.main {
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl.set(uri("https://github.com/RelaxoGames-de/SnorlaxLOG/tree/main/lib/src/main/kotlin"))
+            remoteLineSuffix.set("#L")
         }
     }
 
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        customStyleSheets = listOf(file("docs_src/logo-styles.css"))
-        customAssets = listOf(file("docs_src/relaxogames_icon.png"))
-        footerMessage = "Copyright © 2024-2025 RelaxoGames. All rights reserved."
+    pluginsConfiguration.html {
+        customStyleSheets.from("docs_src/logo-styles.css")
+        customAssets.from("docs_src/relaxogames_icon.png")
+        footerMessage.set("Copyright © 2025 RelaxoGames. All rights reserved.")
     }
 }
