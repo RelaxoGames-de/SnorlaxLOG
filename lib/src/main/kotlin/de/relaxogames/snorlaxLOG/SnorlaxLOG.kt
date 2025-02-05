@@ -7,18 +7,17 @@ import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
-import io.ktor.client.request.get
-import io.ktor.client.request.put
-import io.ktor.client.request.setBody
-import io.ktor.client.request.post
-import io.ktor.client.request.delete
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.serialization.kotlinx.xml.*
+import io.ktor.utils.io.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.cbor.Cbor
@@ -26,8 +25,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.protobuf.ProtoBuf
 import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.serialization.XML
-import java.util.concurrent.CompletableFuture
+import java.io.File
 import java.io.IOException
+import java.util.concurrent.CompletableFuture
 
 /**
  * Configuration for the [SnorlaxLOG] client
@@ -261,6 +261,14 @@ class NetworkError(message: String, cause: Throwable? = null) : SnorlaxLOGExcept
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 class InvalidInputError(message: String) : SnorlaxLOGException(message)
+
+/**
+ * Indicates that the annotated function is unstable and in alpha stage.
+ * Use with caution as the API may change in the future.
+ */
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.BINARY)
+annotation class UnstableApi(val message: String = "This API is unstable and in alpha stage.")
 
 /**
  * Main client for interacting with the RGDB Backend. Uses [SnorlaxLOGConfig] for configuration.
@@ -835,6 +843,53 @@ class SnorlaxLOG(
         }
     }
 
+
+    /**
+     * Gets a backup of all storages (Creator only)
+     *
+     * @return A temporary file containing the backup
+     * @throws NetworkError If there was a network issue while getting the backup
+     *
+     * @since 1.8
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    @UnstableApi
+    suspend fun getBackup(): File {
+        val url = config.url + "/creator/storages/backup"
+        val tempFile = withContext(Dispatchers.IO) {
+            File.createTempFile("backup", ".zip")
+        }
+        runBlocking {
+            val response = client.get(url)
+            handleResponse(response, "getting backup")
+            tempFile.writeBytes(response.readRawBytes())
+        }
+        tempFile.deleteOnExit()
+        return tempFile
+    }
+
+    /**
+     * Gets a backup of all storages synchronously (Creator only)
+     *
+     * @return A temporary file containing the backup
+     * @throws NetworkError If there was a network issue while getting the backup
+     *
+     * @since 1.8
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Suppress("UNUSED")
+    @UnstableApi
+    fun syncGetBackup(): File {
+        return runBlocking {
+            getBackup()
+        }
+    }
+
     // USER ONLY
     /**
      * Gets all storage names (User only)
@@ -880,56 +935,6 @@ class SnorlaxLOG(
     fun syncGetStorages(): List<RGDBStorage> {
         return runBlocking {
             getStorages()
-        }
-    }
-
-    /**
-     * Gets a storage (User only)
-     * 
-     * @param name The name of the storage to get
-     * @return The storage
-     * @throws UnauthorizedError If the user was not found
-     * 
-     * @see RGDBStorage
-     * @since 1.0
-     * 
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getStorage(name: String): RGDBStorage {
-        val url = config.url + "/storage/$name"
-        try {
-            val response = client.get(url)
-            handleResponse(response, "getting storage '$name'")
-            return response.body<RGDBStorage>()
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting storage", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting storage", e)
-            }
-        }
-    }
-
-    /**
-     * Gets a storage synchronously (User only)
-     * 
-     * @param name The name of the storage to get
-     * @return The storage
-     * @throws UnauthorizedError If the user was not found
-     * 
-     * @see RGDBStorage
-     * @since 1.2
-     * 
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    fun syncGetStorage(name: String): RGDBStorage {
-        return runBlocking {
-            getStorage(name)
         }
     }
 

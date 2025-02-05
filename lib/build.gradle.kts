@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.logback.classic)
 }
 
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
@@ -60,7 +59,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "de.relaxogames"
             artifactId = "snorlax-log"
-            version = "1.7"
+            version = "1.8"
 
             from(components["java"])
 
@@ -93,6 +92,6 @@ tasks.dokkaHtml {
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customStyleSheets = listOf(file("docs_src/logo-styles.css"))
         customAssets = listOf(file("docs_src/relaxogames_icon.png"))
-        footerMessage = "Copyright © 2024 RelaxoGames. All rights reserved."
+        footerMessage = "Copyright © 2024-2025 RelaxoGames. All rights reserved."
     }
 }
