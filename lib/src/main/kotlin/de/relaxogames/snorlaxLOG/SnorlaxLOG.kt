@@ -263,6 +263,14 @@ class NetworkError(message: String, cause: Throwable? = null) : SnorlaxLOGExcept
 class InvalidInputError(message: String) : SnorlaxLOGException(message)
 
 /**
+ * Indicates that the annotated function is unstable and in alpha stage.
+ * Use with caution as the API may change in the future.
+ */
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.BINARY)
+annotation class UnstableApi(val message: String = "This API is unstable and in alpha stage.")
+
+/**
  * Main client for interacting with the RGDB Backend. Uses [SnorlaxLOGConfig] for configuration.
  * 
  * @param config The [SnorlaxLOGConfig] for the client
@@ -848,6 +856,7 @@ class SnorlaxLOG(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("MemberVisibilityCanBePrivate")
+    @UnstableApi
     suspend fun getBackup(): File {
         val url = config.url + "/creator/storages/backup"
         val tempFile = withContext(Dispatchers.IO) {
@@ -874,6 +883,7 @@ class SnorlaxLOG(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
+    @UnstableApi
     fun syncGetBackup(): File {
         return runBlocking {
             getBackup()

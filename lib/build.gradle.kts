@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.logback.classic)
 }
 
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
