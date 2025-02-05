@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Build
-        run: ./gradlew dokkaHtml
+        run: ./gradlew dokkaGenerate
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
