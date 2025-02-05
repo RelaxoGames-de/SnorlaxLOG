@@ -93,6 +93,6 @@ tasks.dokkaHtml {
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customStyleSheets = listOf(file("docs_src/logo-styles.css"))
         customAssets = listOf(file("docs_src/relaxogames_icon.png"))
-        footerMessage = "Copyright © 2024 RelaxoGames. All rights reserved."
+        footerMessage = "Copyright © 2024-2025 RelaxoGames. All rights reserved."
     }
 }
