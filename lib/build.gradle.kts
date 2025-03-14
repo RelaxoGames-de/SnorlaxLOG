@@ -1,6 +1,3 @@
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
-
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     alias(libs.plugins.kotlin.jvm)
@@ -19,14 +16,10 @@ plugins {
 }
 
 buildscript {
-    dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:${libs.versions.dokka.get()}")
-    }
+    dependencies { classpath("org.jetbrains.dokka:dokka-base:${libs.versions.dokka.get()}") }
 }
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
 dependencies {
     implementation(libs.ktor.client.core)
@@ -47,9 +40,7 @@ dependencies {
 }
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
+    toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
     withSourcesJar()
     withJavadocJar()
 }
@@ -86,7 +77,11 @@ dokka {
     dokkaSourceSets.main {
         sourceLink {
             localDirectory.set(file("src/main/kotlin"))
-            remoteUrl.set(uri("https://github.com/RelaxoGames-de/SnorlaxLOG/tree/main/lib/src/main/kotlin"))
+            remoteUrl.set(
+                    uri(
+                            "https://github.com/RelaxoGames-de/SnorlaxLOG/tree/main/lib/src/main/kotlin"
+                    )
+            )
             remoteLineSuffix.set("#L")
         }
     }

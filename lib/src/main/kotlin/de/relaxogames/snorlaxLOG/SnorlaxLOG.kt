@@ -15,6 +15,9 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.serialization.kotlinx.xml.*
 import io.ktor.utils.io.*
+import java.io.File
+import java.io.IOException
+import java.util.concurrent.CompletableFuture
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -25,20 +28,17 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.protobuf.ProtoBuf
 import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.serialization.XML
-import java.io.File
-import java.io.IOException
-import java.util.concurrent.CompletableFuture
 
 /**
  * Configuration for the [SnorlaxLOG] client
- * 
+ *
  * @param url The URL of the RGDB Backend
  * @param username The username of the user
  * @param password The password of the user
- * 
+ *
  * @see SnorlaxLOG
  * @since 1.0
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
@@ -46,29 +46,29 @@ import java.util.concurrent.CompletableFuture
 data class SnorlaxLOGConfig(val url: String, val username: String, val password: String)
 
 /**
- * User object for the RGDB Backend. Users can have different [RGDBRole]s that determine their permissions.
- * 
+ * User object for the RGDB Backend. Users can have different [RGDBRole]s that determine their
+ * permissions.
+ *
  * @param name The name of the user
  * @param password The password of the user
  * @param role The [RGDBRole] of the user
- * 
+ *
  * @see RGDBRole
  * @since 1.0
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-@Serializable
-data class RGDBUser(val name: String, val password: String, val role: RGDBRole)
+@Serializable data class RGDBUser(val name: String, val password: String, val role: RGDBRole)
 
 /**
  * Role object for the RGDB Backend
- * 
+ *
  * @param value The value of the role
- * 
+ *
  * @see RGDBUser
  * @since 1.0
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
@@ -77,60 +77,57 @@ data class RGDBUser(val name: String, val password: String, val role: RGDBRole)
 enum class RGDBRole(private val value: String) {
     /**
      * Admin role (Has full access to the RGDB Backend)
-     * 
+     *
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
-    @Suppress("UNUSED")
-    ADMIN("admin"),
+    @Suppress("UNUSED") ADMIN("admin"),
     /**
      * Creator role (Has access to the RGDB Backend but can only create and delete storages)
-     * 
+     *
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
-    @Suppress("unused")
-    CREATOR("creator"),
+    @Suppress("unused") CREATOR("creator"),
     /**
-     * User role (Has access to the RGDB Backend but can only read and write to their own and shared storages)
-     * 
+     * User role (Has access to the RGDB Backend but can only read and write to their own and shared
+     * storages)
+     *
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
-    @Suppress("unused")
-    USER("user")
+    @Suppress("unused") USER("user")
 }
 
 /**
  * Storage object for the RGDB Backend (Creator only). Contains [RGDBStorageObject]s.
- * 
+ *
  * @param name The name of the storage
- * 
+ *
  * @see RGDBStorageObject
  * @since 1.0
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-@Serializable
-data class RGDBStorage(val name: String)
+@Serializable data class RGDBStorage(val name: String)
 
 /**
  * Storage object for the RGDB Backend (Shared and Private)
- * 
+ *
  * @param key The key of the storage object
  * @param value The value of the storage object
  * @param isPrivate Whether the storage object is private
- * 
+ *
  * @see RGDBStorage
  * @since 1.0
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
@@ -138,8 +135,8 @@ data class RGDBStorage(val name: String)
 data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
 
 /**
- * Statistics returned by the Server, that are meant to give the user
- * an overview on different important factors such as the Filesystem-Size.
+ * Statistics returned by the Server, that are meant to give the user an overview on different
+ * important factors such as the Filesystem-Size.
  *
  * @param count The amount of user Storages currently in use
  * @param size The Filesystem-Size in Bytes
@@ -149,12 +146,11 @@ data class RGDBStorageObject(val key: String, val value: String, val isPrivate: 
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-@Serializable
-data class StorageStatistic(var count: Int, var size: Long)
+@Serializable data class StorageStatistic(var count: Int, var size: Long)
 
 /**
- * Statistics returned by the Server, that are meant to give the user
- * an overview on different important factors such as the amount of Users.
+ * Statistics returned by the Server, that are meant to give the user an overview on different
+ * important factors such as the amount of Users.
  *
  * @param count The amount of Users currently in the System
  * @param adminCount The amount of Admins in the System
@@ -167,11 +163,16 @@ data class StorageStatistic(var count: Int, var size: Long)
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 @Serializable
-data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: Int, var userCount: Int)
+data class UserStatistic(
+        var count: Int,
+        var adminCount: Int,
+        var creatorCount: Int,
+        var userCount: Int
+)
 
 /**
- * Statistics returned by the Server, that are meant to give the user
- * an overview on different important factors such as the uptime of the server.
+ * Statistics returned by the Server, that are meant to give the user an overview on different
+ * important factors such as the uptime of the server.
  *
  * @param upTime The uptime of the server in milliseconds
  *
@@ -180,30 +181,30 @@ data class UserStatistic(var count: Int, var adminCount: Int, var creatorCount: 
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-@Serializable
-data class ServerStatistics(var upTime: Long)
+@Serializable data class ServerStatistics(var upTime: Long)
 
 /**
  * Base exception class for SnorlaxLOG errors
  *
  * @param message The error message
  * @param cause The cause of the error
- * 
+ *
  * @since 1.7
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-open class SnorlaxLOGException(message: String, cause: Throwable? = null) : Exception(message, cause)
+open class SnorlaxLOGException(message: String, cause: Throwable? = null) :
+        Exception(message, cause)
 
 /**
  * Thrown when authentication fails (401)
- * 
+ *
  * @param message The error message
- * 
+ *
  * @see SnorlaxLOGException
  * @since 1.7
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
@@ -211,12 +212,12 @@ class UnauthorizedError(message: String = "Unauthorized") : SnorlaxLOGException(
 
 /**
  * Thrown when a resource is not found (404)
- * 
+ *
  * @param message The error message
- * 
+ *
  * @see SnorlaxLOGException
  * @since 1.7
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
@@ -224,12 +225,12 @@ class NotFoundException(message: String) : SnorlaxLOGException(message)
 
 /**
  * Thrown when the server returns an error (500)
- * 
+ *
  * @param message The error message
- * 
+ *
  * @see SnorlaxLOGException
  * @since 1.7
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
@@ -237,13 +238,13 @@ class ServerError(message: String) : SnorlaxLOGException(message)
 
 /**
  * Thrown when a request fails due to network issues
- * 
+ *
  * @param message The error message
  * @param cause The cause of the error
- * 
+ *
  * @see SnorlaxLOGException
  * @since 1.7
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
@@ -251,20 +252,20 @@ class NetworkError(message: String, cause: Throwable? = null) : SnorlaxLOGExcept
 
 /**
  * Thrown when a request fails due to invalid input
- * 
+ *
  * @param message The error message
- * 
+ *
  * @see SnorlaxLOGException
  * @since 1.7
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 class InvalidInputError(message: String) : SnorlaxLOGException(message)
 
 /**
- * Indicates that the annotated function is unstable and in alpha stage.
- * Use with caution as the API may change in the future.
+ * Indicates that the annotated function is unstable and in alpha stage. Use with caution as the API
+ * may change in the future.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.BINARY)
@@ -272,35 +273,33 @@ annotation class UnstableApi(val message: String = "This API is unstable and in 
 
 /**
  * Main client for interacting with the RGDB Backend. Uses [SnorlaxLOGConfig] for configuration.
- * 
+ *
  * @param config The [SnorlaxLOGConfig] for the client
  * @param loggingEnabled Whether logging is enabled
  *
  * @see SnorlaxLOGConfig
  * @since 1.0
- * 
+ *
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 class SnorlaxLOG(
-    /**
-     * The configuration for the client
-     * 
-     * @see SnorlaxLOGConfig
-     */
-    private val config: SnorlaxLOGConfig,
+        /**
+         * The configuration for the client
+         *
+         * @see SnorlaxLOGConfig
+         */
+        private val config: SnorlaxLOGConfig,
 
-    /**
-     * Whether logging is enabled
-     */
-    private val loggingEnabled: Boolean = false
+        /** Whether logging is enabled */
+        private val loggingEnabled: Boolean = false
 ) {
     /**
      * The HTTP client for the SnorlaxLOG client
-     * 
+     *
      * @see HttpClient
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -308,19 +307,15 @@ class SnorlaxLOG(
     private val client =
             HttpClient(CIO) {
                 install(ContentNegotiation) {
-                    json(Json {
-                        prettyPrint = true
-                        isLenient = true
-                    })
-                    xml(format = XML {
-                        xmlDeclMode = XmlDeclMode.Auto
-                    })
-                    cbor(Cbor {
-                        ignoreUnknownKeys = true
-                    })
-                    protobuf(ProtoBuf {
-                        encodeDefaults = true
-                    })
+                    json(
+                            Json {
+                                prettyPrint = true
+                                isLenient = true
+                            }
+                    )
+                    xml(format = XML { xmlDeclMode = XmlDeclMode.Auto })
+                    cbor(Cbor { ignoreUnknownKeys = true })
+                    protobuf(ProtoBuf { encodeDefaults = true })
                 }
                 install(Logging) {
                     logger = Logger.DEFAULT
@@ -329,9 +324,7 @@ class SnorlaxLOG(
                 }
                 install(Auth) {
                     basic {
-                        credentials {
-                            BasicAuthCredentials(config.username, config.password)
-                        }
+                        credentials { BasicAuthCredentials(config.username, config.password) }
                         sendWithoutRequest { true }
                     }
                 }
@@ -339,12 +332,12 @@ class SnorlaxLOG(
 
     /**
      * Tests the connection to the RGDB Backend
-     * 
+     *
      * @return Whether the connection was successful
      * @throws UnauthorizedError If the connection was not successful
-     * 
+     *
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -367,31 +360,29 @@ class SnorlaxLOG(
 
     /**
      * Tests the connection to the RGDB Backend synchronously
-     * 
+     *
      * @return Whether the connection was successful
      * @throws UnauthorizedError If the connection was not successful
-     * 
+     *
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncTestConnection(): Boolean {
-        return runBlocking {
-            testConnection()
-        }
+        return runBlocking { testConnection() }
     }
 
     /**
      * Gets the user the snorlaxLOG client is authenticated as (User only)
-     * 
+     *
      * @return The self user
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -414,31 +405,29 @@ class SnorlaxLOG(
 
     /**
      * Gets the user the snorlaxLOG client is authenticated as synchronously (User only)
-     * 
+     *
      * @return The self user
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncGetSelf(): RGDBUser {
-        return runBlocking {
-            getSelf()
-        }
+        return runBlocking { getSelf() }
     }
 
     /**
      * Changes the password of the user the snorlaxLOG client is authenticated as (User only)
-     * 
+     *
      * @param newPassword The new password
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -463,32 +452,31 @@ class SnorlaxLOG(
     }
 
     /**
-     * Changes the password of the user the snorlaxLOG client is authenticated as synchronously (User only)
-     * 
+     * Changes the password of the user the snorlaxLOG client is authenticated as synchronously
+     * (User only)
+     *
      * @param newPassword The new password
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncChangePassword(newPassword: String) {
-        return runBlocking {
-            changePassword(newPassword)
-        }
+        return runBlocking { changePassword(newPassword) }
     }
 
     /**
      * Gets all users (Admin only)
-     * 
+     *
      * @return A list of all users
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -511,32 +499,30 @@ class SnorlaxLOG(
 
     /**
      * Gets all users synchronously (Admin only)
-     * 
+     *
      * @return A list of all users
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncGetUsers(): List<RGDBUser> {
-        return runBlocking {
-            getUsers()
-        }
+        return runBlocking { getUsers() }
     }
 
     /**
      * Creates a user (Admin only)
-     * 
+     *
      * @param user The user to create
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -548,10 +534,11 @@ class SnorlaxLOG(
 
         val url = config.url + "/admin/users"
         try {
-            val response = client.post(url) {
-                contentType(ContentType.Application.Json)
-                setBody(user)
-            }
+            val response =
+                    client.post(url) {
+                        contentType(ContentType.Application.Json)
+                        setBody(user)
+                    }
             handleResponse(response, "creating user '${user.name}'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while creating user", e)
@@ -565,31 +552,29 @@ class SnorlaxLOG(
 
     /**
      * Creates a user synchronously (Admin only)
-     * 
+     *
      * @param user The user to create
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncCreateUser(user: RGDBUser) {
-        return runBlocking {
-            createUser(user)
-        }
+        return runBlocking { createUser(user) }
     }
 
     /**
      * Deletes a user (Admin only)
-     * 
+     *
      * @param name The name of the user to delete
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -615,33 +600,31 @@ class SnorlaxLOG(
 
     /**
      * Deletes a user synchronously (Admin only)
-     * 
+     *
      * @param name The name of the user to delete
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncDeleteUser(name: String) {
-        return runBlocking {
-            deleteUser(name)
-        }
+        return runBlocking { deleteUser(name) }
     }
 
     /**
      * Updates the role of a user (Admin only)
-     * 
+     *
      * @param name The name of the user to update
      * @param role The new role
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBRole
      * @see RGDBUser
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -653,10 +636,11 @@ class SnorlaxLOG(
 
         val url = config.url + "/admin/users/$name/role"
         try {
-            val response = client.put(url) {
-                contentType(ContentType.Application.Json)
-                setBody(role)
-            }
+            val response =
+                    client.put(url) {
+                        contentType(ContentType.Application.Json)
+                        setBody(role)
+                    }
             handleResponse(response, "updating role for user '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while updating user role", e)
@@ -670,34 +654,32 @@ class SnorlaxLOG(
 
     /**
      * Updates the role of a user synchronously (Admin only)
-     * 
+     *
      * @param name The name of the user to update
      * @param role The new role
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBRole
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncUpdateUserRole(name: String, role: RGDBRole) {
-        return runBlocking {
-            updateUserRole(name, role)
-        }
+        return runBlocking { updateUserRole(name, role) }
     }
 
     /**
      * Updates the password of a user (Admin only)
-     * 
+     *
      * @param name The name of the user to update
      * @param newPassword The new password
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -712,41 +694,43 @@ class SnorlaxLOG(
         } catch (e: Exception) {
             when (e) {
                 is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while updating user password", e)
+                else ->
+                        throw SnorlaxLOGException(
+                                "Unexpected error while updating user password",
+                                e
+                        )
             }
         }
     }
 
     /**
      * Updates the password of a user synchronously (Admin only)
-     * 
+     *
      * @param name The name of the user to update
      * @param newPassword The new password
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncUpdateUserPassword(name: String, newPassword: String) {
-        return runBlocking {
-            updateUserPassword(name, newPassword)
-        }
+        return runBlocking { updateUserPassword(name, newPassword) }
     }
 
     /**
      * Gets a user (Admin only)
-     * 
+     *
      * @param name The name of the user to get
      * @return The user
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -769,34 +753,32 @@ class SnorlaxLOG(
 
     /**
      * Gets a user synchronously (Admin only)
-     * 
+     *
      * @param name The name of the user to get
      * @return The user
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBUser
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncGetUser(name: String): RGDBUser {
-        return runBlocking {
-            getUser(name)
-        }
+        return runBlocking { getUser(name) }
     }
 
     // Creator only
     /**
      * Creates a storage (Creator only)
-     * 
+     *
      * @param name The name of the storage to create
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorage
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -805,14 +787,15 @@ class SnorlaxLOG(
         if (name.isBlank()) {
             throw InvalidInputError("Storage name cannot be blank")
         }
-        
+
         val url = config.url + "/creator/storages"
         val storage = RGDBStorage(name)
         try {
-            val response = client.post(url) {
-                contentType(ContentType.Application.Json)
-                setBody(storage)
-            }
+            val response =
+                    client.post(url) {
+                        contentType(ContentType.Application.Json)
+                        setBody(storage)
+                    }
             handleResponse(response, "creating storage '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while creating storage", e)
@@ -826,23 +809,20 @@ class SnorlaxLOG(
 
     /**
      * Creates a storage synchronously (Creator only)
-     * 
+     *
      * @param name The name of the storage to create
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorage
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncCreateStorage(name: String) {
-        return runBlocking {
-            createStorage(name)
-        }
+        return runBlocking { createStorage(name) }
     }
-
 
     /**
      * Gets a backup of all storages (Creator only)
@@ -859,9 +839,7 @@ class SnorlaxLOG(
     @UnstableApi
     suspend fun getBackup(): File {
         val url = config.url + "/creator/storages/backup"
-        val tempFile = withContext(Dispatchers.IO) {
-            File.createTempFile("backup", ".zip")
-        }
+        val tempFile = withContext(Dispatchers.IO) { File.createTempFile("backup", ".zip") }
         runBlocking {
             val response = client.get(url)
             handleResponse(response, "getting backup")
@@ -885,9 +863,7 @@ class SnorlaxLOG(
     @Suppress("UNUSED")
     @UnstableApi
     fun syncGetBackup(): File {
-        return runBlocking {
-            getBackup()
-        }
+        return runBlocking { getBackup() }
     }
 
     // USER ONLY
@@ -933,21 +909,19 @@ class SnorlaxLOG(
      */
     @Suppress("UNUSED")
     fun syncGetStorages(): List<RGDBStorage> {
-        return runBlocking {
-            getStorages()
-        }
+        return runBlocking { getStorages() }
     }
 
     /**
      * Gets a shared table (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @return The shared table
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -974,35 +948,33 @@ class SnorlaxLOG(
 
     /**
      * Gets a shared table synchronously (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @return The shared table
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncGetSharedTable(dbName: String): List<RGDBStorageObject> {
-        return runBlocking {
-            getSharedTable(dbName)
-        }
+        return runBlocking { getSharedTable(dbName) }
     }
 
     /**
      * Gets a shared entry (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
      * @return The shared entry
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -1029,36 +1001,34 @@ class SnorlaxLOG(
 
     /**
      * Gets a shared entry synchronously (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
      * @return The shared entry
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncGetSharedEntry(dbName: String, key: String): String {
-        return runBlocking {
-            getSharedEntry(dbName, key)
-        }
+        return runBlocking { getSharedEntry(dbName, key) }
     }
 
     /**
      * Sets a shared entry (User only)
-     * 
+     *
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
      * @param value The value of the entry to set
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -1071,35 +1041,33 @@ class SnorlaxLOG(
 
     /**
      * Sets a shared entry synchronously (User only)
-     * 
+     *
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
      * @param value The value of the entry to set
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncSetSharedEntry(dbName: String, key: String, value: String) {
-        return runBlocking {
-            setSharedEntry(dbName, key, value)
-        }
+        return runBlocking { setSharedEntry(dbName, key, value) }
     }
 
     /**
      * Gets a private table (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @return The private table
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -1122,35 +1090,33 @@ class SnorlaxLOG(
 
     /**
      * Gets a private table synchronously (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @return The private table
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncGetPrivateTable(dbName: String): List<RGDBStorageObject> {
-        return runBlocking {
-            getPrivateTable(dbName)
-        }
+        return runBlocking { getPrivateTable(dbName) }
     }
 
     /**
      * Gets a private entry (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
      * @return The private entry
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -1173,36 +1139,34 @@ class SnorlaxLOG(
 
     /**
      * Gets a private entry synchronously (User only)
-     * 
+     *
      * @param dbName The name of the storage to get
      * @param key The key of the entry to get
      * @return The private entry
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncGetPrivateEntry(dbName: String, key: String): String {
-        return runBlocking {
-            getPrivateEntry(dbName, key)
-        }
+        return runBlocking { getPrivateEntry(dbName, key) }
     }
 
     /**
      * Sets a private entry (User only)
-     * 
+     *
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
      * @param value The value of the entry to set
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.0
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
@@ -1215,29 +1179,27 @@ class SnorlaxLOG(
 
     /**
      * Sets a private entry synchronously (User only)
-     * 
+     *
      * @param dbName The name of the storage to set
      * @param key The key of the entry to set
      * @param value The value of the entry to set
      * @throws UnauthorizedError If the user was not found
-     * 
+     *
      * @see RGDBStorageObject
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun syncSetPrivateEntry(dbName: String, key: String, value: String) {
-        return runBlocking {
-            setPrivateEntry(dbName, key, value)
-        }
+        return runBlocking { setPrivateEntry(dbName, key, value) }
     }
 
     // Statistic Endpoints
     /**
-     * Gets the statistics of the current RGDB Instance
-     * regarding Storage, such as Filesystem-size etc. (User only)
+     * Gets the statistics of the current RGDB Instance regarding Storage, such as Filesystem-size
+     * etc. (User only)
      *
      * @return The Storage Statistics of the current RGDB Server
      * @throws Exception If the instance can't retrieve the info from the Server
@@ -1257,8 +1219,8 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
-     * way regarding Storage, such as Filesystem-size etc. (User only)
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous) way regarding
+     * Storage, such as Filesystem-size etc. (User only)
      *
      * @return The Storage Statistics of the current RGDB Server
      * @throws Exception If the instance can't retrieve the info from the Server
@@ -1271,14 +1233,12 @@ class SnorlaxLOG(
      */
     @Suppress("UNUSED")
     fun syncGetStorageStatistics(): StorageStatistic {
-        return runBlocking {
-            getStorageStatistics()
-        }
+        return runBlocking { getStorageStatistics() }
     }
 
     /**
-     * Gets the statistics of the current RGDB Instance the info
-     * regarding Users, such as currently existing etc. (User only)
+     * Gets the statistics of the current RGDB Instance the info regarding Users, such as currently
+     * existing etc. (User only)
      *
      * @return The User Statistics of the current RGDB Server
      * @throws Exception If the instance can't retrieve the info from the Server
@@ -1298,8 +1258,8 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
-     * way, the statistics are regarding Users, such as currently existing etc. (User only)
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous) way, the
+     * statistics are regarding Users, such as currently existing etc. (User only)
      *
      * @return The User Statistics of the current RGDB Server
      * @throws Exception If the instance can't retrieve the info from the Server
@@ -1312,14 +1272,12 @@ class SnorlaxLOG(
      */
     @Suppress("UNUSED")
     fun syncGetUserStatistics(): UserStatistic {
-        return runBlocking {
-            getUserStatistics()
-        }
+        return runBlocking { getUserStatistics() }
     }
 
     /**
-     * Gets the statistics of the current RGDB Instance the info
-     * regarding the Server itself, such as the UpTime (User only)
+     * Gets the statistics of the current RGDB Instance the info regarding the Server itself, such
+     * as the UpTime (User only)
      *
      * @return The User Statistics of the current RGDB Server
      * @throws Exception If the instance can't retrieve the info from the Server
@@ -1339,8 +1297,8 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets the statistics of the current RGDB Instance in a blocking (synchronous)
-     * way, the statistics are regarding the Server itself, such as the UpTime (User only)
+     * Gets the statistics of the current RGDB Instance in a blocking (synchronous) way, the
+     * statistics are regarding the Server itself, such as the UpTime (User only)
      *
      * @return The User Statistics of the current RGDB Server
      * @throws Exception If the instance can't retrieve the info from the Server
@@ -1353,49 +1311,41 @@ class SnorlaxLOG(
      */
     @Suppress("UNUSED")
     fun syncGetServerStatistics(): ServerStatistics {
-        return runBlocking {
-            getServerStatistics()
-        }
+        return runBlocking { getServerStatistics() }
     }
 
     /**
      * Converts a suspend function to a sync function
-     * 
+     *
      * @param function The suspend function to convert
      * @return The sync function
-     * 
+     *
      * @see runBlocking
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun asyncFunctionToSync(function: suspend () -> Unit): () -> Unit {
-        return {
-            runBlocking {
-                function()
-            }
-        }
+        return { runBlocking { function() } }
     }
 
     /**
      * Converts a kotlin function to a java future
-     * 
+     *
      * @param action The kotlin function to convert
      * @return The java future
-     * 
+     *
      * @see CompletableFuture
      * @since 1.2
-     * 
+     *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Suppress("UNUSED")
     fun <T> kotlinFunctionToJavaFuture(action: () -> T): CompletableFuture<T> {
-        return CompletableFuture.supplyAsync {
-            action()
-        }
+        return CompletableFuture.supplyAsync { action() }
     }
 
     /**
@@ -1417,7 +1367,10 @@ class SnorlaxLOG(
             404 -> throw NotFoundException("Resource not found: $context")
             400 -> throw InvalidInputError("Invalid input for: $context")
             in 500..599 -> throw ServerError("Server error while $context")
-            else -> throw SnorlaxLOGException("Unexpected error (${response.status.value}) while $context")
+            else ->
+                    throw SnorlaxLOGException(
+                            "Unexpected error (${response.status.value}) while $context"
+                    )
         }
     }
 }
