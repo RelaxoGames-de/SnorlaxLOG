@@ -3,6 +3,7 @@ package de.relaxogames.snorlaxLOG
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -306,6 +307,11 @@ class SnorlaxLOG(
     @OptIn(ExperimentalSerializationApi::class)
     private val client =
             HttpClient(CIO) {
+                install(HttpTimeout) {
+                    requestTimeoutMillis = 10_000
+                    connectTimeoutMillis = 5_000
+                    socketTimeoutMillis = 5_000
+                }
                 install(ContentNegotiation) {
                     json(
                             Json {
@@ -685,6 +691,10 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun updateUserPassword(name: String, newPassword: String) {
+        if (name.isBlank() || newPassword.isBlank()) {
+            throw InvalidInputError("User name and/or new password cannot be blank")
+        }
+
         val url = config.url + "/admin/users/$name/password"
         try {
             val response = client.put(url) { setBody(newPassword) }
@@ -736,6 +746,10 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getUser(name: String): RGDBUser {
+        if (name.isBlank()) {
+            throw InvalidInputError("User name cannot be blank")
+        }
+
         val url = config.url + "/admin/users/$name"
         try {
             val response = client.get(url)
@@ -981,7 +995,7 @@ class SnorlaxLOG(
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getSharedEntry(dbName: String, key: String): String {
         if (dbName.isBlank() || key.isBlank()) {
-            throw InvalidInputError("Database name and key cannot be blank")
+            throw InvalidInputError("Database name and/or key cannot be blank")
         }
 
         val url = config.url + "/storage/shared/$dbName/$key"
@@ -1034,6 +1048,10 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun setSharedEntry(dbName: String, key: String, value: String) {
+        if (dbName.isBlank() || key.isBlank()) {
+            throw InvalidInputError("Database name and/or key cannot be blank")
+        }
+
         val url = config.url + "/storage/shared/$dbName/$key"
         val response = client.post(url) { setBody(value) }
         handleResponse(response, "setting shared entry '$key' in '$dbName'")
@@ -1073,6 +1091,10 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
+        if (dbName.isBlank()) {
+            throw InvalidInputError("Database name cannot be blank")
+        }
+
         val url = config.url + "/storage/private/$dbName"
         try {
             val response = client.get(url)
@@ -1122,6 +1144,10 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun getPrivateEntry(dbName: String, key: String): String {
+        if (dbName.isBlank() || key.isBlank()) {
+            throw InvalidInputError("Database name and/or key cannot be blank")
+        }
+
         val url = config.url + "/storage/private/$dbName/$key"
         try {
             val response = client.get(url)
@@ -1172,6 +1198,10 @@ class SnorlaxLOG(
      */
     @Suppress("MemberVisibilityCanBePrivate")
     suspend fun setPrivateEntry(dbName: String, key: String, value: String) {
+        if (dbName.isEmpty() || key.isEmpty() || value.isEmpty()) {
+            throw IllegalArgumentException("dbName, key and value must not be empty")
+        }
+
         val url = config.url + "/storage/private/$dbName/$key"
         val response = client.post(url) { setBody(value) }
         handleResponse(response, "setting private entry '$key' in '$dbName'")
