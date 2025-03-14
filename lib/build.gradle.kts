@@ -50,7 +50,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "de.relaxogames"
             artifactId = "snorlax-log"
-            version = "1.8-1"
+            version = "1.8-2"
 
             from(components["java"])
 
