@@ -1,5 +1,16 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
+$dokka.location:de.relaxogames.snorlaxLOG.samples////PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/index.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/index.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/asyncFunctionToSyncSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/async-function-to-sync-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/createUserSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/create-user-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/getPrivateTableSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/get-private-table-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/getSelfSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/get-self-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/getSharedTableSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/get-shared-table-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/getStoragesSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/get-storages-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/getUsersSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/get-users-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/kotlinFunctionToJavaFutureSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/kotlin-function-to-java-future-sample.html
+$dokka.location:de.relaxogames.snorlaxLOG.samples/SnorlaxLOGSamples/testConnectionSample/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG.samples/-snorlax-l-o-g-samples/test-connection-sample.html
 $dokka.location:de.relaxogames.snorlaxLOG////PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/InvalidInputError///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-invalid-input-error/index.html
 $dokka.location:de.relaxogames.snorlaxLOG/InvalidInputError/InvalidInputError/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-invalid-input-error/-invalid-input-error.html
@@ -36,6 +47,7 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG///PointingToDeclaration/-s
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/SnorlaxLOG/#de.relaxogames.snorlaxLOG.SnorlaxLOGConfig#kotlin.Boolean/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/-snorlax-l-o-g.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/asyncFunctionToSync/#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/async-function-to-sync.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/changePassword/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/change-password.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/close/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/close.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/createStorage/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/create-storage.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/createUser/#de.relaxogames.snorlaxLOG.RGDBUser/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/create-user.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/deleteUser/#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/delete-user.html
@@ -79,8 +91,12 @@ $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/testConnection/#/PointingTo
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/updateUserPassword/#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/update-user-password.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOG/updateUserRole/#kotlin.String#de.relaxogames.snorlaxLOG.RGDBRole/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g/update-user-role.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/index.html
-$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/SnorlaxLOGConfig/#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/-snorlax-l-o-g-config.html
-$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/password/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/password.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/SnorlaxLOGConfig/#kotlin.String#kotlin.String#kotlin.String#kotlin.Long#kotlin.Long#kotlin.Long/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/-snorlax-l-o-g-config.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/connectTimeoutMillis/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/connect-timeout-millis.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/getPassword/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/get-password.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/requestTimeoutMillis/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/request-timeout-millis.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/socketTimeoutMillis/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/socket-timeout-millis.html
+$dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/toString/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/to-string.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/url/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/url.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGConfig/username/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-config/username.html
 $dokka.location:de.relaxogames.snorlaxLOG/SnorlaxLOGException///PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-snorlax-l-o-g-exception/index.html
@@ -100,3 +116,4 @@ $dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/count/#/PointingToDeclar
 $dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/creatorCount/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/creator-count.html
 $dokka.location:de.relaxogames.snorlaxLOG/UserStatistic/userCount/#/PointingToDeclaration/-snorlax-l-o-g -documentation/de.relaxogames.snorlaxLOG/-user-statistic/user-count.html
 de.relaxogames.snorlaxLOG
+de.relaxogames.snorlaxLOG.samples
