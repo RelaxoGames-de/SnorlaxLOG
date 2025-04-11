@@ -1,8 +1,8 @@
 [versions]
-ktor = "3.1.1"
-logback = "1.5.17"
+ktor = "3.1.2"
+logback = "1.5.18"
 kotlinx_io = "0.7.0"
-kotlin = "2.1.10"
+kotlin = "2.1.20"
 dokka = "2.0.0"
 
 [libraries]
