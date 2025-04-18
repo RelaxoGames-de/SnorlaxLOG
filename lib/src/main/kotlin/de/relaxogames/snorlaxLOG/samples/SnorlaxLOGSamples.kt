@@ -175,42 +175,4 @@ object SnorlaxLOGSamples {
             }
         }
     }
-
-    /**
-     * Sample for using asyncFunctionToSync
-     */
-    fun asyncFunctionToSyncSample() {
-        val config = SnorlaxLOGConfig("https://rgdb.example.com", "username", "password")
-        val client = SnorlaxLOG(config)
-
-        // Instead of this:
-        val syncGetUsers = client.asyncFunctionToSync { client.getUsers() }
-        val users = syncGetUsers()
-
-        // Use this:
-        val users2 = client.syncGetUsers()
-
-        // Or implement your own wrapper with proper context:
-        fun <T> withMyContext(block: suspend () -> T): T {
-            return runBlocking(sampleDispatcher) { block() }
-        }
-    }
-
-    /**
-     * Sample for using kotlinFunctionToJavaFuture
-     */
-    fun kotlinFunctionToJavaFutureSample() {
-        val config = SnorlaxLOGConfig("https://rgdb.example.com", "username", "password")
-        val client = SnorlaxLOG(config)
-
-        // Instead of this:
-        val future = client.kotlinFunctionToJavaFuture { client.syncGetUsers() }
-
-        // Use this directly:
-        val future2 = CompletableFuture.supplyAsync { client.syncGetUsers() }
-
-        // Or use Kotlin's coroutine integration:
-        val deferred = GlobalScope.async { client.getUsers() }
-        // Note: In newer Kotlin versions, you would use future conversion utilities
-    }
 }

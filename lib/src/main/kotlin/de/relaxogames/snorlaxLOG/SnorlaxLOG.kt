@@ -47,7 +47,7 @@ import java.util.concurrent.CompletableFuture
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 @Serializable
-data class SnorlaxLOGConfig(
+data class SnorlaxLOGConfig @JvmOverloads constructor(
     val url: String, 
     val username: String, 
     private val _password: String,
@@ -157,7 +157,7 @@ enum class RGDBRole(private val value: String) {
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 @Serializable
-data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
+data class RGDBStorageObject @JvmOverloads constructor(val key: String, val value: String, val isPrivate: Boolean = false)
 
 /**
  * Statistics returned by the Server, that are meant to give the user an overview on different
@@ -219,7 +219,7 @@ data class UserStatistic(
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-open class SnorlaxLOGException(message: String, cause: Throwable? = null) :
+open class SnorlaxLOGException @JvmOverloads constructor(message: String, cause: Throwable? = null) :
         Exception(message, cause)
 
 /**
@@ -233,7 +233,7 @@ open class SnorlaxLOGException(message: String, cause: Throwable? = null) :
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-class UnauthorizedError(message: String = "Unauthorized") : SnorlaxLOGException(message)
+class UnauthorizedError @JvmOverloads constructor(message: String = "Unauthorized") : SnorlaxLOGException(message)
 
 /**
  * Thrown when a resource is not found (404)
@@ -273,7 +273,7 @@ class ServerError(message: String) : SnorlaxLOGException(message)
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-class NetworkError(message: String, cause: Throwable? = null) : SnorlaxLOGException(message, cause)
+class NetworkError @JvmOverloads constructor(message: String, cause: Throwable? = null) : SnorlaxLOGException(message, cause)
 
 /**
  * Thrown when a request fails due to invalid input
@@ -308,7 +308,7 @@ annotation class UnstableApi(@Suppress("UNUSED") val message: String = "This API
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-class SnorlaxLOG(
+class SnorlaxLOG @JvmOverloads constructor(
         /**
          * The configuration for the client
          *
@@ -364,8 +364,8 @@ class SnorlaxLOG(
      * Tests the connection to the RGDB Backend
      *
      * @return Whether the connection was successful
-     * @throws UnauthorizedError If the credentials are invalid
-     * @throws NetworkError If there was a network issue while testing the connection
+     * @throws UnauthorizedError If the user was not found
+     * @throws NetworkError If there was a network issue while getting the user
      * @throws SnorlaxLOGException If an unexpected error occurs
      *
      * @since 1.0
