@@ -47,7 +47,7 @@ import java.util.concurrent.CompletableFuture
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 @Serializable
-data class SnorlaxLOGConfig(
+data class SnorlaxLOGConfig @JvmOverloads constructor(
     val url: String, 
     val username: String, 
     private val _password: String,
@@ -157,7 +157,7 @@ enum class RGDBRole(private val value: String) {
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
 @Serializable
-data class RGDBStorageObject(val key: String, val value: String, val isPrivate: Boolean = false)
+data class RGDBStorageObject @JvmOverloads constructor(val key: String, val value: String, val isPrivate: Boolean = false)
 
 /**
  * Statistics returned by the Server, that are meant to give the user an overview on different
@@ -219,7 +219,7 @@ data class UserStatistic(
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-open class SnorlaxLOGException(message: String, cause: Throwable? = null) :
+open class SnorlaxLOGException @JvmOverloads constructor(message: String, cause: Throwable? = null) :
         Exception(message, cause)
 
 /**
@@ -233,7 +233,7 @@ open class SnorlaxLOGException(message: String, cause: Throwable? = null) :
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-class UnauthorizedError(message: String = "Unauthorized") : SnorlaxLOGException(message)
+class UnauthorizedError @JvmOverloads constructor(message: String = "Unauthorized") : SnorlaxLOGException(message)
 
 /**
  * Thrown when a resource is not found (404)
@@ -273,7 +273,7 @@ class ServerError(message: String) : SnorlaxLOGException(message)
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-class NetworkError(message: String, cause: Throwable? = null) : SnorlaxLOGException(message, cause)
+class NetworkError @JvmOverloads constructor(message: String, cause: Throwable? = null) : SnorlaxLOGException(message, cause)
 
 /**
  * Thrown when a request fails due to invalid input
@@ -308,7 +308,7 @@ annotation class UnstableApi(@Suppress("UNUSED") val message: String = "This API
  * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
  * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
  */
-class SnorlaxLOG(
+class SnorlaxLOG @JvmOverloads constructor(
         /**
          * The configuration for the client
          *
@@ -364,8 +364,8 @@ class SnorlaxLOG(
      * Tests the connection to the RGDB Backend
      *
      * @return Whether the connection was successful
-     * @throws UnauthorizedError If the credentials are invalid
-     * @throws NetworkError If there was a network issue while testing the connection
+     * @throws UnauthorizedError If the user was not found
+     * @throws NetworkError If there was a network issue while getting the user
      * @throws SnorlaxLOGException If an unexpected error occurs
      *
      * @since 1.0
@@ -389,27 +389,6 @@ class SnorlaxLOG(
                 else -> throw SnorlaxLOGException("Unexpected error while testing connection", e)
             }
         }
-    }
-
-    /**
-     * Tests the connection to the RGDB Backend synchronously
-     *
-     * @return Whether the connection was successful
-     * @throws UnauthorizedError If the connection was not successful
-     *
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { testConnection() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncTestConnection(): Boolean {
-        return runBlocking { testConnection() }
     }
 
     /**
@@ -445,28 +424,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets the user the snorlaxLOG client is authenticated as synchronously (User only)
-     *
-     * @return The self user
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBUser
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getSelf() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetSelf(): RGDBUser {
-        return runBlocking { getSelf() }
-    }
-
-    /**
      * Changes the password of the user the snorlaxLOG client is authenticated as (User only)
      *
      * @param newPassword The new password
@@ -495,28 +452,6 @@ class SnorlaxLOG(
                 else -> throw SnorlaxLOGException("Unexpected error while changing password", e)
             }
         }
-    }
-
-    /**
-     * Changes the password of the user the snorlaxLOG client is authenticated as synchronously
-     * (User only)
-     *
-     * @param newPassword The new password
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { changePassword(newPassword) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncChangePassword(newPassword: String) {
-        return runBlocking { changePassword(newPassword) }
     }
 
     /**
@@ -549,28 +484,6 @@ class SnorlaxLOG(
                 else -> throw SnorlaxLOGException("Unexpected error while getting users", e)
             }
         }
-    }
-
-    /**
-     * Gets all users synchronously (Admin only)
-     *
-     * @return A list of all users
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBUser
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getUsers() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetUsers(): List<RGDBUser> {
-        return runBlocking { getUsers() }
     }
 
     /**
@@ -615,28 +528,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Creates a user synchronously (Admin only)
-     *
-     * @param user The user to create
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBUser
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { createUser(user) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncCreateUser(user: RGDBUser) {
-        return runBlocking { createUser(user) }
-    }
-
-    /**
      * Deletes a user (Admin only)
      *
      * @param name The name of the user to delete
@@ -665,27 +556,6 @@ class SnorlaxLOG(
                 else -> throw SnorlaxLOGException("Unexpected error while deleting user", e)
             }
         }
-    }
-
-    /**
-     * Deletes a user synchronously (Admin only)
-     *
-     * @param name The name of the user to delete
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { deleteUser(name) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncDeleteUser(name: String) {
-        return runBlocking { deleteUser(name) }
     }
 
     /**
@@ -727,29 +597,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Updates the role of a user synchronously (Admin only)
-     *
-     * @param name The name of the user to update
-     * @param role The new role
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBRole
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { updateUserRole(name, role) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncUpdateUserRole(name: String, role: RGDBRole) {
-        return runBlocking { updateUserRole(name, role) }
-    }
-
-    /**
      * Updates the password of a user (Admin only)
      *
      * @param name The name of the user to update
@@ -787,29 +634,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Updates the password of a user synchronously (Admin only)
-     *
-     * @param name The name of the user to update
-     * @param newPassword The new password
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBUser
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { updateUserPassword(name, newPassword) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncUpdateUserPassword(name: String, newPassword: String) {
-        return runBlocking { updateUserPassword(name, newPassword) }
-    }
-
-    /**
      * Gets a user (Admin only)
      *
      * @param name The name of the user to get
@@ -841,29 +665,6 @@ class SnorlaxLOG(
                 else -> throw SnorlaxLOGException("Unexpected error while getting user", e)
             }
         }
-    }
-
-    /**
-     * Gets a user synchronously (Admin only)
-     *
-     * @param name The name of the user to get
-     * @return The user
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBUser
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getUser(name) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetUser(name: String): RGDBUser {
-        return runBlocking { getUser(name) }
     }
 
     // Creator only
@@ -905,28 +706,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Creates a storage synchronously (Creator only)
-     *
-     * @param name The name of the storage to create
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBStorage
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { createStorage(name) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncCreateStorage(name: String) {
-        return runBlocking { createStorage(name) }
-    }
-
-    /**
      * Gets a backup of all storages (Creator only)
      *
      * @return A temporary file containing the backup
@@ -949,28 +728,6 @@ class SnorlaxLOG(
         }
         tempFile.deleteOnExit()
         return tempFile
-    }
-
-    /**
-     * Gets a backup of all storages synchronously (Creator only)
-     *
-     * @return A temporary file containing the backup
-     * @throws NetworkError If there was a network issue while getting the backup
-     *
-     * @since 1.9
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @UnstableApi
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getBackup() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetBackup(): File {
-        return runBlocking { getBackup() }
     }
 
     // USER ONLY
@@ -1005,26 +762,6 @@ class SnorlaxLOG(
                 else -> throw SnorlaxLOGException("Unexpected error while getting storages", e)
             }
         }
-    }
-
-    /**
-     * Gets all storage names synchronously (User only)
-     *
-     * @return A list of all the names (in form of RGDB Storages)
-     * @throws UnauthorizedError If the user was not found
-     * @throws Exception If there was another unidentified Error
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getStorages() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetStorages(): List<RGDBStorage> {
-        return runBlocking { getStorages() }
     }
 
     /**
@@ -1068,29 +805,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a shared table synchronously (User only)
-     *
-     * @param dbName The name of the storage to get
-     * @return The shared table
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBStorageObject
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getSharedTable(dbName) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetSharedTable(dbName: String): List<RGDBStorageObject> {
-        return runBlocking { getSharedTable(dbName) }
-    }
-
-    /**
      * Gets a shared entry (User only)
      *
      * @param dbName The name of the storage to get
@@ -1126,30 +840,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a shared entry synchronously (User only)
-     *
-     * @param dbName The name of the storage to get
-     * @param key The key of the entry to get
-     * @return The shared entry
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBStorageObject
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getSharedEntry(dbName, key) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetSharedEntry(dbName: String, key: String): String {
-        return runBlocking { getSharedEntry(dbName, key) }
-    }
-
-    /**
      * Sets a shared entry (User only)
      *
      * @param dbName The name of the storage to set
@@ -1172,30 +862,6 @@ class SnorlaxLOG(
         val url = config.url + "/storage/shared/$dbName/$key"
         val response = client.post(url) { setBody(value) }
         handleResponse(response, "setting shared entry '$key' in '$dbName'")
-    }
-
-    /**
-     * Sets a shared entry synchronously (User only)
-     *
-     * @param dbName The name of the storage to set
-     * @param key The key of the entry to set
-     * @param value The value of the entry to set
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBStorageObject
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { setSharedEntry(dbName, key, value) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncSetSharedEntry(dbName: String, key: String, value: String) {
-        return runBlocking { setSharedEntry(dbName, key, value) }
     }
 
     /**
@@ -1239,29 +905,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a private table synchronously (User only)
-     *
-     * @param dbName The name of the storage to get
-     * @return The private table
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBStorageObject
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getPrivateTable(dbName) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetPrivateTable(dbName: String): List<RGDBStorageObject> {
-        return runBlocking { getPrivateTable(dbName) }
-    }
-
-    /**
      * Gets a private entry (User only)
      *
      * @param dbName The name of the storage to get
@@ -1297,30 +940,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets a private entry synchronously (User only)
-     *
-     * @param dbName The name of the storage to get
-     * @param key The key of the entry to get
-     * @return The private entry
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBStorageObject
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getPrivateEntry(dbName, key) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetPrivateEntry(dbName: String, key: String): String {
-        return runBlocking { getPrivateEntry(dbName, key) }
-    }
-
-    /**
      * Sets a private entry (User only)
      *
      * @param dbName The name of the storage to set
@@ -1343,30 +962,6 @@ class SnorlaxLOG(
         val url = config.url + "/storage/private/$dbName/$key"
         val response = client.post(url) { setBody(value) }
         handleResponse(response, "setting private entry '$key' in '$dbName'")
-    }
-
-    /**
-     * Sets a private entry synchronously (User only)
-     *
-     * @param dbName The name of the storage to set
-     * @param key The key of the entry to set
-     * @param value The value of the entry to set
-     * @throws UnauthorizedError If the user was not found
-     *
-     * @see RGDBStorageObject
-     * @since 1.2
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { setPrivateEntry(dbName, key, value) }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncSetPrivateEntry(dbName: String, key: String, value: String) {
-        return runBlocking { setPrivateEntry(dbName, key, value) }
     }
 
     // Statistic Endpoints
@@ -1392,29 +987,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets the statistics of the current RGDB Instance in a blocking (synchronous) way regarding
-     * Storage, such as Filesystem-size etc. (User only)
-     *
-     * @return The Storage Statistics of the current RGDB Server
-     * @throws Exception If the instance can't retrieve the info from the Server
-     *
-     * @see StorageStatistic
-     * @since 1.6
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getStorageStatistics() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetStorageStatistics(): StorageStatistic {
-        return runBlocking { getStorageStatistics() }
-    }
-
-    /**
      * Gets the statistics of the current RGDB Instance the info regarding Users, such as currently
      * existing etc. (User only)
      *
@@ -1435,29 +1007,6 @@ class SnorlaxLOG(
     }
 
     /**
-     * Gets the statistics of the current RGDB Instance in a blocking (synchronous) way, the
-     * statistics are regarding Users, such as currently existing etc. (User only)
-     *
-     * @return The User Statistics of the current RGDB Server
-     * @throws Exception If the instance can't retrieve the info from the Server
-     *
-     * @see UserStatistic
-     * @since 1.6
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getUserStatistics() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetUserStatistics(): UserStatistic {
-        return runBlocking { getUserStatistics() }
-    }
-
-    /**
      * Gets the statistics of the current RGDB Instance the info regarding the Server itself, such
      * as the UpTime (User only)
      *
@@ -1475,79 +1024,6 @@ class SnorlaxLOG(
         val url = config.url + "/statistic/server"
         val response = client.get(url)
         return safeBodyParse<ServerStatistics>(response, "getting server statistics")
-    }
-
-    /**
-     * Gets the statistics of the current RGDB Instance in a blocking (synchronous) way, the
-     * statistics are regarding the Server itself, such as the UpTime (User only)
-     *
-     * @return The User Statistics of the current RGDB Server
-     * @throws Exception If the instance can't retrieve the info from the Server
-     *
-     * @see ServerStatistics
-     * @since 1.7
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     */
-    @Suppress("UNUSED")
-    @Deprecated(
-        "This sync method will be replaced with a centralized approach in a future version. Use the async version with your own coroutine context instead.",
-        ReplaceWith("runBlocking { getServerStatistics() }"),
-        DeprecationLevel.WARNING
-    )
-    fun syncGetServerStatistics(): ServerStatistics {
-        return runBlocking { getServerStatistics() }
-    }
-
-    /**
-     * Converts a suspend function to a sync function
-     *
-     * @param function The suspend function to convert
-     * @return The sync function
-     *
-     * @see runBlocking
-     * @since 1.2
-     * 
-     * @deprecated Use the specific sync methods instead or implement your own wrapper with proper context
-     *             This will be removed in version 2.0
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     * 
-     * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.asyncFunctionToSyncSample
-     */
-    @Suppress("UNUSED")
-    @Deprecated("Use the specific sync methods instead or implement your own wrapper with proper context", 
-                ReplaceWith("runBlocking { function() }"), 
-                DeprecationLevel.WARNING)
-    fun asyncFunctionToSync(function: suspend () -> Unit): () -> Unit {
-        return { runBlocking { function() } }
-    }
-
-    /**
-     * Converts a kotlin function to a java future
-     *
-     * @param action The kotlin function to convert
-     * @return The java future
-     *
-     * @see CompletableFuture
-     * @since 1.2
-     * 
-     * @deprecated Use Java's CompletableFuture directly or Kotlin's coroutine integration with Java concurrency
-     *             This will be removed in version 2.0
-     *
-     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
-     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
-     * 
-     * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.kotlinFunctionToJavaFutureSample
-     */
-    @Suppress("UNUSED")
-    @Deprecated("Use Java's CompletableFuture directly or Kotlin's coroutine integration with Java concurrency",
-                ReplaceWith("CompletableFuture.supplyAsync { action() }"),
-                DeprecationLevel.WARNING)
-    fun <T> kotlinFunctionToJavaFuture(action: () -> T): CompletableFuture<T> {
-        return CompletableFuture.supplyAsync { action() }
     }
 
     /**
