@@ -174,10 +174,10 @@ data class RGDBStorageObject @JvmOverloads constructor(val key: String, val valu
  * Statistics returned by the Server that are meant to give the user an overview on different
  * important factors such as the number of Users.
  *
- * @param count The amount of Users currently in the System
- * @param adminCount The amount of Admins in the System
- * @param creatorCount The amount of Creators in the System
- * @param userCount The amount of Users (non Creator/Admins) in the System
+ * @param count The number of Users currently in the System
+ * @param adminCount The number of Admins in the System
+ * @param creatorCount The number of Creators in the System
+ * @param userCount The number of Users (non Creator/Admins) in the System
  *
  * @since 1.6
  *
@@ -193,7 +193,7 @@ data class UserStatistic(
 )
 
 /**
- * Statistics returned by the Server, that are meant to give the user an overview on different
+ * Statistics returned by the Server that are meant to give the user an overview on different
  * important factors such as the uptime of the server.
  *
  * @param upTime The uptime of the server in milliseconds
@@ -286,7 +286,7 @@ class NetworkError @JvmOverloads constructor(message: String, cause: Throwable? 
 class InvalidInputError(message: String) : SnorlaxLOGException(message)
 
 /**
- * Indicates that the annotated function is unstable and in alpha stage. Use with caution as the API
+ * Indicates that the annotated function is unstable and in the alpha stage. Use with caution as the API
  * may change in the future.
  */
 @Target(AnnotationTarget.FUNCTION)
@@ -373,7 +373,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.testConnectionSample
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun testConnection(): Boolean {
         val url = config.url + "/ping"
         try {
@@ -392,7 +392,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     /**
      * Gets the user the snorlaxLOG client is authenticated as (User only)
      *
-     * @return The self user
+     * @return The self-user
      * @throws UnauthorizedError If the credentials are invalid or the user doesn't have sufficient permissions
      * @throws NetworkError If there was a network issue while getting the user
      * @throws SnorlaxLOGException If an unexpected error occurs
@@ -406,7 +406,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.getSelfSample
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getSelf(): RGDBUser {
         val url = config.url + "/user/self"
         try {
@@ -436,7 +436,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun changePassword(newPassword: String) {
         if (newPassword.isBlank()) {
             throw InvalidInputError("New password cannot be blank")
@@ -473,7 +473,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.getUsersSample
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getUsers(): List<RGDBUser> {
         val url = config.url + "/admin/users"
         try {
@@ -507,7 +507,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.createUserSample
      */
     @Throws(UnauthorizedError::class, InvalidInputError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun createUser(user: RGDBUser) {
         if (user.name.isBlank() || user.password.isBlank()) {
             throw InvalidInputError("User name and password cannot be blank")
@@ -546,7 +546,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun deleteUser(name: String) {
         if (name.isBlank()) {
             throw InvalidInputError("User name cannot be blank")
@@ -624,7 +624,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun updateUserPassword(name: String, newPassword: String) {
         if (name.isBlank() || newPassword.isBlank()) {
             throw InvalidInputError("User name and/or new password cannot be blank")
@@ -664,7 +664,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getUser(name: String): RGDBUser {
         if (name.isBlank()) {
             throw InvalidInputError("User name cannot be blank")
@@ -701,7 +701,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, InvalidInputError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun createStorage(name: String) {
         if (name.isBlank()) {
             throw InvalidInputError("Storage name cannot be blank")
@@ -741,7 +741,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     @UnstableApi
     fun getBackup(): File {
         val url = config.url + "/creator/storages/backup"
@@ -759,7 +759,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     /**
      * Gets all storage names (User only)
      *
-     * @return A list of all the names (in form of RGDB Storages)
+     * @return A list of all the names (in the form of RGDB Storages)
      * @throws UnauthorizedError If the credentials are invalid or the user doesn't have sufficient permissions
      * @throws NetworkError If there was a network issue while getting the storages
      * @throws SnorlaxLOGException If an unexpected error occurs
@@ -773,7 +773,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.getStoragesSample
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getStorages(): List<RGDBStorage> {
         val url = config.url + "/storage"
         try {
@@ -810,7 +810,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.getSharedTableSample
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getSharedTable(dbName: String): List<RGDBStorageObject> {
         if (dbName.isBlank()) {
             throw InvalidInputError("Database name cannot be blank")
@@ -848,7 +848,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getSharedEntry(dbName: String, key: String): String {
         if (dbName.isBlank() || key.isBlank()) {
             throw InvalidInputError("Database name and/or key cannot be blank")
@@ -886,7 +886,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun setSharedEntry(dbName: String, key: String, value: String) {
         if (dbName.isBlank() || key.isBlank()) {
             throw InvalidInputError("Database name and/or key cannot be blank")
@@ -917,7 +917,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @sample de.relaxogames.snorlaxLOG.samples.SnorlaxLOGSamples.getPrivateTableSample
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
         if (dbName.isBlank()) {
             throw InvalidInputError("Database name cannot be blank")
@@ -955,7 +955,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getPrivateEntry(dbName: String, key: String): String {
         if (dbName.isBlank() || key.isBlank()) {
             throw InvalidInputError("Database name and/or key cannot be blank")
@@ -993,7 +993,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun setPrivateEntry(dbName: String, key: String, value: String) {
         if (dbName.isEmpty() || key.isEmpty() || value.isEmpty()) {
             throw IllegalArgumentException("dbName, key and value must not be empty")
@@ -1021,7 +1021,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getStorageStatistics(): StorageStatistic {
         val url = config.url + "/statistic/storages"
         val response = runBlocking { client.get(url) }
@@ -1045,7 +1045,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getUserStatistics(): UserStatistic {
         val url = config.url + "/statistic/user"
         val response = runBlocking { client.get(url) }
@@ -1068,7 +1068,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("UNUSED")
     fun getServerStatistics(): ServerStatistics {
         val url = config.url + "/statistic/server"
         val response = runBlocking { client.get(url) }
