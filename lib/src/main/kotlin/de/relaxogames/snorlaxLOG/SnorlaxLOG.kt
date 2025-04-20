@@ -15,9 +15,7 @@ import io.ktor.serialization.kotlinx.cbor.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.serialization.kotlinx.xml.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.cbor.Cbor
@@ -28,7 +26,6 @@ import nl.adaptivity.xmlutil.serialization.XML
 import java.io.Closeable
 import java.io.File
 import java.io.IOException
-import java.util.concurrent.CompletableFuture
 
 /**
  * Configuration for the [SnorlaxLOG] client
@@ -160,10 +157,10 @@ enum class RGDBRole(private val value: String) {
 data class RGDBStorageObject @JvmOverloads constructor(val key: String, val value: String, val isPrivate: Boolean = false)
 
 /**
- * Statistics returned by the Server, that are meant to give the user an overview on different
+ * Statistics returned by the Server that are meant to give the user an overview on different
  * important factors such as the Filesystem-Size.
  *
- * @param count The amount of user Storages currently in use
+ * @param count The number of user Storages currently in use
  * @param size The Filesystem-Size in Bytes
  *
  * @since 1.6
@@ -174,8 +171,8 @@ data class RGDBStorageObject @JvmOverloads constructor(val key: String, val valu
 @Serializable data class StorageStatistic(var count: Int, var size: Long)
 
 /**
- * Statistics returned by the Server, that are meant to give the user an overview on different
- * important factors such as the amount of Users.
+ * Statistics returned by the Server that are meant to give the user an overview on different
+ * important factors such as the number of Users.
  *
  * @param count The amount of Users currently in the System
  * @param adminCount The amount of Admins in the System
@@ -377,10 +374,10 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun testConnection(): Boolean {
+    fun testConnection(): Boolean {
         val url = config.url + "/ping"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             return safeBodyParse<String>(response, "testing connection") == "pong"
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while testing connection", e)
@@ -410,10 +407,10 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getSelf(): RGDBUser {
+    fun getSelf(): RGDBUser {
         val url = config.url + "/user/self"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             return safeBodyParse<RGDBUser>(response, "getting self user")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting self user", e)
@@ -440,14 +437,14 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun changePassword(newPassword: String) {
+    fun changePassword(newPassword: String) {
         if (newPassword.isBlank()) {
             throw InvalidInputError("New password cannot be blank")
         }
 
         val url = config.url + "/user/self/password"
         try {
-            val response = client.put(url) { setBody(newPassword) }
+            val response = runBlocking { client.put(url) { setBody(newPassword) } }
             handleResponse(response, "changing password")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while changing password", e)
@@ -477,10 +474,10 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getUsers(): List<RGDBUser> {
+    fun getUsers(): List<RGDBUser> {
         val url = config.url + "/admin/users"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             return safeBodyParse<List<RGDBUser>>(response, "getting users list")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting users", e)
@@ -511,18 +508,19 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, InvalidInputError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun createUser(user: RGDBUser) {
+    fun createUser(user: RGDBUser) {
         if (user.name.isBlank() || user.password.isBlank()) {
             throw InvalidInputError("User name and password cannot be blank")
         }
 
         val url = config.url + "/admin/users"
         try {
-            val response =
+            val response = runBlocking {
                     client.post(url) {
                         contentType(ContentType.Application.Json)
                         setBody(user)
                     }
+            }
             handleResponse(response, "creating user '${user.name}'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while creating user", e)
@@ -549,14 +547,14 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun deleteUser(name: String) {
+    fun deleteUser(name: String) {
         if (name.isBlank()) {
             throw InvalidInputError("User name cannot be blank")
         }
 
         val url = config.url + "/admin/users/$name"
         try {
-            val response = client.delete(url)
+            val response = runBlocking { client.delete(url) }
             handleResponse(response, "deleting user '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while deleting user", e)
@@ -586,18 +584,19 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate", "UNUSED")
-    suspend fun updateUserRole(name: String, role: RGDBRole) {
+    fun updateUserRole(name: String, role: RGDBRole) {
         if (name.isBlank()) {
             throw InvalidInputError("User name cannot be blank")
         }
 
         val url = config.url + "/admin/users/$name/role"
         try {
-            val response =
+            val response = runBlocking {
                     client.put(url) {
                         contentType(ContentType.Application.Json)
                         setBody(role)
                     }
+            }
             handleResponse(response, "updating role for user '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while updating user role", e)
@@ -626,14 +625,14 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun updateUserPassword(name: String, newPassword: String) {
+    fun updateUserPassword(name: String, newPassword: String) {
         if (name.isBlank() || newPassword.isBlank()) {
             throw InvalidInputError("User name and/or new password cannot be blank")
         }
 
         val url = config.url + "/admin/users/$name/password"
         try {
-            val response = client.put(url) { setBody(newPassword) }
+            val response = runBlocking { client.put(url) { setBody(newPassword) } }
             handleResponse(response, "updating password for user '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while updating user password", e)
@@ -666,16 +665,16 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getUser(name: String): RGDBUser {
+    fun getUser(name: String): RGDBUser {
         if (name.isBlank()) {
             throw InvalidInputError("User name cannot be blank")
         }
 
         val url = config.url + "/admin/users/$name"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             handleResponse(response, "getting user '$name'")
-            return response.body<RGDBUser>()
+            return runBlocking { response.body<RGDBUser>() }
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting user", e)
         } catch (e: Exception) {
@@ -703,7 +702,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, InvalidInputError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun createStorage(name: String) {
+    fun createStorage(name: String) {
         if (name.isBlank()) {
             throw InvalidInputError("Storage name cannot be blank")
         }
@@ -711,11 +710,12 @@ class SnorlaxLOG @JvmOverloads constructor(
         val url = config.url + "/creator/storages"
         val storage = RGDBStorage(name)
         try {
-            val response =
+            val response = runBlocking {
                     client.post(url) {
                         contentType(ContentType.Application.Json)
                         setBody(storage)
                     }
+            }
             handleResponse(response, "creating storage '$name'")
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while creating storage", e)
@@ -743,9 +743,9 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
     @UnstableApi
-    suspend fun getBackup(): File {
+    fun getBackup(): File {
         val url = config.url + "/creator/storages/backup"
-        val tempFile = withContext(Dispatchers.IO) { File.createTempFile("backup", ".zip") }
+        val tempFile = runBlocking { File.createTempFile("backup", ".zip") }
         runBlocking {
             val response = client.get(url)
             handleResponse(response, "getting backup")
@@ -774,12 +774,12 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getStorages(): List<RGDBStorage> {
+    fun getStorages(): List<RGDBStorage> {
         val url = config.url + "/storage"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             handleResponse(response, "getting storage list")
-            return response.body<List<RGDBStorage>>()
+            return runBlocking { response.body<List<RGDBStorage>>() }
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting storages", e)
         } catch (e: Exception) {
@@ -811,16 +811,16 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getSharedTable(dbName: String): List<RGDBStorageObject> {
+    fun getSharedTable(dbName: String): List<RGDBStorageObject> {
         if (dbName.isBlank()) {
             throw InvalidInputError("Database name cannot be blank")
         }
 
         val url = config.url + "/storage/shared/$dbName"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             handleResponse(response, "getting shared table for '$dbName'")
-            return response.body<List<RGDBStorageObject>>()
+            return runBlocking { response.body<List<RGDBStorageObject>>() }
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting shared table", e)
         } catch (e: Exception) {
@@ -849,16 +849,16 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getSharedEntry(dbName: String, key: String): String {
+    fun getSharedEntry(dbName: String, key: String): String {
         if (dbName.isBlank() || key.isBlank()) {
             throw InvalidInputError("Database name and/or key cannot be blank")
         }
 
         val url = config.url + "/storage/shared/$dbName/$key"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             handleResponse(response, "getting shared entry '$key' from '$dbName'")
-            return response.body<String>()
+            return runBlocking { response.body<String>() }
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting shared entry", e)
         } catch (e: Exception) {
@@ -887,13 +887,13 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun setSharedEntry(dbName: String, key: String, value: String) {
+    fun setSharedEntry(dbName: String, key: String, value: String) {
         if (dbName.isBlank() || key.isBlank()) {
             throw InvalidInputError("Database name and/or key cannot be blank")
         }
 
         val url = config.url + "/storage/shared/$dbName/$key"
-        val response = client.post(url) { setBody(value) }
+        val response = runBlocking { client.post(url) { setBody(value) } }
         handleResponse(response, "setting shared entry '$key' in '$dbName'")
     }
 
@@ -918,16 +918,16 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
+    fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
         if (dbName.isBlank()) {
             throw InvalidInputError("Database name cannot be blank")
         }
 
         val url = config.url + "/storage/private/$dbName"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             handleResponse(response, "getting private table for '$dbName'")
-            return response.body<List<RGDBStorageObject>>()
+            return runBlocking { response.body<List<RGDBStorageObject>>() }
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting private table", e)
         } catch (e: Exception) {
@@ -956,16 +956,16 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getPrivateEntry(dbName: String, key: String): String {
+    fun getPrivateEntry(dbName: String, key: String): String {
         if (dbName.isBlank() || key.isBlank()) {
             throw InvalidInputError("Database name and/or key cannot be blank")
         }
 
         val url = config.url + "/storage/private/$dbName/$key"
         try {
-            val response = client.get(url)
+            val response = runBlocking { client.get(url) }
             handleResponse(response, "getting private entry '$key' from '$dbName'")
-            return response.body<String>()
+            return runBlocking { response.body<String>() }
         } catch (e: IOException) {
             throw NetworkError("Failed to connect to server while getting private entry", e)
         } catch (e: Exception) {
@@ -994,13 +994,13 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun setPrivateEntry(dbName: String, key: String, value: String) {
+    fun setPrivateEntry(dbName: String, key: String, value: String) {
         if (dbName.isEmpty() || key.isEmpty() || value.isEmpty()) {
             throw IllegalArgumentException("dbName, key and value must not be empty")
         }
 
         val url = config.url + "/storage/private/$dbName/$key"
-        val response = client.post(url) { setBody(value) }
+        val response = runBlocking { client.post(url) { setBody(value) } }
         handleResponse(response, "setting private entry '$key' in '$dbName'")
     }
 
@@ -1022,11 +1022,11 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getStorageStatistics(): StorageStatistic {
+    fun getStorageStatistics(): StorageStatistic {
         val url = config.url + "/statistic/storages"
-        val response = client.get(url)
+        val response = runBlocking { client.get(url) }
         handleResponse(response, "getting storage statistics")
-        return response.body<StorageStatistic>()
+        return runBlocking { response.body<StorageStatistic>() }
     }
 
     /**
@@ -1046,9 +1046,9 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getUserStatistics(): UserStatistic {
+    fun getUserStatistics(): UserStatistic {
         val url = config.url + "/statistic/user"
-        val response = client.get(url)
+        val response = runBlocking { client.get(url) }
         return safeBodyParse<UserStatistic>(response, "getting user statistics")
     }
 
@@ -1069,9 +1069,9 @@ class SnorlaxLOG @JvmOverloads constructor(
      */
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate")
-    suspend fun getServerStatistics(): ServerStatistics {
+    fun getServerStatistics(): ServerStatistics {
         val url = config.url + "/statistic/server"
-        val response = client.get(url)
+        val response = runBlocking { client.get(url) }
         return safeBodyParse<ServerStatistics>(response, "getting server statistics")
     }
 
@@ -1124,10 +1124,10 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
     @Throws(UnauthorizedError::class, NotFoundException::class, InvalidInputError::class, ServerError::class, SnorlaxLOGException::class)
-    private suspend inline fun <reified T> safeBodyParse(response: HttpResponse, context: String): T {
+    private inline fun <reified T> safeBodyParse(response: HttpResponse, context: String): T {
         handleResponse(response, context)
         try {
-            return response.body<T>()
+            return runBlocking { response.body<T>() }
         } catch (e: Exception) {
             throw SnorlaxLOGException("Failed to parse response body for $context", e)
         }
