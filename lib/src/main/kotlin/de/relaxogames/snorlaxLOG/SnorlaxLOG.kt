@@ -376,16 +376,9 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Suppress("UNUSED")
     fun testConnection(): Boolean {
         val url = config.url + "/ping"
-        try {
+        return executeWithErrorHandling("testing connection") {
             val response = runBlocking { client.get(url) }
-            return safeBodyParse<String>(response, "testing connection") == "pong"
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while testing connection", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while testing connection", e)
-            }
+            safeBodyParse<String>(response, "testing connection") == "pong"
         }
     }
 
@@ -409,16 +402,9 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Suppress("UNUSED")
     fun getSelf(): RGDBUser {
         val url = config.url + "/user/self"
-        try {
+        return executeWithErrorHandling("getting self user") {
             val response = runBlocking { client.get(url) }
-            return safeBodyParse<RGDBUser>(response, "getting self user")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting self user", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting self user", e)
-            }
+            safeBodyParse<RGDBUser>(response, "getting self user")
         }
     }
 
@@ -443,16 +429,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/user/self/password"
-        try {
+        executeWithErrorHandling("changing password") {
             val response = runBlocking { client.put(url) { setBody(newPassword) } }
             handleResponse(response, "changing password")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while changing password", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while changing password", e)
-            }
         }
     }
 
@@ -1107,6 +1086,38 @@ class SnorlaxLOG @JvmOverloads constructor(
     }
 
     /**
+     * Executes a network operation with standardized error handling
+     *
+     * @param context A description of the operation for error messages
+     * @param block The operation to execute
+     * @return The result of the operation
+     * @throws UnauthorizedError If the credentials are invalid or the user doesn't have sufficient permissions
+     * @throws NotFoundException If the resource was not found
+     * @throws InvalidInputError If the input was invalid
+     * @throws ServerError If the server encountered an error
+     * @throws NetworkError If there was a network issue
+     * @throws SnorlaxLOGException If an unexpected error occurs
+     *
+     * @since 1.9
+     *
+     * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
+     * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
+     */
+    @Throws(UnauthorizedError::class, NotFoundException::class, InvalidInputError::class, ServerError::class, NetworkError::class, SnorlaxLOGException::class)
+    private inline fun <T> executeWithErrorHandling(context: String, block: () -> T): T {
+        try {
+            return block()
+        } catch (e: IOException) {
+            throw NetworkError("Failed to connect to server while $context", e)
+        } catch (e: Exception) {
+            when (e) {
+                is SnorlaxLOGException -> throw e
+                else -> throw SnorlaxLOGException("Unexpected error while $context", e)
+            }
+        }
+    }
+
+    /**
      * Safely parses the response body with proper error handling
      *
      * @param response The HTTP response to parse
@@ -1117,19 +1128,18 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @throws NotFoundException If the resource was not found
      * @throws InvalidInputError If the input was invalid
      * @throws ServerError If the server encountered an error
+     * @throws NetworkError If there was a network issue
      *
      * @since 1.9
      *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
      */
-    @Throws(UnauthorizedError::class, NotFoundException::class, InvalidInputError::class, ServerError::class, SnorlaxLOGException::class)
+    @Throws(UnauthorizedError::class, NotFoundException::class, InvalidInputError::class, ServerError::class, NetworkError::class, SnorlaxLOGException::class)
     private inline fun <reified T> safeBodyParse(response: HttpResponse, context: String): T {
         handleResponse(response, context)
-        try {
-            return runBlocking { response.body<T>() }
-        } catch (e: Exception) {
-            throw SnorlaxLOGException("Failed to parse response body for $context", e)
+        return executeWithErrorHandling("parsing response body for $context") {
+            runBlocking { response.body<T>() }
         }
     }
 
