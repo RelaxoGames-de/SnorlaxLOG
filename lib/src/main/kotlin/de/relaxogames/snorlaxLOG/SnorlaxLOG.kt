@@ -455,16 +455,10 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Suppress("UNUSED")
     fun getUsers(): List<RGDBUser> {
         val url = config.url + "/admin/users"
-        try {
+
+        return executeWithErrorHandling("getting users list") {
             val response = runBlocking { client.get(url) }
-            return safeBodyParse<List<RGDBUser>>(response, "getting users list")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting users", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting users", e)
-            }
+            safeBodyParse<List<RGDBUser>>(response, "getting users list")
         }
     }
 
@@ -493,21 +487,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/admin/users"
-        try {
-            val response = runBlocking {
-                    client.post(url) {
-                        contentType(ContentType.Application.Json)
-                        setBody(user)
-                    }
-            }
+        executeWithErrorHandling("creating user '${user.name}'") {
+            val response = runBlocking { client.post(url) { setBody(user) } }
             handleResponse(response, "creating user '${user.name}'")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while creating user", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while creating user", e)
-            }
         }
     }
 
@@ -532,16 +514,8 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/admin/users/$name"
-        try {
-            val response = runBlocking { client.delete(url) }
-            handleResponse(response, "deleting user '$name'")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while deleting user", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while deleting user", e)
-            }
+        executeWithErrorHandling("deleting user '$name'") {
+            runBlocking { client.delete(url) }
         }
     }
 
@@ -569,21 +543,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/admin/users/$name/role"
-        try {
-            val response = runBlocking {
-                    client.put(url) {
-                        contentType(ContentType.Application.Json)
-                        setBody(role)
-                    }
-            }
+        executeWithErrorHandling("updating role for user '$name'") {
+            val response = runBlocking { client.put(url) { setBody(role) } }
             handleResponse(response, "updating role for user '$name'")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while updating user role", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while updating user role", e)
-            }
         }
     }
 
@@ -610,20 +572,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/admin/users/$name/password"
-        try {
+        executeWithErrorHandling("updating password for user '$name'") {
             val response = runBlocking { client.put(url) { setBody(newPassword) } }
             handleResponse(response, "updating password for user '$name'")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while updating user password", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else ->
-                        throw SnorlaxLOGException(
-                                "Unexpected error while updating user password",
-                                e
-                        )
-            }
         }
     }
 
@@ -650,17 +601,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/admin/users/$name"
-        try {
+        executeWithErrorHandling("getting user '$name'") {
             val response = runBlocking { client.get(url) }
-            handleResponse(response, "getting user '$name'")
-            return runBlocking { response.body<RGDBUser>() }
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting user", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting user", e)
-            }
+            return safeBodyParse<RGDBUser>(response, "getting user '$name'")
         }
     }
 
@@ -688,21 +631,9 @@ class SnorlaxLOG @JvmOverloads constructor(
 
         val url = config.url + "/creator/storages"
         val storage = RGDBStorage(name)
-        try {
-            val response = runBlocking {
-                    client.post(url) {
-                        contentType(ContentType.Application.Json)
-                        setBody(storage)
-                    }
-            }
+        executeWithErrorHandling("creating storage '$name'") {
+            val response = runBlocking { client.post(url) { setBody(storage) } }
             handleResponse(response, "creating storage '$name'")
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while creating storage", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while creating storage", e)
-            }
         }
     }
 
@@ -755,17 +686,9 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Suppress("UNUSED")
     fun getStorages(): List<RGDBStorage> {
         val url = config.url + "/storage"
-        try {
+        executeWithErrorHandling("getting storage list") {
             val response = runBlocking { client.get(url) }
-            handleResponse(response, "getting storage list")
-            return runBlocking { response.body<List<RGDBStorage>>() }
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting storages", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting storages", e)
-            }
+            return safeBodyParse<List<RGDBStorage>>(response, "getting storage list")
         }
     }
 
@@ -796,17 +719,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/storage/shared/$dbName"
-        try {
+        executeWithErrorHandling("getting shared table for '$dbName'") {
             val response = runBlocking { client.get(url) }
-            handleResponse(response, "getting shared table for '$dbName'")
-            return runBlocking { response.body<List<RGDBStorageObject>>() }
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting shared table", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting shared table", e)
-            }
+            return safeBodyParse<List<RGDBStorageObject>>(response, "getting shared table for '$dbName'")
         }
     }
 
@@ -834,17 +749,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/storage/shared/$dbName/$key"
-        try {
+        executeWithErrorHandling("getting shared entry '$key' from '$dbName'") {
             val response = runBlocking { client.get(url) }
-            handleResponse(response, "getting shared entry '$key' from '$dbName'")
-            return runBlocking { response.body<String>() }
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting shared entry", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting shared entry", e)
-            }
+            return safeBodyParse<String>(response, "getting shared entry '$key' from '$dbName'")
         }
     }
 
@@ -872,8 +779,10 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/storage/shared/$dbName/$key"
-        val response = runBlocking { client.post(url) { setBody(value) } }
-        handleResponse(response, "setting shared entry '$key' in '$dbName'")
+        executeWithErrorHandling("setting shared entry '$key' in '$dbName'") {
+            val response = runBlocking { client.post(url) { setBody(value) } }
+            handleResponse(response, "setting shared entry '$key' in '$dbName'")
+        }
     }
 
     /**
@@ -903,17 +812,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/storage/private/$dbName"
-        try {
+        executeWithErrorHandling("getting private table for '$dbName'") {
             val response = runBlocking { client.get(url) }
-            handleResponse(response, "getting private table for '$dbName'")
-            return runBlocking { response.body<List<RGDBStorageObject>>() }
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting private table", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting private table", e)
-            }
+            return safeBodyParse<List<RGDBStorageObject>>(response, "getting private table for '$dbName'")
         }
     }
 
@@ -941,17 +842,9 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/storage/private/$dbName/$key"
-        try {
+        executeWithErrorHandling("getting private entry '$key' from '$dbName'") {
             val response = runBlocking { client.get(url) }
-            handleResponse(response, "getting private entry '$key' from '$dbName'")
-            return runBlocking { response.body<String>() }
-        } catch (e: IOException) {
-            throw NetworkError("Failed to connect to server while getting private entry", e)
-        } catch (e: Exception) {
-            when (e) {
-                is SnorlaxLOGException -> throw e
-                else -> throw SnorlaxLOGException("Unexpected error while getting private entry", e)
-            }
+            return safeBodyParse<String>(response, "getting private entry '$key' from '$dbName'")
         }
     }
 
@@ -979,8 +872,10 @@ class SnorlaxLOG @JvmOverloads constructor(
         }
 
         val url = config.url + "/storage/private/$dbName/$key"
-        val response = runBlocking { client.post(url) { setBody(value) } }
-        handleResponse(response, "setting private entry '$key' in '$dbName'")
+        executeWithErrorHandling("setting private entry '$key' in '$dbName'") {
+            val response = runBlocking { client.post(url) { setBody(value) } }
+            handleResponse(response, "setting private entry '$key' in '$dbName'")
+        }
     }
 
     // Statistic Endpoints
@@ -1003,9 +898,10 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Suppress("UNUSED")
     fun getStorageStatistics(): StorageStatistic {
         val url = config.url + "/statistic/storages"
-        val response = runBlocking { client.get(url) }
-        handleResponse(response, "getting storage statistics")
-        return runBlocking { response.body<StorageStatistic>() }
+        executeWithErrorHandling("getting storage statistics") {
+            val response = runBlocking { client.get(url) }
+            return safeBodyParse<StorageStatistic>(response, "getting storage statistics")
+        }
     }
 
     /**
