@@ -424,9 +424,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun changePassword(newPassword: String) {
-        if (newPassword.isBlank()) {
-            throw InvalidInputError("New password cannot be blank")
-        }
+        if (newPassword.isBlank()) throw InvalidInputError("New password cannot be blank")
 
         val url = config.url + "/user/self/password"
         executeWithErrorHandling("changing password") {
@@ -482,9 +480,8 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, InvalidInputError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun createUser(user: RGDBUser) {
-        if (user.name.isBlank() || user.password.isBlank()) {
-            throw InvalidInputError("User name and password cannot be blank")
-        }
+        if (user.name.isBlank() || user.password.isBlank()) throw InvalidInputError("User name and password cannot be blank")
+
 
         val url = config.url + "/admin/users"
         executeWithErrorHandling("creating user '${user.name}'") {
@@ -509,11 +506,9 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun deleteUser(name: String) {
-        if (name.isBlank()) {
-            throw InvalidInputError("User name cannot be blank")
-        }
+        if (name.isBlank()) throw InvalidInputError("User name cannot be blank")
 
-        val url = config.url + "/admin/users/$name"
+            val url = config.url + "/admin/users/$name"
         executeWithErrorHandling("deleting user '$name'") {
             runBlocking { client.delete(url) }
         }
@@ -538,9 +533,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("MemberVisibilityCanBePrivate", "UNUSED")
     fun updateUserRole(name: String, role: RGDBRole) {
-        if (name.isBlank()) {
-            throw InvalidInputError("User name cannot be blank")
-        }
+        if (name.isBlank()) throw InvalidInputError("User name cannot be blank")
 
         val url = config.url + "/admin/users/$name/role"
         executeWithErrorHandling("updating role for user '$name'") {
@@ -567,9 +560,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun updateUserPassword(name: String, newPassword: String) {
-        if (name.isBlank() || newPassword.isBlank()) {
-            throw InvalidInputError("User name and/or new password cannot be blank")
-        }
+        if (name.isBlank() || newPassword.isBlank()) throw InvalidInputError("User name and/or new password cannot be blank")
 
         val url = config.url + "/admin/users/$name/password"
         executeWithErrorHandling("updating password for user '$name'") {
@@ -596,9 +587,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun getUser(name: String): RGDBUser {
-        if (name.isBlank()) {
-            throw InvalidInputError("User name cannot be blank")
-        }
+        if (name.isBlank()) throw InvalidInputError("User name cannot be blank")
 
         val url = config.url + "/admin/users/$name"
         executeWithErrorHandling("getting user '$name'") {
@@ -625,9 +614,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, InvalidInputError::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun createStorage(name: String) {
-        if (name.isBlank()) {
-            throw InvalidInputError("Storage name cannot be blank")
-        }
+        if (name.isBlank()) throw InvalidInputError("Storage name cannot be blank")
 
         val url = config.url + "/creator/storages"
         val storage = RGDBStorage(name)
@@ -714,9 +701,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun getSharedTable(dbName: String): List<RGDBStorageObject> {
-        if (dbName.isBlank()) {
-            throw InvalidInputError("Database name cannot be blank")
-        }
+        if (dbName.isBlank()) throw InvalidInputError("Database name cannot be blank")
 
         val url = config.url + "/storage/shared/$dbName"
         executeWithErrorHandling("getting shared table for '$dbName'") {
@@ -744,9 +729,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun getSharedEntry(dbName: String, key: String): String {
-        if (dbName.isBlank() || key.isBlank()) {
-            throw InvalidInputError("Database name and/or key cannot be blank")
-        }
+        if (dbName.isBlank() || key.isBlank()) throw InvalidInputError("Database name and/or key cannot be blank")
 
         val url = config.url + "/storage/shared/$dbName/$key"
         executeWithErrorHandling("getting shared entry '$key' from '$dbName'") {
@@ -774,9 +757,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun setSharedEntry(dbName: String, key: String, value: String) {
-        if (dbName.isBlank() || key.isBlank()) {
-            throw InvalidInputError("Database name and/or key cannot be blank")
-        }
+        if (dbName.isBlank() || key.isBlank()) throw InvalidInputError("Database name and/or key cannot be blank")
 
         val url = config.url + "/storage/shared/$dbName/$key"
         executeWithErrorHandling("setting shared entry '$key' in '$dbName'") {
@@ -807,9 +788,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun getPrivateTable(dbName: String): List<RGDBStorageObject> {
-        if (dbName.isBlank()) {
-            throw InvalidInputError("Database name cannot be blank")
-        }
+        if (dbName.isBlank()) throw InvalidInputError("Database name cannot be blank")
 
         val url = config.url + "/storage/private/$dbName"
         executeWithErrorHandling("getting private table for '$dbName'") {
@@ -837,9 +816,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun getPrivateEntry(dbName: String, key: String): String {
-        if (dbName.isBlank() || key.isBlank()) {
-            throw InvalidInputError("Database name and/or key cannot be blank")
-        }
+        if (dbName.isBlank() || key.isBlank()) throw InvalidInputError("Database name and/or key cannot be blank")
 
         val url = config.url + "/storage/private/$dbName/$key"
         executeWithErrorHandling("getting private entry '$key' from '$dbName'") {
@@ -867,9 +844,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NotFoundException::class, NetworkError::class, SnorlaxLOGException::class)
     @Suppress("UNUSED")
     fun setPrivateEntry(dbName: String, key: String, value: String) {
-        if (dbName.isEmpty() || key.isEmpty() || value.isEmpty()) {
-            throw IllegalArgumentException("dbName, key and value must not be empty")
-        }
+        if (dbName.isEmpty() || key.isEmpty() || value.isEmpty()) throw IllegalArgumentException("dbName, key and value must not be empty")
 
         val url = config.url + "/storage/private/$dbName/$key"
         executeWithErrorHandling("setting private entry '$key' in '$dbName'") {
@@ -969,7 +944,7 @@ class SnorlaxLOG @JvmOverloads constructor(
     @Throws(UnauthorizedError::class, NotFoundException::class, InvalidInputError::class, ServerError::class, SnorlaxLOGException::class)
     private fun handleResponse(response: HttpResponse, context: String) {
         when (response.status.value) {
-            in 200..299 -> return // Success
+            in 200..299 -> return
             401 -> throw UnauthorizedError("Unauthorized access: $context")
             404 -> throw NotFoundException("Resource not found: $context")
             400 -> throw InvalidInputError("Invalid input for: $context")
@@ -994,7 +969,7 @@ class SnorlaxLOG @JvmOverloads constructor(
      * @throws NetworkError If there was a network issue
      * @throws SnorlaxLOGException If an unexpected error occurs
      *
-     * @since 1.9
+     * @since 1.11
      *
      * @author Johannes ([Jotrorox](https://jotrorox.com)) Müller
      * @author The [RelaxoGames](https://relaxogames.de) Infrastructure Team
